@@ -1,7 +1,7 @@
 [
   {
     "id": "1",
-    "name": "Cali",
+    "name": "Calis",
     "lat": 3.472,
     "lon": -76.5278,
     "status": "activa",
@@ -16,5 +16,14 @@
     "status": "activa",
     "dept": "Caldas",
     "coverage": 45.0
+  },
+  {
+    "id": "4",
+    "name": "Bogota",
+    "lat": 4.60971,
+    "lon": -74.08175,
+    "status": "activa",
+    "dept": "Cundinamarca",
+    "coverage": 80.0
   }
 ]

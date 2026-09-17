@@ -1,12 +1,15 @@
 from flask import Flask
 from flask_cors import CORS
 from src.presentation.controllers.EstacionesController import station_bp
-
+from src.presentation.controllers.SismosController import sismo_bp
 app = Flask(__name__)
 CORS(app)  # Habilita CORS para permitir peticiones desde React
 
 # Registrar el Blueprint de estaciones
 app.register_blueprint(station_bp)
+
+# Registrar el Blueprint de sismos
+app.register_blueprint(sismo_bp)
 
 
 @app.route("/")

@@ -33,4 +33,8 @@ source venv/bin/activate Mac/Linux
 **Ruta:** `/estaciones 
 http://127.0.0.1:5000/estaciones
 
+(put/delete/post/get/get{id})
+**Ruta:** /sismos
+http://127.0.0.1:5000/sismos
+
 El servidor corre en http://localhost:5000.
