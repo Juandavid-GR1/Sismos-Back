@@ -31,5 +31,6 @@ source venv/bin/activate Mac/Linux
 
 ## Estaciones (put/delete/post/get/get{id})
 **Ruta:** `/estaciones 
+http://127.0.0.1:5000/estaciones
 
 El servidor corre en http://localhost:5000.

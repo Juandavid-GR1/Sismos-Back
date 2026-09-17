@@ -1,7 +1,6 @@
-import json
 import math
-import os
 import re
+from src.business.interfaces.IF_Estaciones import IF_Estaciones
 from src.Models.Estaciones import Station
 
 
@@ -15,58 +14,12 @@ ALLOWED_STATUSES = {"activa", "inactiva", "mantenimiento"}
 
 
 class StationService:
-    """Capa de negocio con validaciones, coordenadas únicas y almacenamiento JSON."""
+    """Capa de negocio pura con validaciones e inyección de dependencia."""
 
-    def __init__(self, json_file: str = "stations.json"):
-        self.json_file = json_file
-        self._ensure_file_exists()
-
-    def _ensure_file_exists(self):
-        if not os.path.exists(self.json_file):
-            self._write_raw_data([])
-
-    def _write_raw_data(self, data: list):
-        with open(self.json_file, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-
-    def _load_data(self) -> list[Station]:
-        try:
-            with open(self.json_file, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                if not isinstance(data, list):
-                    return []
-                return [
-                    Station(
-                        id=str(item.get("id", "")),
-                        name=str(item.get("name", "")),
-                        lat=float(item.get("lat", 0.0)),
-                        lon=float(item.get("lon", 0.0)),
-                        status=str(item.get("status", "activa")),
-                        dept=str(item.get("dept", "")),
-                        coverage=float(item.get("coverage", 0.0)),
-                    )
-                    for item in data
-                ]
-        except (json.JSONDecodeError, KeyError, ValueError):
-            return []
-
-    def _save_data(self, stations: list[Station]):
-        data = [
-            {
-                "id": s.id,
-                "name": s.name,
-                "lat": s.lat,
-                "lon": s.lon,
-                "status": s.status,
-                "dept": s.dept,
-                "coverage": s.coverage,
-            }
-            for s in stations
-        ]
-        self._write_raw_data(data)
+    def __init__(self, repository: IF_Estaciones):
+        self.repository = repository
 
     def _generate_next_id(self, stations_list: list[Station]) -> str:
-        """Genera el siguiente ID como un número entero correlativo (1, 2, 3...)."""
         max_id = 0
         for s in stations_list:
             try:
@@ -75,7 +28,6 @@ class StationService:
                     max_id = num_id
             except (ValueError, TypeError):
                 continue
-
         return str(max_id + 1)
 
     def _check_duplicate_coordinates(
@@ -85,7 +37,6 @@ class StationService:
         stations_list: list[Station],
         current_station_id: str | None = None,
     ):
-        """Verifica que no exista otra estación en las mismas coordenadas."""
         for s in stations_list:
             if current_station_id is not None and str(s.id).strip() == str(
                 current_station_id
@@ -115,7 +66,6 @@ class StationService:
         return clean
 
     def _validate_coordinates(self, lat: any, lon: any) -> tuple[float, float]:
-        """Soporta enteros, flotantes y cadenas numéricas positivas o negativas."""
         try:
             val_lat = float(lat)
             val_lon = float(lon)
@@ -170,11 +120,11 @@ class StationService:
         return clean_status
 
     def get_all(self) -> list[Station]:
-        return self._load_data()
+        return self.repository.get_all()
 
     def get_by_id(self, station_id: str) -> Station | None:
         clean_id = station_id.strip()
-        stations = self._load_data()
+        stations = self.repository.get_all()
         return next((s for s in stations if s.id == clean_id), None)
 
     def _create_single(self, data: dict, stations_list: list[Station]) -> Station:
@@ -194,7 +144,6 @@ class StationService:
         self._check_duplicate_coordinates(lat, lon, stations_list)
 
         station_id = self._generate_next_id(stations_list)
-
         name = self._sanitize_string(data["name"], "name")
         dept = self._sanitize_string(data["dept"], "dept")
         coverage = self._validate_coverage(data["coverage"])
@@ -213,7 +162,7 @@ class StationService:
         return new_station
 
     def create(self, data: dict | list) -> Station | list[Station]:
-        stations = self._load_data()
+        stations = self.repository.get_all()
 
         if isinstance(data, list):
             if not data:
@@ -226,12 +175,12 @@ class StationService:
                 created = self._create_single(item, stations)
                 new_stations.append(created)
 
-            self._save_data(stations)
+            self.repository.save_all(stations)
             return new_stations
 
         if isinstance(data, dict):
             new_station = self._create_single(data, stations)
-            self._save_data(stations)
+            self.repository.save_all(stations)
             return new_station
 
         raise StationValidationError(
@@ -245,7 +194,7 @@ class StationService:
             )
 
         clean_id = station_id.strip()
-        stations = self._load_data()
+        stations = self.repository.get_all()
         target_station = next((s for s in stations if s.id == clean_id), None)
 
         if not target_station:
@@ -275,15 +224,15 @@ class StationService:
         if "status" in data:
             target_station.status = self._validate_status(data["status"])
 
-        self._save_data(stations)
+        self.repository.save_all(stations)
         return target_station
 
     def delete(self, station_id: str) -> bool:
         clean_id = station_id.strip()
-        stations = self._load_data()
+        stations = self.repository.get_all()
         filtered = [s for s in stations if s.id != clean_id]
 
         if len(filtered) < len(stations):
-            self._save_data(filtered)
+            self.repository.save_all(filtered)
             return True
         return False

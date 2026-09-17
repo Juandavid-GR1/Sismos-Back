@@ -1,13 +1,20 @@
 from flask import Blueprint, jsonify, request
 from src.Models.Estaciones import Station
-from src.services.EstacionesService import StationService, StationValidationError
+from src.business.services.EstacionesService import (
+    StationService,
+    StationValidationError,
+)
+from src.dataaccess.repository.JsonStationRepository import JsonStationRepository
 
 # Configuración del Blueprint
 station_bp = Blueprint("stations", __name__, url_prefix="/estaciones")
 station_bp.strict_slashes = False
 
-# Instancia de la capa de servicio
-station_service = StationService()
+# 1. Instancias el repositorio
+repository = JsonStationRepository()
+
+# 2. Se lo inyectas al servicio
+station_service = StationService(repository=repository)
 
 
 def _station_to_dict(station: Station) -> dict:
