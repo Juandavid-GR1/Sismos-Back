@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "Cali",
+    "lat": 3.472,
+    "lon": -76.5278,
+    "status": "activa",
+    "dept": "Valle del Cauca",
+    "coverage": 25.0
+  },
+  {
+    "id": "3",
+    "name": "Armenia",
+    "lat": 4.53656,
+    "lon": -75.67263,
+    "status": "activa",
+    "dept": "Caldas",
+    "coverage": 45.0
+  }
+]

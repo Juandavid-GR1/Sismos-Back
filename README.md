@@ -27,4 +27,9 @@ source venv/bin/activate Mac/Linux
 ## Ejecutar el Servidor
 `python app.py`
 
+## End-points
+
+## Estaciones (put/delete/post/get/get{id})
+**Ruta:** `/estaciones 
+
 El servidor corre en http://localhost:5000.
