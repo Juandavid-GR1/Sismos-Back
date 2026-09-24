@@ -26,6 +26,9 @@ class ISismoRepository(Protocol):
     def save(self, sismo: Sismo) -> Sismo:
         ...
 
+    def delete(self, sismo_id: int) -> bool:
+        ...
+
     def generate_next_id(self) -> int:
         ...
 
@@ -73,13 +76,9 @@ class SismoService:
 
     def _validate_epicenter_coord(self, coord: any, name: str) -> float:
         try:
-            val = round(float(coord), 1)
+            return round(float(coord), 6)
         except (ValueError, TypeError):
             raise SismoValidationError(f"La coordenada '{name}' debe ser un número válido.")
-
-        if not (0.0 <= val <= 1000.0):
-            raise SismoValidationError(f"La coordenada '{name}' debe estar entre 0.0 y 1000.0 km.")
-        return val
 
     def _validate_timestamp(self, ts: any) -> datetime:
         if isinstance(ts, datetime):
@@ -91,10 +90,15 @@ class SismoService:
                 raise SismoValidationError("El 'timestamp' debe ser una cadena con formato ISO 8601 válido.")
         raise SismoValidationError("El 'timestamp' debe ser un objeto datetime o una cadena ISO 8601.")
 
-    def _validate_station_id(self, station_id: str) -> str:
-        if not isinstance(station_id, str) or not station_id.strip():
-            raise SismoValidationError("El identificador de estación debe ser una cadena no vacía.")
-        return station_id.strip()
+    def _validate_station_id(self, station_id: Optional[str]) -> Optional[str]:
+        """Acepta un identificador opcional. Retorna None si no se envía o es una cadena vacía."""
+        if station_id is None:
+            return None
+        if not isinstance(station_id, str):
+            raise SismoValidationError("El identificador de estación debe ser una cadena de texto.")
+        
+        cleaned = station_id.strip()
+        return cleaned if cleaned else None
 
     # --- Reglas de Negocio Principales ---
 
@@ -105,11 +109,11 @@ class SismoService:
         epicenter_x: float,
         epicenter_y: float,
         timestamp: datetime | str,
-        initial_station_id: str,
+        initial_station_id: Optional[str] = None,
     ) -> Sismo:
         """
         1. Alta Inicial (Revisión 1):
-           Crea un nuevo evento con revision=1, status=PENDIENTE y asigna la estación emisora.
+           Crea un nuevo evento con revision=1, status=PENDIENTE. La estación emisora es opcional.
         """
         station = self._validate_station_id(initial_station_id)
         sismo_id = self.repository.generate_next_id()
@@ -123,20 +127,18 @@ class SismoService:
             epicenter_y=self._validate_epicenter_coord(epicenter_y, "epicenter_y"),
             timestamp=self._validate_timestamp(timestamp),
             revision=1,
-            reporting_stations={station},
+            reporting_stations={station} if station else set(),
             status=StatusSismo.PENDIENTE,
         )
 
         return self.repository.save(sismo)
 
     def add_consensus_report(self, sismo_id: int, station_id: str) -> Sismo:
-        """
-        2. Consenso entre Estaciones (Misma Revisión):
-           Agrega una nueva estación emisora al evento sin alterar la revisión ni el estado.
-        """
         station = self._validate_station_id(station_id)
+        if not station:
+            raise SismoValidationError("El identificador de la estación no puede estar vacío.")
+
         sismo = self.repository.get_by_id(self._validate_id(sismo_id))
-        
         if not sismo:
             raise SismoNotFoundError(f"No existe el evento sísmico con ID {sismo_id}.")
 
@@ -152,14 +154,11 @@ class SismoService:
         epicenter_x: Optional[float] = None,
         epicenter_y: Optional[float] = None,
     ) -> Sismo:
-        """
-        3. Corrección de Datos (Incremento de Revisión):
-           Si hay cambios en los parámetros físicos, incrementa revision (+1),
-           reinicia reporting_stations con la estación que corrige y retorna a PENDIENTE.
-        """
         station = self._validate_station_id(station_id)
-        sismo = self.repository.get_by_id(self._validate_id(sismo_id))
+        if not station:
+            raise SismoValidationError("El identificador de la estación no puede estar vacío al aplicar corrección.")
 
+        sismo = self.repository.get_by_id(self._validate_id(sismo_id))
         if not sismo:
             raise SismoNotFoundError(f"No existe el evento sísmico con ID {sismo_id}.")
 
@@ -168,7 +167,6 @@ class SismoService:
         new_x = self._validate_epicenter_coord(epicenter_x, "epicenter_x") if epicenter_x is not None else sismo.epicenter_x
         new_y = self._validate_epicenter_coord(epicenter_y, "epicenter_y") if epicenter_y is not None else sismo.epicenter_y
 
-        # Verificar si realmente hubo cambios en los parámetros físicos
         has_changed = not (
             math.isclose(sismo.magnitude, new_mag, abs_tol=1e-1)
             and math.isclose(sismo.depth, new_depth, abs_tol=1e-1)
@@ -187,23 +185,31 @@ class SismoService:
 
             return self.repository.save(sismo)
 
-        # Si los parámetros no cambiaron, cuenta simplemente como reporte de consenso
         return self.add_consensus_report(sismo_id, station_id)
 
     def audit_and_validate(self, sismo_id: int) -> Sismo:
-        """
-        4. Auditoría y Validación:
-           Cambia el estado de un evento PENDIENTE a REVISADO tras la verificación del operador.
-        """
         sismo = self.repository.get_by_id(self._validate_id(sismo_id))
 
         if not sismo:
             raise SismoNotFoundError(f"No existe el evento sísmico con ID {sismo_id}.")
 
-        sismo.status = StatusSismo.REVISADO
+        sismo.status = StatusSismo.CONFIRMADO
         return self.repository.save(sismo)
 
-    # --- Consultas ---
+    def delete(self, sismo_id: any) -> bool:
+        """
+        Valida el ID del sismo, confirma su existencia y solicita su eliminación al repositorio.
+        """
+        val_id = self._validate_id(sismo_id)
+        sismo = self.repository.get_by_id(val_id)
+
+        if not sismo:
+            raise SismoNotFoundError(f"No existe el evento sísmico con ID {val_id}.")
+
+        return self.repository.delete(val_id)
+
+    # Alias alternativo
+    delete_event = delete
 
     def get_by_id(self, sismo_id: int) -> Sismo:
         sismo = self.repository.get_by_id(self._validate_id(sismo_id))

@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": 5,
+    "magnitude": 4.5,
+    "depth": 15.0,
+    "epicenter_x": -74.2973,
+    "epicenter_y": 4.5709,
+    "timestamp": "2026-09-24T00:48:38.269000+00:00",
+    "revision": 1,
+    "reporting_stations": [],
+    "status": "Pendiente"
+  },
+  {
+    "id": 6,
+    "magnitude": 4.5,
+    "depth": 15.0,
+    "epicenter_x": -74.2973,
+    "epicenter_y": 45.615,
+    "timestamp": "2026-09-24T01:39:54.356000+00:00",
+    "revision": 1,
+    "reporting_stations": [],
+    "status": "Pendiente"
+  }
+]

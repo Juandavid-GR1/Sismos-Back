@@ -69,6 +69,16 @@ def get_sismo_by_id(sismo_id: int):
     return jsonify(_sismo_to_dict(sismo)), 200
 
 
+@sismo_bp.route("/<int:sismo_id>", methods=["DELETE"])
+def delete_sismo(sismo_id: int):
+    """Elimina un evento sísmico por su ID (DELETE /sismos/<id>)."""
+    sismo_service.delete(sismo_id)
+    return jsonify({
+        "message": f"Evento sísmico con ID {sismo_id} eliminado exitosamente.",
+        "id": sismo_id
+    }), 200
+
+
 @sismo_bp.route("", methods=["POST"])
 def create_event():
     """
@@ -87,13 +97,13 @@ def create_event():
             400,
         )
 
+    # station_id ya no forma parte de required_fields
     required_fields = [
         "magnitude",
         "depth",
         "epicenter_x",
         "epicenter_y",
         "timestamp",
-        "station_id",
     ]
     missing = [f for f in required_fields if f not in data]
     if missing:
@@ -107,13 +117,16 @@ def create_event():
             400,
         )
 
+    # Se busca el identificador de estación soportando ambas posibles claves ('station_id' o 'initial_station_id')
+    station_id = data.get("station_id") or data.get("initial_station_id")
+
     new_sismo = sismo_service.create_event(
         magnitude=data["magnitude"],
         depth=data["depth"],
         epicenter_x=data["epicenter_x"],
         epicenter_y=data["epicenter_y"],
         timestamp=data["timestamp"],
-        initial_station_id=data["station_id"],
+        initial_station_id=station_id,
     )
 
     return jsonify(_sismo_to_dict(new_sismo)), 201

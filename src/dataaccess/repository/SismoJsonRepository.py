@@ -87,6 +87,27 @@ class SismoJsonRepository(IF_Sismos):
         self._write_raw_data(raw_data)
         return sismo
 
+    def delete(self, sismo_id: int) -> bool:
+        """
+        Elimina un evento sísmico del archivo JSON por su ID.
+        
+        :param sismo_id: Identificador numérico del sismo.
+        :return: True si fue eliminado, False si no existía.
+        """
+        sismos = self.get_all()
+        initial_count = len(sismos)
+        
+        # Filtrar excluyendo el ID a eliminar
+        filtered_sismos = [s for s in sismos if s.id != sismo_id]
+
+        if len(filtered_sismos) == initial_count:
+            return False  # No se encontró el registro
+
+        # Persistir la nueva lista sin el elemento eliminado
+        raw_data = [self._to_dict(s) for s in filtered_sismos]
+        self._write_raw_data(raw_data)
+        return True
+
     def generate_next_id(self) -> int:
         """Calcula el siguiente ID numérico disponible."""
         sismos = self.get_all()
