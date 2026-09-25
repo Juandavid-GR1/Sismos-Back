@@ -1,0 +1,135 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "nombre": "Zona Norte",
+        "codigo": "ZN",
+        "poblada": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-79.0, 9.0],
+            [-72.0, 9.0],
+            [-72.0, 12.5],
+            [-75.0, 12.5],
+            [-79.0, 11.5],
+            [-79.0, 9.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "nombre": "Zona Noroccidental",
+        "codigo": "ZNO",
+        "poblada": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-79.0, 5.0],
+            [-74.5, 5.0],
+            [-74.5, 9.0],
+            [-79.0, 9.0],
+            [-79.0, 5.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "nombre": "Zona Central",
+        "codigo": "ZC",
+        "poblada": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-75.5, 2.0],
+            [-72.0, 2.0],
+            [-72.0, 7.5],
+            [-74.5, 7.5],
+            [-75.5, 5.0],
+            [-75.5, 2.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "nombre": "Zona Oriental",
+        "codigo": "ZO",
+        "poblada": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-72.0, 5.0],
+            [-66.8, 5.0],
+            [-66.8, 9.0],
+            [-72.0, 9.0],
+            [-72.0, 5.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "nombre": "Zona Sur",
+        "codigo": "ZS",
+        "poblada": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-79.0, -1.5],
+            [-72.0, -1.5],
+            [-72.0, 5.0],
+            [-75.5, 5.0],
+            [-79.0, 2.0],
+            [-79.0, -1.5]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "nombre": "Zona Amazónica",
+        "codigo": "ZA",
+        "poblada": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-75.5, -4.0],
+            [-66.8, -4.0],
+            [-66.8, 5.0],
+            [-72.0, 5.0],
+            [-75.5, 2.0],
+            [-75.5, -4.0]
+          ]
+        ]
+      }
+    }
+  ]
+}

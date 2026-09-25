@@ -172,6 +172,11 @@ http://127.0.0.1:5000/sismos
 | `PUT`    | `/sismos/<id>` | Actualizar un registro de sismo |
 | `DELETE` | `/sismos/<id>` | Eliminar un registro de sismo   |
 
+GET	/	Verificar que el servidor está funcionando
+GET	/zonas	Obtener todas las zonas geográficas en GeoJSON
+POST	/zonas/comprobar	Comprobar si unas coordenadas están dentro de una zona poblada
+POST	/reportes	Procesar un reporte de una estación sobre un sismo existente
+
 > **Nota:** Los endpoints y métodos indicados deben coincidir con las rutas realmente implementadas en `app.py`.
 
 ---
