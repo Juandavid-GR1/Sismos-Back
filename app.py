@@ -2,86 +2,48 @@ from flask import Flask
 from flask_cors import CORS
 
 # ---------------------------------------------------------
-# Controllers existentes
+# Algoritmos, Persistencia y Repositorios
 # ---------------------------------------------------------
-
-from src.presentation.controllers.EstacionesController import station_bp
-from src.presentation.controllers.SismosController import sismo_bp
-
-from src.presentation.controllers.ReportesController import (
-    register_reporte_routes
-)
-
-from src.presentation.controllers.ZonaController import (
-    register_zona_routes
-)
-
-# ---------------------------------------------------------
-# Repositorios
-# ---------------------------------------------------------
-
-from src.dataaccess.repository.SismoJsonRepository import (
-    SismoJsonRepository
-)
-
-from src.dataaccess.repository.ZonaRepository import (
-    ZonaRepository
-)
+from src.business.algortimos.sismos.Priority_Key_sismo import PriorityKeyService
+from src.dataaccess.repository.JsonColasRepository import ColaJsonPersistencia
+from src.dataaccess.repository.SismoJsonRepository import SismoJsonRepository
+from src.dataaccess.repository.ZonaRepository import ZonaRepository
 
 # ---------------------------------------------------------
 # Services
 # ---------------------------------------------------------
-
-from src.business.services.SismosService import (
-    SismoService
-)
-
-from src.business.services.reporte_service import (
-    ReporteService
-)
-
-from src.business.services.ZonaService import (
-    ZonaService
-)
+from src.business.services.cola_reportes import ColaReportesService
+from src.business.services.reporte_service import ReporteService
+from src.business.services.SismosService import SismoService
+from src.business.services.ZonaService import ZonaService
 
 # ---------------------------------------------------------
-# Algoritmos
+# Controllers / Routes
 # ---------------------------------------------------------
-
-from src.business.algortimos.sismos.Priority_Key_sismo import (
-    PriorityKeyService
-)
+from src.presentation.controllers.EstacionesController import station_bp
+from src.presentation.controllers.ReportesController import register_reporte_routes
+from src.presentation.controllers.SismosController import sismo_bp
+from src.presentation.controllers.ZonaController import register_zona_routes
 
 
 app = Flask(__name__)
-
 CORS(app)
 
 
 # =========================================================
-# REPOSITORIOS
+# REPOSITORIOS Y PERSISTENCIA
 # =========================================================
-
 sismo_repository = SismoJsonRepository()
-
-zona_repository = ZonaRepository(
-    "zonas.json"
-)
+zona_repository = ZonaRepository("zonas.json")
+cola_persistencia = ColaJsonPersistencia("data/reportes_cola.json")
 
 
 # =========================================================
 # SERVICES
 # =========================================================
-
-sismo_service = SismoService(
-    sismo_repository
-)
-
+sismo_service = SismoService(sismo_repository)
 priority_key_service = PriorityKeyService()
-
-zona_service = ZonaService(
-    zona_repository
-)
+zona_service = ZonaService(zona_repository)
 
 reporte_service = ReporteService(
     sismo_service=sismo_service,
@@ -89,29 +51,23 @@ reporte_service = ReporteService(
     zona_service=zona_service
 )
 
+cola_reportes = ColaReportesService(persistencia=cola_persistencia)
+
 
 # =========================================================
-# REGISTRO DE BLUEPRINTS EXISTENTES
+# REGISTRO DE BLUEPRINTS Y RUTAS
 # =========================================================
-
-# Estaciones
+# Blueprints directos
 app.register_blueprint(station_bp)
-
-# Sismos
 app.register_blueprint(sismo_bp)
 
-
-# =========================================================
-# REGISTRO DE RUTAS CON INYECCIÓN DE DEPENDENCIAS
-# =========================================================
-
-# Reportes
+# Rutas con inyección de dependencias
 register_reporte_routes(
     app,
-    reporte_service
+    reporte_service,
+    cola_reportes
 )
 
-# Zonas
 register_zona_routes(
     app,
     zona_service
@@ -119,17 +75,12 @@ register_zona_routes(
 
 
 # =========================================================
-# RUTA PRINCIPAL
+# RUTAS BÁSICAS Y EJECUCIÓN
 # =========================================================
-
 @app.route("/")
 def home():
     return "Servidor Flask corriendo correctamente"
 
-
-# =========================================================
-# EJECUCIÓN
-# =========================================================
 
 if __name__ == "__main__":
     app.run(

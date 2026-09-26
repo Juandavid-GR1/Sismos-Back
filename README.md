@@ -177,6 +177,8 @@ GET	/zonas	Obtener todas las zonas geográficas en GeoJSON
 POST	/zonas/comprobar	Comprobar si unas coordenadas están dentro de una zona poblada
 POST	/reportes	Procesar un reporte de una estación sobre un sismo existente
 
+GET /reportes/cola
+
 > **Nota:** Los endpoints y métodos indicados deben coincidir con las rutas realmente implementadas en `app.py`.
 
 ---

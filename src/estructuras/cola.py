@@ -25,3 +25,6 @@ class Cola:
       return self._cola[0]
     else:
       raise Exception("Cola vacía")
+    
+  def obtener_elementos(self):
+        return self._cola.copy()
