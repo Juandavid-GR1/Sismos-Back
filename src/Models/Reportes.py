@@ -15,3 +15,4 @@ class Reporte:
     epicenter_x: float
     epicenter_y: float
     timestamp: datetime
+    revision: int

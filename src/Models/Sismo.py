@@ -156,7 +156,7 @@ class Sismo:
     # procesado ningún reporte de estación.
     # ------------------------------------------------------------------
 
-    revision: int = 0
+    revision: int = 1
 
 
 

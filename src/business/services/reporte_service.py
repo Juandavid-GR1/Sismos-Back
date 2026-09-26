@@ -1,220 +1,162 @@
 from datetime import datetime
+from typing import Any, Dict, Optional, Tuple
 
+from src.Models.Reportes import Reporte
 from src.business.algortimos.sismos.Priority_Key_sismo import PriorityKeyService
 from src.business.services.SismosService import SismoService
 from src.business.services.ZonaService import ZonaService
-from src.Models.Reportes import Reporte
+
+# ==============================================================================
+# EXCEPCIONES DOMINIO DE REPORTES
+# ==============================================================================
 
 
 class ReporteValidationError(ValueError):
-    """Excepción para errores de validación de reportes."""
+    """Excepción lanzada cuando los datos de un reporte no cumplen la validación sintáctica o de rango."""
+
     pass
 
 
+class ReporteDesactualizadoError(ValueError):
+    """Excepción lanzada cuando la revisión del reporte es menor a la revisión actual del sismo."""
+
+    pass
+
+
+class ReporteConflictoError(ValueError):
+    """Excepción lanzada cuando un reporte de la misma revisión contiene datos discrepantes con el sismo."""
+
+    pass
+
+
+# ==============================================================================
+# SERVICIO DE PROCESAMIENTO DE REPORTES
+# ==============================================================================
+
+
 class ReporteService:
-    """
-    Servicio encargado de procesar los reportes realizados
-    por las estaciones sobre sismos existentes.
+    """Servicio encargado de validar, comparar y procesar los reportes de eventos sísmicos.
 
-    Responsabilidades:
-        - Validar los datos del reporte.
-        - Obtener el sismo asociado mediante su ID.
-        - Determinar automáticamente si el epicentro pertenece a una zona poblada.
-        - Calcular la prioridad del reporte.
-        - Generar la clave (P, M, I).
-        - Determinar si el reporte es una confirmación o una corrección.
-        - Delegar la modificación del sismo al SismoService.
+    Aplica la lógica de resolución de revisiones para determinar si un reporte
+    constituye una confirmación, un conflicto o una corrección/actualización.
 
-    Este servicio NO:
-        - crea sismos;
-        - busca sismos por distancia o tiempo;
-        - administra directamente el AVL;
-        - administra directamente la persistencia.
+    Attributes:
+        sismo_service (SismoService): Servicio para operaciones sobre el modelo de sismos.
+        priority_key_service (PriorityKeyService): Servicio para cálculo de prioridades y claves.
+        zona_service (ZonaService): Servicio para consultas de geofencing y zonas pobladas.
     """
 
     def __init__(
         self,
         sismo_service: SismoService,
         priority_key_service: PriorityKeyService,
-        zona_service: ZonaService
-    ):
+        zona_service: ZonaService,
+    ) -> None:
+        """Inicializa las dependencias necesarias para la gestión de reportes."""
         self.sismo_service = sismo_service
         self.priority_key_service = priority_key_service
         self.zona_service = zona_service
 
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     # PROCESAMIENTO PRINCIPAL
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
-    def procesar_reporte(self, reporte: Reporte):
+    def procesar_reporte(self, reporte: Reporte) -> Dict[str, Any]:
+        """Procesa un reporte entrante aplicando la matriz de reglas de revisión sísmica.
+
+        Reglas de Revisión:
+            1. `reporte.revision < sismo.revision`:
+                Se descarta por estar obsoleto/desactualizado.
+
+            2. `reporte.revision == sismo.revision`:
+                - Si coinciden los datos: Se procesa como Confirmación.
+                - Si difieren los datos: Eleva ReporteConflictoError.
+
+            3. `reporte.revision > sismo.revision`:
+                Se procesa como Corrección/Nueva versión recalculando prioridad.
+
+        Raises:
+            ReporteValidationError: Si el reporte no cumple con las restricciones sintácticas/tipo.
+            ReporteDesactualizadoError: Si el reporte hace referencia a una revisión obsoleta.
+            ReporteConflictoError: Si el reporte entra en contradicción en la revisión actual.
         """
-        Procesa un reporte que ya está asociado a un sismo existente.
-
-        La zona poblada se determina automáticamente utilizando
-        las coordenadas del epicentro del reporte.
-
-        Flujo:
-            1. Validar el reporte.
-            2. Obtener el sismo mediante sismo_id.
-            3. Determinar si el epicentro está en una zona poblada.
-            4. Calcular la prioridad.
-            5. Generar la clave (P, M, I).
-            6. Determinar si es confirmación o corrección.
-            7. Delegar la actualización al SismoService.
-            8. Retornar el sismo actualizado.
-
-        La prioridad y la clave se calculan una sola vez
-        y posteriormente se actualizan en el Sismo.
-        """
-        # --------------------------------------------------------------
-        # Validar reporte
-        # --------------------------------------------------------------
         self.validar_reporte(reporte)
-
-        # --------------------------------------------------------------
-        # Obtener el sismo existente
-        # --------------------------------------------------------------
         sismo = self.sismo_service.get_by_id(reporte.sismo_id)
 
-        # --------------------------------------------------------------
-        # Determinar automáticamente la zona
-        # --------------------------------------------------------------
-        zona_poblada = self.zona_service.punto_en_zona(
-            longitud=reporte.epicenter_x,
-            latitud=reporte.epicenter_y
+        # Caso 1: Reporte desactualizado
+        if reporte.revision < sismo.revision:
+            raise ReporteDesactualizadoError(
+                f"El reporte pertenece a la revisión {reporte.revision}, "
+                f"pero el sismo ya se encuentra en la revisión {sismo.revision}."
+            )
+
+        # Caso 2: Misma revisión
+        if reporte.revision == sismo.revision:
+            if not self.es_confirmacion(sismo, reporte):
+                raise ReporteConflictoError(
+                    f"El reporte de la revisión {reporte.revision} "
+                    f"contiene datos diferentes a los del sismo."
+                )
+
+            prioridad, clave = None, None
+            if sismo.prioridad is None or sismo.clave is None:
+                prioridad, clave = self._calcular_prioridad_y_clave(reporte)
+
+            resultado = self.procesar_confirmacion(
+                reporte=reporte,
+                prioridad=prioridad,
+                clave=clave,
+            )
+
+            return {
+                "decision": "confirmacion",
+                "mensaje": "El reporte confirma la información existente.",
+                "resultado": resultado,
+            }
+
+        # Caso 3: Nueva revisión (reporte.revision > sismo.revision)
+        prioridad, clave = self._calcular_prioridad_y_clave(reporte)
+        resultado = self.procesar_correccion(
+            reporte=reporte,
+            prioridad=prioridad,
+            clave=clave,
         )
 
-        # --------------------------------------------------------------
-        # Calcular prioridad
-        # --------------------------------------------------------------
+        return {
+            "decision": "correccion",
+            "mensaje": "Se aplicó una corrección al evento.",
+            "resultado": resultado,
+        }
+
+    # --------------------------------------------------------------------------
+    # MÉTODOS AUXILIARES Y DE CÁLCULO
+    # --------------------------------------------------------------------------
+
+    def _calcular_prioridad_y_clave(
+        self, reporte: Reporte
+    ) -> Tuple[int, Tuple[int, float, int]]:
+        """Calcula la zona poblada, prioridad y clave única para un reporte dado."""
+        zona_poblada = self.zona_service.punto_en_zona(
+            longitud=reporte.epicenter_x,
+            latitud=reporte.epicenter_y,
+        )
+
         prioridad = self.priority_key_service.calcular_prioridad(
             magnitude=reporte.magnitude,
             depth=reporte.depth,
-            zona_poblada=zona_poblada
+            zona_poblada=zona_poblada,
         )
 
-        # --------------------------------------------------------------
-        # Generar clave (P, M, I) - Se calcula UNA SOLA VEZ.
-        # --------------------------------------------------------------
         clave = self.priority_key_service.generar_clave(
             prioridad=prioridad,
             magnitude=reporte.magnitude,
-            sismo_id=sismo.id
+            sismo_id=reporte.sismo_id,
         )
 
-        # --------------------------------------------------------------
-        # Determinar si es confirmación o corrección
-        # --------------------------------------------------------------
-        if self.es_confirmacion(sismo, reporte):
-            sismo = self.procesar_confirmacion(
-                reporte=reporte,
-                prioridad=prioridad,
-                clave=clave
-            )
-        else:
-            sismo = self.procesar_correccion(
-                reporte=reporte,
-                prioridad=prioridad,
-                clave=clave
-            )
+        return prioridad, clave
 
-        # --------------------------------------------------------------
-        # Retornar únicamente el sismo actualizado
-        # --------------------------------------------------------------
-        return sismo
-
-    # ------------------------------------------------------------------
-    # VALIDACIÓN
-    # ------------------------------------------------------------------
-
-    def validar_reporte(self, reporte: Reporte) -> None:
-        """
-        Valida los datos básicos de un reporte.
-        """
-        # --------------------------------------------------------------
-        # Reporte
-        # --------------------------------------------------------------
-        if reporte is None:
-            raise ReporteValidationError("El reporte no puede ser None.")
-
-        if not isinstance(reporte, Reporte):
-            raise ReporteValidationError("El objeto recibido debe ser un Reporte.")
-
-        # --------------------------------------------------------------
-        # Sismo
-        # --------------------------------------------------------------
-        if reporte.sismo_id is None:
-            raise ReporteValidationError("El reporte debe tener un sismo asociado.")
-
-        if not isinstance(reporte.sismo_id, int):
-            raise ReporteValidationError("El sismo_id debe ser un número entero.")
-
-        if reporte.sismo_id <= 0:
-            raise ReporteValidationError("El sismo_id debe ser mayor que cero.")
-
-        # --------------------------------------------------------------
-        # Estación
-        # --------------------------------------------------------------
-        if not isinstance(reporte.station_id, str):
-            raise ReporteValidationError("El station_id debe ser texto.")
-
-        if not reporte.station_id.strip():
-            raise ReporteValidationError("El station_id no puede estar vacío.")
-
-        # --------------------------------------------------------------
-        # Magnitud
-        # --------------------------------------------------------------
-        if not isinstance(reporte.magnitude, (int, float)):
-            raise ReporteValidationError("La magnitud debe ser numérica.")
-
-        if not -2.0 <= reporte.magnitude <= 10.0:
-            raise ReporteValidationError("La magnitud debe estar entre -2.0 y 10.0.")
-
-        # --------------------------------------------------------------
-        # Profundidad
-        # --------------------------------------------------------------
-        if not isinstance(reporte.depth, (int, float)):
-            raise ReporteValidationError("La profundidad debe ser numérica.")
-
-        if not 0.0 <= reporte.depth <= 700.0:
-            raise ReporteValidationError("La profundidad debe estar entre 0.0 y 700.0 km.")
-
-        # --------------------------------------------------------------
-        # Longitud (X) - Rango mundial: -180° a 180°
-        # --------------------------------------------------------------
-        if not isinstance(reporte.epicenter_x, (int, float)):
-            raise ReporteValidationError("La longitud debe ser numérica.")
-
-        if not -180.0 <= reporte.epicenter_x <= 180.0:
-            raise ReporteValidationError("La longitud debe estar entre -180.0 y 180.0 grados.")
-
-        # --------------------------------------------------------------
-        # Latitud (Y) - Rango mundial: -90° a 90°
-        # --------------------------------------------------------------
-        if not isinstance(reporte.epicenter_y, (int, float)):
-            raise ReporteValidationError("La latitud debe ser numérica.")
-
-        if not -90.0 <= reporte.epicenter_y <= 90.0:
-            raise ReporteValidationError("La latitud debe estar entre -90.0 y 90.0 grados.")
-
-        # --------------------------------------------------------------
-        # Timestamp
-        # --------------------------------------------------------------
-        if not isinstance(reporte.timestamp, datetime):
-            raise ReporteValidationError("El timestamp debe ser una instancia de datetime.")
-
-    # ------------------------------------------------------------------
-    # CONFIRMACIÓN
-    # ------------------------------------------------------------------
-
-    def es_confirmacion(self, sismo, reporte: Reporte) -> bool:
-        """
-        Determina si el reporte mantiene los mismos parámetros
-        físicos del sismo actual.
-
-        Si todos los parámetros físicos coinciden,
-        el reporte se considera una confirmación.
-        """
+    def es_confirmacion(self, sismo: Any, reporte: Reporte) -> bool:
+        """Determina si un reporte coincide exactamente con la información actual del sismo."""
         return (
             sismo.magnitude == reporte.magnitude
             and sismo.depth == reporte.depth
@@ -222,66 +164,31 @@ class ReporteService:
             and sismo.epicenter_y == reporte.epicenter_y
         )
 
+    def es_correccion(self, sismo: Any, reporte: Reporte) -> bool:
+        """Evalúa si los datos del reporte difieren de los almacenados en el sismo actual."""
+        return not self.es_confirmacion(sismo, reporte)
+
     def procesar_confirmacion(
         self,
         reporte: Reporte,
-        prioridad: int,
-        clave: tuple[int, float, int]
-    ):
-        """
-        Procesa un reporte cuyos datos físicos coinciden
-        con los datos actuales del sismo.
-
-        La prioridad y la clave ya fueron calculadas
-        previamente por procesar_reporte().
-
-        El SismoService se encarga de:
-            - actualizar prioridad;
-            - actualizar clave;
-            - agregar la estación al conjunto;
-            - incrementar la revisión;
-            - guardar el sismo.
-        """
+        prioridad: Optional[int] = None,
+        clave: Optional[Tuple[int, float, int]] = None,
+    ) -> Any:
+        """Registra una estación como confirmante dentro del consenso del sismo."""
         return self.sismo_service.add_consensus_report(
             sismo_id=reporte.sismo_id,
             station_id=reporte.station_id,
             prioridad=prioridad,
-            clave=clave
+            clave=clave,
         )
-
-    # ------------------------------------------------------------------
-    # CORRECCIÓN
-    # ------------------------------------------------------------------
-
-    def es_correccion(self, sismo, reporte: Reporte) -> bool:
-        """
-        Determina si el reporte modifica algún parámetro físico
-        del sismo.
-        """
-        return not self.es_confirmacion(sismo, reporte)
 
     def procesar_correccion(
         self,
         reporte: Reporte,
         prioridad: int,
-        clave: tuple[int, float, int]
-    ):
-        """
-        Procesa un reporte que modifica los parámetros físicos
-        actuales del sismo.
-
-        La prioridad y la clave ya fueron calculadas
-        previamente por procesar_reporte().
-
-        El SismoService se encarga de:
-            - actualizar los datos físicos;
-            - actualizar prioridad;
-            - actualizar clave;
-            - agregar la estación;
-            - incrementar la revisión;
-            - establecer el estado PENDIENTE;
-            - guardar el sismo.
-        """
+        clave: Tuple[int, float, int],
+    ) -> Any:
+        """Aplica la actualización de parámetros e incremento de versión al sismo."""
         return self.sismo_service.apply_correction(
             sismo_id=reporte.sismo_id,
             station_id=reporte.station_id,
@@ -290,5 +197,50 @@ class ReporteService:
             epicenter_x=reporte.epicenter_x,
             epicenter_y=reporte.epicenter_y,
             prioridad=prioridad,
-            clave=clave
+            clave=clave,
+            revision=reporte.revision,
         )
+
+    # --------------------------------------------------------------------------
+    # VALIDACIÓN SINTÁCTICA Y DE RANGOS
+    # --------------------------------------------------------------------------
+
+    def validar_reporte(self, reporte: Reporte) -> None:
+        """Valida la existencia, tipos y rangos numéricos aceptables de los atributos del reporte."""
+        if reporte is None:
+            raise ReporteValidationError("El reporte no puede ser None.")
+
+        if not isinstance(reporte, Reporte):
+            raise ReporteValidationError("El objeto recibido debe ser un Reporte.")
+
+        # Identificador del sismo
+        if not isinstance(reporte.sismo_id, int) or reporte.sismo_id <= 0:
+            raise ReporteValidationError("El sismo_id debe ser un entero positivo.")
+
+        # Identificador de la estación
+        if not isinstance(reporte.station_id, str) or not reporte.station_id.strip():
+            raise ReporteValidationError("El station_id debe ser un texto no vacío.")
+
+        # Número de revisión
+        if not isinstance(reporte.revision, int) or reporte.revision <= 0:
+            raise ReporteValidationError("La revisión debe ser un entero positivo.")
+
+        # Magnitud (Mw / ML)
+        if not isinstance(reporte.magnitude, (int, float)) or not (-2.0 <= reporte.magnitude <= 10.0):
+            raise ReporteValidationError("La magnitud debe ser numérica entre -2.0 y 10.0.")
+
+        # Profundidad (km)
+        if not isinstance(reporte.depth, (int, float)) or not (0.0 <= reporte.depth <= 700.0):
+            raise ReporteValidationError("La profundidad debe ser numérica entre 0.0 y 700.0 km.")
+
+        # Coordenadas: Longitud (X)
+        if not isinstance(reporte.epicenter_x, (int, float)) or not (-180.0 <= reporte.epicenter_x <= 180.0):
+            raise ReporteValidationError("La longitud debe estar entre -180.0 y 180.0 grados.")
+
+        # Coordenadas: Latitud (Y)
+        if not isinstance(reporte.epicenter_y, (int, float)) or not (-90.0 <= reporte.epicenter_y <= 90.0):
+            raise ReporteValidationError("La latitud debe estar entre -90.0 y 90.0 grados.")
+
+        # Marca temporal
+        if not isinstance(reporte.timestamp, datetime):
+            raise ReporteValidationError("El timestamp debe ser una instancia de datetime.")
