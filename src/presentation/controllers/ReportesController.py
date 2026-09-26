@@ -5,16 +5,17 @@ from flask import Blueprint, Flask, jsonify, request
 from flask.wrappers import Response
 
 from src.Models.Reportes import Reporte
-from src.business.services.SismosService import (
-    SismoNotFoundError,
-    SismoValidationError,
-)
 from src.business.services.cola_reportes import ColaReportesService
+from src.business.services.ModoAutomaticoService import ModoAutomaticoService
 from src.business.services.reporte_service import (
     ReporteConflictoError,
     ReporteDesactualizadoError,
     ReporteService,
     ReporteValidationError,
+)
+from src.business.services.SismosService import (
+    SismoNotFoundError,
+    SismoValidationError,
 )
 
 reporte_controller = Blueprint(
@@ -28,6 +29,7 @@ reporte_controller = Blueprint(
 # CONTROLADOR HTTP DE REPORTES SÍSMICOS
 # ==============================================================================
 
+
 class ReporteController:
     """Controlador HTTP para la gestión de reportes sísmicos enviados por estaciones.
 
@@ -39,15 +41,12 @@ class ReporteController:
         self,
         reporte_service: ReporteService,
         cola_reportes: ColaReportesService,
+        modo_automatico_service: ModoAutomaticoService,
     ) -> None:
-        """Inicializa el controlador inyectando los servicios requeridos.
-
-        Args:
-            reporte_service (ReporteService): Servicio de lógica de negocio para reportes.
-            cola_reportes (ColaReportesService): Servicio para la gestión de la cola de espera.
-        """
+        """Inicializa el controlador inyectando los servicios requeridos."""
         self.reporte_service = reporte_service
         self.cola_reportes = cola_reportes
+        self.modo_automatico_service = modo_automatico_service
 
     # --------------------------------------------------------------------------
     # SERIALIZADORES AUXILIARES
@@ -76,17 +75,11 @@ class ReporteController:
     # --------------------------------------------------------------------------
 
     def crear_reporte(self) -> Tuple[Response, int]:
-        """Recepciona un nuevo reporte en formato JSON y lo añade a la cola.
-
-        Returns:
-            Tuple[Response, int]: Respuesta JSON y código de estado HTTP.
-        """
+        """Recepciona un nuevo reporte en formato JSON y lo añade a la cola."""
         data = request.get_json(silent=True)
 
         if not data:
-            return jsonify({
-                "error": "El cuerpo de la petición debe contener un JSON válido."
-            }), 400
+            return jsonify({"error": "El cuerpo de la petición debe contener un JSON válido."}), 400
 
         try:
             timestamp = data.get("timestamp")
@@ -128,11 +121,7 @@ class ReporteController:
     # --------------------------------------------------------------------------
 
     def obtener_cola(self) -> Tuple[Response, int]:
-        """Obtiene el listado actual de reportes pendientes en la cola.
-
-        Returns:
-            Tuple[Response, int]: Respuesta JSON con la lista de reportes.
-        """
+        """Obtiene el listado actual de reportes pendientes en la cola."""
         try:
             cola = self.cola_reportes.obtener_cola()
             return jsonify({
@@ -150,16 +139,10 @@ class ReporteController:
     # --------------------------------------------------------------------------
 
     def descartar_ruido(self) -> Tuple[Response, int]:
-        """Elimina y descarta el reporte al frente de la cola por considerarse ruido.
-
-        Returns:
-            Tuple[Response, int]: Respuesta JSON con el reporte descartado.
-        """
+        """Elimina y descarta el reporte al frente de la cola por considerarse ruido."""
         try:
             if self.cola_reportes.esta_vacia():
-                return jsonify({
-                    "error": "No hay reportes pendientes en la cola."
-                }), 404
+                return jsonify({"error": "No hay reportes pendientes en la cola."}), 404
 
             reporte = self.cola_reportes.descartar_reporte()
 
@@ -180,23 +163,16 @@ class ReporteController:
     # --------------------------------------------------------------------------
 
     def validar_y_emitir(self) -> Tuple[Response, int]:
-        """Procesa y valida el reporte al frente de la cola, aplicando cambios al sismo.
-
-        Returns:
-            Tuple[Response, int]: Respuesta JSON con el estado de la decisión.
-        """
+        """Procesa y valida el reporte al frente de la cola, aplicando cambios al sismo."""
         try:
             if self.cola_reportes.esta_vacia():
-                return jsonify({
-                    "error": "No hay reportes pendientes en la cola."
-                }), 404
+                return jsonify({"error": "No hay reportes pendientes en la cola."}), 404
 
             reporte = self.cola_reportes.obtener_frente()
             resultado = self.reporte_service.procesar_reporte(reporte=reporte)
 
-            # Confirmación o Corrección exitosa: Remover de la cola
+            # Confirmación o Corrección exitosa: Remover de la cola.
             self.cola_reportes.obtener_siguiente()
-
             sismo = self.reporte_service.sismo_service.get_by_id(reporte.sismo_id)
 
             return jsonify({
@@ -254,26 +230,42 @@ class ReporteController:
                 "detalle": str(error),
             }), 500
 
+    # --------------------------------------------------------------------------
+    # PROCESAMIENTO AUTOMÁTICO
+    # --------------------------------------------------------------------------
+
+    def procesar_automaticamente(self) -> Tuple[Response, int]:
+        """Procesa automáticamente un único reporte de la cola."""
+        try:
+            resultado = self.modo_automatico_service.procesar_siguiente()
+            if resultado.get("decision") == "cola_vacia":
+                return jsonify(resultado), 404
+
+            return jsonify(resultado), 200
+
+        except Exception as error:
+            return jsonify({
+                "error": "No se pudo procesar automáticamente el reporte.",
+                "detalle": str(error),
+            }), 500
+
 
 # ==============================================================================
 # REGISTRO DE RUTAS FLASK
 # ==============================================================================
 
+
 def register_reporte_routes(
     app: Flask,
     reporte_service: ReporteService,
     cola_reportes: ColaReportesService,
+    modo_automatico_service: ModoAutomaticoService,
 ) -> None:
-    """Asocia e inscribe las rutas del controlador de reportes en Flask.
-
-    Args:
-        app (Flask): Instancia principal de la aplicación web.
-        reporte_service (ReporteService): Instancia del servicio de negocio para reportes.
-        cola_reportes (ColaReportesService): Instancia del servicio de cola.
-    """
+    """Asocia e inscribe las rutas del controlador de reportes en Flask."""
     controller = ReporteController(
         reporte_service=reporte_service,
         cola_reportes=cola_reportes,
+        modo_automatico_service=modo_automatico_service,
     )
 
     reporte_controller.add_url_rule(
@@ -294,6 +286,11 @@ def register_reporte_routes(
     reporte_controller.add_url_rule(
         "/cola/validar",
         view_func=controller.validar_y_emitir,
+        methods=["POST"],
+    )
+    reporte_controller.add_url_rule(
+        "/cola/automatico",
+        view_func=controller.procesar_automaticamente,
         methods=["POST"],
     )
 
