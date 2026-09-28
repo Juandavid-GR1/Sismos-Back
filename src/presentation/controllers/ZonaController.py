@@ -3,12 +3,6 @@ from flask import Blueprint, jsonify, request
 from src.business.services.ZonaService import ZonaService
 
 
-zona_controller = Blueprint(
-    "zona_controller",
-    __name__,
-    url_prefix="/zonas"
-)
-
 
 class ZonaController:
     """
@@ -75,6 +69,13 @@ def register_zona_routes(
     app,
     zona_service: ZonaService
 ):
+
+    # Created per registration so it can be attached to a fresh app.
+    zona_controller = Blueprint(
+        "zona_controller",
+        __name__,
+        url_prefix="/zonas"
+    )
 
     controller = ZonaController(
         zona_service

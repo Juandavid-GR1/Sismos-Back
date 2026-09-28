@@ -5,11 +5,14 @@ from flask import Blueprint, Flask, jsonify, request
 from flask.wrappers import Response
 
 from src.Models.Reportes import Reporte
+from src.Models.Sismo import Sismo
+from src.presentation.controllers.SismosController import _sismo_to_dict
 from src.business.services.cola_reportes import ColaReportesService
 from src.business.services.ModoAutomaticoService import ModoAutomaticoService
 from src.business.services.reporte_service import (
     ReporteConflictoError,
     ReporteDesactualizadoError,
+    ReporteIdentificadorRetiradoError,
     ReporteService,
     ReporteValidationError,
 )
@@ -18,11 +21,6 @@ from src.business.services.SismosService import (
     SismoValidationError,
 )
 
-reporte_controller = Blueprint(
-    "reporte_controller",
-    __name__,
-    url_prefix="/reportes",
-)
 
 
 # ==============================================================================
@@ -218,8 +216,29 @@ class ReporteController:
                 "detalle_decision": str(error),
             }), 409
 
+        except ReporteIdentificadorRetiradoError as error:
+            # Igual que los otros rechazos de negocio: se saca de la
+            # cola para que no bloquee lo que sigue detrás -- el
+            # reporte queda descartado, no reintentado indefinidamente.
+            self.cola_reportes.descartar_reporte()
+            return jsonify({
+                "mensaje": "El reporte fue rechazado.",
+                "decision": "identificador_retirado",
+                "detalle_decision": str(error),
+            }), 409
+
         except (ReporteValidationError, SismoValidationError, ValueError) as error:
-            return jsonify({"error": str(error)}), 400
+
+            # datos inválidos (ej. id fuera de rango, 54654654 > 999999)
+            # se quedaba atascado al frente de la cola para siempre,
+            # bloqueando todo lo que viniera detrás. Ahora se descarta
+            # igual que los demás rechazos de negocio.
+            self.cola_reportes.descartar_reporte()
+            return jsonify({
+                "mensaje": "El reporte fue rechazado por datos inválidos.",
+                "decision": "datos_invalidos",
+                "detalle_decision": str(error),
+            }), 400
 
         except SismoNotFoundError as error:
             return jsonify({"error": str(error)}), 404
@@ -240,6 +259,13 @@ class ReporteController:
             resultado = self.modo_automatico_service.procesar_siguiente()
             if resultado.get("decision") == "cola_vacia":
                 return jsonify(resultado), 404
+
+            # The result holds a Sismo dataclass (with a set and datetimes)
+            # that jsonify cannot serialize: before this fix the report was
+            # applied and removed from the queue but the endpoint answered
+            # 500, so the frontend showed an error for a successful step.
+            if isinstance(resultado.get("resultado"), Sismo):
+                resultado["resultado"] = _sismo_to_dict(resultado["resultado"])
 
             return jsonify(resultado), 200
 
@@ -262,6 +288,14 @@ def register_reporte_routes(
     modo_automatico_service: ModoAutomaticoService,
 ) -> None:
     """Asocia e inscribe las rutas del controlador de reportes en Flask."""
+    # Created inside the function (not at module level) so the blueprint
+    # can be registered on a fresh app (tests, app factory).
+    reporte_controller = Blueprint(
+        "reporte_controller",
+        __name__,
+        url_prefix="/reportes",
+    )
+
     controller = ReporteController(
         reporte_service=reporte_service,
         cola_reportes=cola_reportes,

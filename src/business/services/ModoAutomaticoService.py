@@ -1,4 +1,3 @@
-
 from typing import Any
 
 from src.business.services.cola_reportes import ColaReportesService
@@ -6,6 +5,20 @@ from src.business.services.reporte_service import (
     ReporteService,
     ReporteDesactualizadoError,
     ReporteConflictoError,
+    ReporteIdentificadorRetiradoError,
+    ReporteValidationError,
+)
+from src.business.algortimos.sismos.SismoValidationService import SismoValidationError
+
+# Business rejections: the report is removed from the queue (it must not
+# block the ones behind it) and the decision is reported.
+_RECHAZOS = (
+    (ReporteDesactualizadoError, "reporte_antiguo", "El reporte fue rechazado por estar desactualizado."),
+    (ReporteConflictoError, "conflicto", "El reporte fue rechazado por conflicto."),
+    (ReporteIdentificadorRetiradoError, "identificador_retirado",
+     "El identificador fue eliminado y está retirado."),
+    ((ReporteValidationError, SismoValidationError, ValueError), "datos_invalidos",
+     "El reporte fue rechazado por datos inválidos."),
 )
 
 
@@ -81,38 +94,19 @@ class ModoAutomaticoService:
                 },
             }
 
-        except ReporteDesactualizadoError as error:
-
-            # Un reporte antiguo no debe permanecer en la cola.
-            self.cola_reportes.descartar_reporte()
-
-            return {
-                "procesado": True,
-                "decision": "reporte_antiguo",
-                "mensaje": "El reporte fue rechazado por estar desactualizado.",
-                "detalle_decision": str(error),
-                "reporte": {
-                    "sismo_id": reporte.sismo_id,
-                    "station_id": reporte.station_id,
-                    "revision": reporte.revision,
-                },
-            }
-
-        except ReporteConflictoError as error:
-
-            # Un reporte conflictivo tampoco debe permanecer
-            # bloqueando la cola.
-            self.cola_reportes.descartar_reporte()
-
-            return {
-                "procesado": True,
-                "decision": "conflicto",
-                "mensaje": "El reporte fue rechazado por conflicto.",
-                "detalle_decision": str(error),
-                "reporte": {
-                    "sismo_id": reporte.sismo_id,
-                    "station_id": reporte.station_id,
-                    "revision": reporte.revision,
-                },
-            }
-
+        except Exception as error:
+            for tipos, decision, mensaje in _RECHAZOS:
+                if isinstance(error, tipos):
+                    self.cola_reportes.descartar_reporte()
+                    return {
+                        "procesado": True,
+                        "decision": decision,
+                        "mensaje": mensaje,
+                        "detalle_decision": str(error),
+                        "reporte": {
+                            "sismo_id": reporte.sismo_id,
+                            "station_id": reporte.station_id,
+                            "revision": reporte.revision,
+                        },
+                    }
+            raise

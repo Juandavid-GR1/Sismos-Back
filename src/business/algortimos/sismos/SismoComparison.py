@@ -1,39 +1,48 @@
-import math
+from datetime import datetime, timezone
 
 
 class SismoComparison:
+    """
+    Consistent equality of the physical data of an event (section 6:
+    "the equality of data refers to magnitude, depth, epicenter and
+    occurrence time").
+
+    Magnitude and depth have at most one decimal, so they are compared as
+    integer numbers of tenths; coordinates are stored with up to 6
+    decimals (degrees) and are compared as integer millionths. This avoids float issues: the previous
+    version used math.isclose(abs_tol=0.1), which considered 4.5 and 4.6
+    EQUAL, so a correction 4.5 -> 4.6 was ignored.
+    Timestamps are compared in UTC with second precision.
+    """
 
     @staticmethod
-    def tiene_cambios(
-        sismo,
-        magnitude,
-        depth,
-        epicenter_x,
-        epicenter_y
-    ) -> bool:
+    def decimas(valor) -> int:
+        return int(round(float(valor) * 10))
 
-        return not (
-            math.isclose(
-                sismo.magnitude,
-                magnitude,
-                abs_tol=1e-1
-            )
-            and
-            math.isclose(
-                sismo.depth,
-                depth,
-                abs_tol=1e-1
-            )
-            and
-            math.isclose(
-                sismo.epicenter_x,
-                epicenter_x,
-                abs_tol=1e-1
-            )
-            and
-            math.isclose(
-                sismo.epicenter_y,
-                epicenter_y,
-                abs_tol=1e-1
-            )
+    @staticmethod
+    def normalizar_fecha(fecha: datetime | None) -> datetime | None:
+        if fecha is None:
+            return None
+        if fecha.tzinfo is not None:
+            fecha = fecha.astimezone(timezone.utc).replace(tzinfo=None)
+        return fecha.replace(microsecond=0)
+
+    @staticmethod
+    def millonesimas(valor) -> int:
+        return int(round(float(valor) * 1_000_000))
+
+    @classmethod
+    def mismos_datos(cls, sismo, magnitude, depth, epicenter_x, epicenter_y, timestamp=None) -> bool:
+        iguales = (
+            cls.decimas(sismo.magnitude) == cls.decimas(magnitude)
+            and cls.decimas(sismo.depth) == cls.decimas(depth)
+            and cls.millonesimas(sismo.epicenter_x) == cls.millonesimas(epicenter_x)
+            and cls.millonesimas(sismo.epicenter_y) == cls.millonesimas(epicenter_y)
         )
+        if iguales and timestamp is not None:
+            iguales = cls.normalizar_fecha(sismo.timestamp) == cls.normalizar_fecha(timestamp)
+        return iguales
+
+    @classmethod
+    def tiene_cambios(cls, sismo, magnitude, depth, epicenter_x, epicenter_y, timestamp=None) -> bool:
+        return not cls.mismos_datos(sismo, magnitude, depth, epicenter_x, epicenter_y, timestamp)

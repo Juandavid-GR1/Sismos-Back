@@ -1,3 +1,4 @@
+from dataclasses import replace
 from datetime import datetime
 import json
 import os
@@ -12,6 +13,7 @@ class SismoJsonRepository(IF_Sismos):
 
     def __init__(self, json_file: str = "sismos.json") -> None:
         self.json_file = json_file
+        self._cache: Optional[dict] = None
         self._ensure_file_exists()
 
     def _ensure_file_exists(self) -> None:
@@ -63,55 +65,64 @@ class SismoJsonRepository(IF_Sismos):
             status=StatusSismo(data.get("status", StatusSismo.PENDIENTE.value)),
         )
 
+    # ------------------------------------------------------------------
+    # In-memory cache (write-through)
+    #
+    # The previous version re-read and re-parsed the whole JSON file on
+    # EVERY get_by_id/save (O(n) disk I/O per call, several times per
+    # request). Now the file is read once and kept in a dict id -> Sismo;
+    # each write still dumps the file so nothing is lost on restart.
+    # Copies are returned so a service that fails half-way through a
+    # validation never leaves a partially modified event in the cache.
+    # ------------------------------------------------------------------
+
+    def _cargar_cache(self) -> dict:
+        if self._cache is None:
+            self._cache = {}
+            try:
+                with open(self.json_file, "r", encoding="utf-8") as f:
+                    raw_data = json.load(f)
+                if isinstance(raw_data, list):
+                    for item in raw_data:
+                        try:
+                            sismo = self._to_entity(item)
+                            self._cache[sismo.id] = sismo
+                        except (KeyError, ValueError, TypeError, IndexError):
+                            continue
+            except (OSError, json.JSONDecodeError):
+                pass
+        return self._cache
+
+    @staticmethod
+    def _copia(sismo: Sismo) -> Sismo:
+        return replace(sismo, reporting_stations=set(sismo.reporting_stations))
+
+    def _persistir(self) -> None:
+        self._write_raw_data([self._to_dict(s) for s in self._cargar_cache().values()])
+
     def get_all(self) -> List[Sismo]:
-        """Lee el archivo JSON y retorna la lista de instancias Sismo."""
-        try:
-            with open(self.json_file, "r", encoding="utf-8") as f:
-                raw_data = json.load(f)
-
-            if not isinstance(raw_data, list):
-                return []
-
-            return [self._to_entity(item) for item in raw_data]
-
-        except (json.JSONDecodeError, KeyError, ValueError, TypeError, IndexError):
-            return []
+        """Returns copies of all stored events."""
+        return [self._copia(s) for s in self._cargar_cache().values()]
 
     def get_by_id(self, sismo_id: int) -> Optional[Sismo]:
-        """Busca un sismo por su ID."""
-        return next((s for s in self.get_all() if s.id == sismo_id), None)
+        """O(1) lookup by id."""
+        sismo = self._cargar_cache().get(sismo_id)
+        return self._copia(sismo) if sismo is not None else None
 
     def save(self, sismo: Sismo) -> Sismo:
-        """Inserta o actualiza un sismo en el archivo JSON."""
-        sismos = self.get_all()
-        updated = False
-
-        for i, existing in enumerate(sismos):
-            if existing.id == sismo.id:
-                sismos[i] = sismo
-                updated = True
-                break
-
-        if not updated:
-            sismos.append(sismo)
-
-        self._write_raw_data([self._to_dict(s) for s in sismos])
+        """Inserts or updates an event and writes the file."""
+        self._cargar_cache()[sismo.id] = self._copia(sismo)
+        self._persistir()
         return sismo
 
     def delete(self, sismo_id: int) -> bool:
-        """Elimina un evento sísmico del archivo JSON por su ID."""
-        sismos = self.get_all()
-        filtered_sismos = [s for s in sismos if s.id != sismo_id]
-
-        if len(filtered_sismos) == len(sismos):
+        """Removes an event from the file."""
+        if self._cargar_cache().pop(sismo_id, None) is None:
             return False
-
-        self._write_raw_data([self._to_dict(s) for s in filtered_sismos])
+        self._persistir()
         return True
 
     def generate_next_id(self) -> int:
-        """Calcula el siguiente ID numérico disponible."""
-        sismos = self.get_all()
-        if not sismos:
-            return 1
-        return max(s.id for s in sismos) + 1
+        """Next free numeric id (max + 1)."""
+        cache = self._cargar_cache()
+        return max(cache, default=0) + 1

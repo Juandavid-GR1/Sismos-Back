@@ -3,7 +3,8 @@ from typing import Any, Dict, Optional, Tuple
 
 from src.Models.Reportes import Reporte
 from src.business.algortimos.sismos.Priority_Key_sismo import PriorityKeyService
-from src.business.services.SismosService import SismoService
+from src.business.algortimos.sismos.SismoComparison import SismoComparison
+from src.business.services.SismosService import SismoService, SismoNotFoundError
 from src.business.services.ZonaService import ZonaService
 
 # ==============================================================================
@@ -25,6 +26,14 @@ class ReporteDesactualizadoError(ValueError):
 
 class ReporteConflictoError(ValueError):
     """Excepción lanzada cuando un reporte de la misma revisión contiene datos discrepantes con el sismo."""
+
+    pass
+
+
+class ReporteIdentificadorRetiradoError(ValueError):
+    """Excepción lanzada cuando un reporte referencia un identificador
+    que fue eliminado individualmente (sección 6: "sus reportes
+    posteriores se rechazan hasta deshacer esa eliminación")."""
 
     pass
 
@@ -64,7 +73,12 @@ class ReporteService:
     def procesar_reporte(self, reporte: Reporte) -> Dict[str, Any]:
         """Procesa un reporte entrante aplicando la matriz de reglas de revisión sísmica.
 
-        Reglas de Revisión:
+        Reglas de Revisión (sección 6 del enunciado):
+            0. Identificador desconocido:
+                Se registra un evento nuevo si los datos son válidos. La
+                primera revisión recibida puede ser mayor que 1. Si el
+                identificador fue eliminado (retirado), se rechaza.
+
             1. `reporte.revision < sismo.revision`:
                 Se descarta por estar obsoleto/desactualizado.
 
@@ -77,11 +91,17 @@ class ReporteService:
 
         Raises:
             ReporteValidationError: Si el reporte no cumple con las restricciones sintácticas/tipo.
+            ReporteIdentificadorRetiradoError: Si el id fue eliminado individualmente.
             ReporteDesactualizadoError: Si el reporte hace referencia a una revisión obsoleta.
             ReporteConflictoError: Si el reporte entra en contradicción en la revisión actual.
         """
         self.validar_reporte(reporte)
-        sismo = self.sismo_service.get_by_id(reporte.sismo_id)
+
+        try:
+            sismo = self.sismo_service.get_by_id(reporte.sismo_id)
+        except SismoNotFoundError:
+
+            return self._procesar_alta_desde_reporte(reporte)
 
         # Caso 1: Reporte desactualizado
         if reporte.revision < sismo.revision:
@@ -129,6 +149,48 @@ class ReporteService:
         }
 
     # --------------------------------------------------------------------------
+    # ALTA DESDE REPORTE (identificador desconocido) -- NUEVO
+    # --------------------------------------------------------------------------
+
+    def _procesar_alta_desde_reporte(self, reporte: Reporte) -> Dict[str, Any]:
+        """Registra un evento nuevo a partir de un reporte cuyo
+        sismo_id no existía todavía (sección 6: "Identificador
+        desconocido... Registrar un evento nuevo si los datos son
+        válidos. La primera revisión recibida puede ser mayor que 1").
+
+        Rechaza el alta si el id fue eliminado individualmente antes
+        (sección 6: "Un identificador eliminado se conserva como
+        retirado: sus reportes posteriores se rechazan hasta deshacer
+        esa eliminación").
+        """
+        eliminados_service = getattr(self.sismo_service, "eliminados_service", None)
+        if eliminados_service is not None and eliminados_service.esta_retirado(reporte.sismo_id):
+            raise ReporteIdentificadorRetiradoError(
+                f"El identificador {reporte.sismo_id} fue eliminado y está "
+                f"retirado: sus reportes se rechazan hasta deshacer esa eliminación."
+            )
+
+        # Single action: the event is created directly at the received
+        # revision (it may be greater than 1), with priority/key derived
+        # and inserted in the AVL. No intermediate revision-1 state.
+        nuevo_sismo = self.sismo_service.create_event(
+            magnitude=reporte.magnitude,
+            depth=reporte.depth,
+            epicenter_x=reporte.epicenter_x,
+            epicenter_y=reporte.epicenter_y,
+            timestamp=reporte.timestamp,
+            initial_station_id=reporte.station_id,
+            sismo_id=reporte.sismo_id,
+            revision=reporte.revision,
+        )
+
+        return {
+            "decision": "alta",
+            "mensaje": "Identificador desconocido: se registró un evento nuevo.",
+            "resultado": nuevo_sismo,
+        }
+
+    # --------------------------------------------------------------------------
     # MÉTODOS AUXILIARES Y DE CÁLCULO
     # --------------------------------------------------------------------------
 
@@ -156,12 +218,15 @@ class ReporteService:
         return prioridad, clave
 
     def es_confirmacion(self, sismo: Any, reporte: Reporte) -> bool:
-        """Determina si un reporte coincide exactamente con la información actual del sismo."""
-        return (
-            sismo.magnitude == reporte.magnitude
-            and sismo.depth == reporte.depth
-            and sismo.epicenter_x == reporte.epicenter_x
-            and sismo.epicenter_y == reporte.epicenter_y
+        """Same magnitude, depth, epicenter AND occurrence time (section 6),
+        compared with a fixed precision (see SismoComparison)."""
+        return SismoComparison.mismos_datos(
+            sismo,
+            magnitude=reporte.magnitude,
+            depth=reporte.depth,
+            epicenter_x=reporte.epicenter_x,
+            epicenter_y=reporte.epicenter_y,
+            timestamp=reporte.timestamp,
         )
 
     def es_correccion(self, sismo: Any, reporte: Reporte) -> bool:
@@ -199,6 +264,7 @@ class ReporteService:
             prioridad=prioridad,
             clave=clave,
             revision=reporte.revision,
+            timestamp=reporte.timestamp,
         )
 
     # --------------------------------------------------------------------------
