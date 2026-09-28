@@ -3,16 +3,7 @@ from datetime import datetime, timezone
 
 class SismoComparison:
     """
-    Consistent equality of the physical data of an event (section 6:
-    "the equality of data refers to magnitude, depth, epicenter and
-    occurrence time").
-
-    Magnitude and depth have at most one decimal, so they are compared as
-    integer numbers of tenths; coordinates are stored with up to 6
-    decimals (degrees) and are compared as integer millionths. This avoids float issues: the previous
-    version used math.isclose(abs_tol=0.1), which considered 4.5 and 4.6
-    EQUAL, so a correction 4.5 -> 4.6 was ignored.
-    Timestamps are compared in UTC with second precision.
+    Consistent equality of the physical data of an event.
     """
 
     @staticmethod

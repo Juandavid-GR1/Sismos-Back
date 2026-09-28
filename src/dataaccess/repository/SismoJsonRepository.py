@@ -65,16 +65,6 @@ class SismoJsonRepository(IF_Sismos):
             status=StatusSismo(data.get("status", StatusSismo.PENDIENTE.value)),
         )
 
-    # ------------------------------------------------------------------
-    # In-memory cache (write-through)
-    #
-    # The previous version re-read and re-parsed the whole JSON file on
-    # EVERY get_by_id/save (O(n) disk I/O per call, several times per
-    # request). Now the file is read once and kept in a dict id -> Sismo;
-    # each write still dumps the file so nothing is lost on restart.
-    # Copies are returned so a service that fails half-way through a
-    # validation never leaves a partially modified event in the cache.
-    # ------------------------------------------------------------------
 
     def _cargar_cache(self) -> dict:
         if self._cache is None:

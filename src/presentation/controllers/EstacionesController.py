@@ -13,7 +13,6 @@ station_bp.strict_slashes = False
 # 1. Instancias el repositorio
 repository = JsonStationRepository()
 
-# 2. Se lo inyectas al servicio
 station_service = StationService(repository=repository)
 
 

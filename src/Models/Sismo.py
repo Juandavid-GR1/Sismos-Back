@@ -188,9 +188,6 @@ class Sismo:
         Returns:
             str:
                 Cadena con el formato 'SIS-XXXXXX'.
-
-                Ejemplo:
-                    ID 10 -> SIS-000010
         """
 
         return f"SIS-{self.id:06d}"

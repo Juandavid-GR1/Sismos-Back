@@ -1,12 +1,3 @@
-"""
-ArbolController
-
-Exposes the REAL AVL tree (the one SismoService keeps in sync through
-AvlService). Response field names are kept compatible with
-ArbolesPage.jsx (clave, datos, altura, factorBalance, balanceado,
-hijoIzquierdo, hijoDerecho).
-"""
-
 from datetime import datetime
 
 from flask import Blueprint, jsonify, request

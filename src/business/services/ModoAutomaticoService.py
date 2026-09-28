@@ -65,13 +65,11 @@ class ModoAutomaticoService:
 
         try:
             # Procesar el reporte utilizando toda la lógica
-            # existente de ReporteService.
             resultado = self.reporte_service.procesar_reporte(
                 reporte=reporte
             )
 
             # Solo se elimina de la cola cuando el procesamiento
-            # terminó correctamente.
             self.cola_reportes.obtener_siguiente()
 
             return {

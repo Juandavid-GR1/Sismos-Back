@@ -3,31 +3,11 @@ from src.estructuras.cola import Cola
 
 
 class ArbolBST:
-  """
-  Unbalanced binary search tree ordered by a comparator function.
-
-  The comparator receives two keys and returns a negative number, zero
-  or a positive number (like C's strcmp). For seismic events the key is
-  the tuple K = (P, M, I) and the comparison is lexicographic.
-
-  This class is also the base of ArbolAVL: the AVL only adds heights,
-  rotations and the id index on top of these operations. That way the
-  BST used for the AVL-vs-BST comparison (sections 11 and 12) and the
-  AVL share exactly the same comparator and insertion path.
-
-  Search and insertion are iterative to avoid Python's recursion limit
-  when the tree degenerates (e.g. ascending insertion in the BST).
-  """
 
   def __init__(self, comparador):
     self._raiz = None
     self._clave = comparador
-    # Accumulated number of key comparisons (for BST vs AVL metrics).
     self._comparaciones = 0
-
-  # ------------------------------------------------------------------
-  # Basic accessors
-  # ------------------------------------------------------------------
 
   def getRaiz(self):
     return self._raiz
@@ -46,17 +26,15 @@ class ArbolBST:
     return self._clave(a, b)
 
   # ------------------------------------------------------------------
-  # Insertion
+  # Inserción
   # ------------------------------------------------------------------
 
   def insertar(self, dato, datos):
-    """Inserts key `dato` with payload `datos`.
-    Returns True if inserted, False if the key already existed."""
+
     return self._insertarNodo(dato, datos) is not None
 
   def _insertarNodo(self, dato, datos):
-    """Inserts and returns the new node, or None if the key exists.
-    Smaller keys go to the left child and larger keys to the right."""
+
     nuevo = Nodo(dato, datos)
     if self._raiz is None:
       self._raiz = nuevo
@@ -82,17 +60,14 @@ class ArbolBST:
     return nuevo
 
   # ------------------------------------------------------------------
-  # Search
+  # Búsqueda
   # ------------------------------------------------------------------
 
   def buscar(self, dato):
-    """Returns the node with key `dato` or None."""
     nodo, _ = self.buscarConConteo(dato)
     return nodo
 
   def buscarConConteo(self, dato):
-    """Returns (node or None, visited nodes). For an existing key the
-    number of visited nodes equals its depth + 1 (section 9)."""
     visitados = 0
     actual = self._raiz
     while actual is not None:
@@ -104,11 +79,10 @@ class ArbolBST:
     return None, visitados
 
   # ------------------------------------------------------------------
-  # Traversals (iterative where recursion could get deep)
+  # Recorridos
   # ------------------------------------------------------------------
 
   def anchura(self):
-    """Level order traversal using the project's own FIFO queue."""
     recorrido = []
     if self._raiz is None:
       return recorrido
@@ -154,8 +128,6 @@ class ArbolBST:
     return recorrido
 
   def _posorden(self, raizActual, recorrido):
-    """Iterative post order (children before parent). Kept with the
-    old signature because the AVL uses it."""
     if raizActual is None:
       return
     pila = [raizActual]
@@ -170,14 +142,13 @@ class ArbolBST:
     recorrido.extend(reversed(salida))
 
   # ------------------------------------------------------------------
-  # Structural metrics (section 11/12: AVL vs BST comparison)
+  # Inicio comparaciones
   # ------------------------------------------------------------------
 
   def cantidadNodos(self):
     return len(self.inorden())
 
   def altura(self):
-    """Tree height computed from scratch (empty = -1, leaf = 0)."""
     if self._raiz is None:
       return -1
     maxima = -1
@@ -198,7 +169,6 @@ class ArbolBST:
     )
 
   def profundidadDe(self, nodo):
-    """Depth of a node (root = 0), walking up through parent links."""
     profundidad = 0
     actual = nodo.getPadre()
     while actual is not None:
@@ -219,11 +189,10 @@ class ArbolBST:
     }
 
   # ------------------------------------------------------------------
-  # Deletion (plain BST, the AVL overrides it)
+  # Eliminación (básica)
   # ------------------------------------------------------------------
 
   def eliminar(self, dato):
-    """Removes the node with key `dato`. Returns True if it existed."""
     nodo = self.buscar(dato)
     if nodo is None:
       return False
@@ -231,7 +200,6 @@ class ArbolBST:
     return True
 
   def _reemplazarEnPadre(self, nodo, hijo):
-    """Links `hijo` in the place `nodo` occupied under its parent."""
     padre = nodo.getPadre()
     if padre is None:
       self._raiz = hijo
@@ -245,8 +213,6 @@ class ArbolBST:
     return padre
 
   def _eliminar(self, nodo):
-    """Returns the parent of the node physically removed (the point
-    where the AVL must start rebalancing)."""
     izquierdo = nodo.getHijoIzquierdo()
     derecho = nodo.getHijoDerecho()
 
@@ -257,8 +223,6 @@ class ArbolBST:
       nodo.setHijoDerecho(None)
       return padre
 
-    # Two children: copy the in-order predecessor into this node and
-    # physically remove the predecessor (it has at most one child).
     predecesor = self._getPredecesor(nodo)
     self._alMoverDatos(predecesor, nodo)
     nodo.setClave(predecesor.getClave())
@@ -266,7 +230,6 @@ class ArbolBST:
     return self._eliminar(predecesor)
 
   def _alMoverDatos(self, origen, destino):
-    """Hook: the AVL overrides it to keep its id index in sync."""
     pass
 
   def _getPredecesor(self, nodo):
@@ -276,7 +239,7 @@ class ArbolBST:
     return actual
 
   # ------------------------------------------------------------------
-  # Console drawing (debug only)
+  # Dibujar
   # ------------------------------------------------------------------
 
   def dibujar(self):

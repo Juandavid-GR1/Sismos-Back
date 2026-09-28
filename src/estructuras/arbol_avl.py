@@ -2,21 +2,6 @@ from src.estructuras.arbol_bst import ArbolBST
 
 
 class ArbolAVL(ArbolBST):
-  """
-  AVL tree ordered by K = (P, M, I).
-
-  Additions over ArbolBST:
-    * Stored heights (empty = -1, leaf = 0) and balance factor
-      (left height - right height).
-    * Normal mode: every insertion/deletion ends with a valid AVL.
-    * Stress mode (section 8): the BST order is preserved but rotations
-      are postponed; only heights along the modified path are updated.
-    * Global recovery that fixes imbalances of any size (> 2 included).
-    * Auxiliary index id -> node, so an event can be found by its id in
-      O(1) even though the id is only the third component of the key.
-    * Counters of LL/RR/LR/RL cases and elementary left/right rotations
-      (section 14). A double case counts as one case and two rotations.
-  """
 
   CASOS = ("LL", "RR", "LR", "RL")
 
@@ -27,7 +12,7 @@ class ArbolAVL(ArbolBST):
     self.reiniciarContadores()
 
   # ------------------------------------------------------------------
-  # Counters
+  # Contadores
   # ------------------------------------------------------------------
 
   def reiniciarContadores(self):
@@ -45,7 +30,7 @@ class ArbolAVL(ArbolBST):
                    "derecha": int(giros.get("derecha", 0))}
 
   # ------------------------------------------------------------------
-  # Stress mode
+  # Modo estrés
   # ------------------------------------------------------------------
 
   def activarModoEstres(self):
@@ -63,7 +48,7 @@ class ArbolAVL(ArbolBST):
     return self._modoEstres
 
   # ------------------------------------------------------------------
-  # Heights and balance factor
+  # Alturas y bf
   # ------------------------------------------------------------------
 
   def _altura(self, nodo):
@@ -81,7 +66,7 @@ class ArbolAVL(ArbolBST):
   factorBalance = _calcularFactorDeBalanceo
 
   def _actualizarAlturasHastaRaiz(self, nodo):
-    """O(h): used in stress mode instead of recomputing the whole tree."""
+    """Used in stress mode instead of recomputing the whole tree."""
     while nodo is not None:
       self._actualizarAltura(nodo)
       nodo = nodo.getPadre()
@@ -96,7 +81,7 @@ class ArbolAVL(ArbolBST):
     return all(-1 <= self._calcularFactorDeBalanceo(n) <= 1 for n in self.inorden())
 
   # ------------------------------------------------------------------
-  # Rotations
+  # Rotaciones
   # ------------------------------------------------------------------
 
   def _giroSimpleIzquierda(self, superior):
@@ -180,7 +165,7 @@ class ArbolAVL(ArbolBST):
       self._balancearDesdeNodo(nodo)
 
   # ------------------------------------------------------------------
-  # Insert / delete keeping the id index in sync
+  # Insertar/eliminar manteniendo sincronizado el índice de ID.
   # ------------------------------------------------------------------
 
   def insertar(self, dato, datos):
@@ -201,11 +186,10 @@ class ArbolAVL(ArbolBST):
     return True
 
   def _alMoverDatos(self, origen, destino):
-    # The predecessor's event now lives in `destino`.
     self._indice[origen.getClave()[2]] = destino
 
   # ------------------------------------------------------------------
-  # Id index
+  # ID
   # ------------------------------------------------------------------
 
   def buscarPorId(self, identificador):
@@ -225,7 +209,7 @@ class ArbolAVL(ArbolBST):
     return None if nodo is None else self.profundidadDe(nodo)
 
   # ------------------------------------------------------------------
-  # Update (correction): remove with old key, reinsert with new key
+  # Corrección
   # ------------------------------------------------------------------
 
   def actualizar(self, identificador, claveNueva, datosNuevos):
@@ -249,26 +233,11 @@ class ArbolAVL(ArbolBST):
     return "actualizado_con_reinsercion"
 
   # ------------------------------------------------------------------
-  # Global recovery (section 8)
+  # Recuperar balance global (modo estrés)
   # ------------------------------------------------------------------
 
   def recuperarBalanceGlobal(self):
-    """
-    Repeatedly fixes the DEEPEST unbalanced node (post order puts
-    children before parents) until a full pass finds none.
 
-    Order: each rotation is a local restructuring that keeps the in-order
-    sequence, so the BST order is preserved.
-    Termination: the node fixed is always the deepest unbalanced one, so
-    its children subtrees are already AVL. A rotation there never makes
-    that subtree taller, and any new imbalance it creates lies strictly
-    inside a smaller subtree. Since the tree is finite, the loop ends
-    (tests/test_arbol_avl.py checks it on degenerate trees with height
-    differences far greater than 2). The tree is never rebuilt from a
-    sorted list.
-
-    Returns the number of cases applied (a double case counts once).
-    """
     antes = self.getContadores()
     aplicados = 0
     while True:
@@ -293,16 +262,10 @@ class ArbolAVL(ArbolBST):
     return aplicados
 
   # ------------------------------------------------------------------
-  # Audit (section 14)
+  # Auditar
   # ------------------------------------------------------------------
 
   def auditar(self):
-    """
-    Full structural check. Returns a list of problems, one dict per
-    inconsistent node. Checks: global order by K (in-order strictly
-    increasing, not only immediate children), unique ids, parent links,
-    stored heights vs recomputed ones, balance factors and index.
-    """
     problemas = []
     nodos = self.inorden()
 
@@ -350,11 +313,10 @@ class ArbolAVL(ArbolBST):
     return problemas
 
   # ------------------------------------------------------------------
-  # Costly access (section 9)
+  # Inicio de costo
   # ------------------------------------------------------------------
 
   def eventosAccesoCostoso(self, limite, prioridadAlta=3):
-    """High priority events whose node depth is strictly greater than L."""
     resultado = []
     for nodo in self.anchura():
       if nodo.getClave()[0] != prioridadAlta:

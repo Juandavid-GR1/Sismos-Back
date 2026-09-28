@@ -59,24 +59,6 @@ class SismoService:
         eliminados_service: Optional[EliminadosService] = None,
     ):
         """Inicializa el servicio con su repositorio de persistencia.
-
-        Args:
-            repository (ISismoRepository): Instancia del repositorio de sismos.
-            avl_service (Optional[AvlService]): Servicio que sincroniza
-                el catálogo activo con el árbol AVL. Si se omite, el sismo se
-                guarda igual, pero no se refleja en el árbol.
-            zona_service (Optional[ZonaService]): Servicio para determinar si
-                el epicentro cae en zona poblada. Necesario para calcular la
-                prioridad de inmediato al crear un evento (sección 6 del
-                enunciado). Si se omite, create_event deja prioridad/clave
-                en None, igual que antes.
-            reloj_service (Optional[RelojService]): Reloj de simulación del
-                escenario. Si se provee, valida que ningún evento tenga un
-                timestamp posterior al reloj (sección 3 del enunciado). Si
-                se omite, no se aplica esa validación.
-            eliminados_service (Optional[EliminadosService]): Registro de
-                ids retirados. Si se provee, bloquea la creación con un id
-                ya eliminado, y marca como retirado cada id que se elimine.
         """
         self.repository = repository
         self.avl_service = avl_service
@@ -95,7 +77,7 @@ class SismoService:
 
     def _derivar_prioridad_y_clave(self, sismo_id: int, magnitude: float, depth: float,
                                    epicenter_x: float, epicenter_y: float):
-        """Priority is ALWAYS derived from current data (section 4), never
+        """Priority is always derived from current data, never
         taken from the caller. Returns (None, None) if there is no
         zone service configured."""
         if self.zona_service is None:
@@ -105,8 +87,8 @@ class SismoService:
         return prioridad, PriorityKeyService.generar_clave(prioridad, magnitude, sismo_id)
 
     def _validar_datos_fisicos(self, magnitude, depth, epicenter_x, epicenter_y, timestamp):
-        """Validates EVERYTHING before touching any structure, so an invalid
-        field never produces a partial update (section 6)."""
+        """Validates everything before touching any structure, so an invalid
+        field never produces a partial update."""
         datos = (
             SismoValidationService.validate_magnitude(magnitude),
             SismoValidationService.validate_depth(depth),
@@ -141,14 +123,13 @@ class SismoService:
         sismo_id: Optional[int] = None,
         revision: int = 1,
     ) -> Sismo:
-        """Creates an event as a single action (section 6): validates, assigns
+        """Creates an event as a single action: validates, assigns
         the revision, derives priority and key K=(P,M,I), inserts it in the
         AVL and leaves it pending.
 
-        sismo_id is entered by the user of each station (section 3). If it is
+        sismo_id is entered by the user of each station. If it is
         omitted a free id is generated. An id that is active or retired
-        (deleted) is rejected. `revision` lets a report with an unknown id
-        start directly at a revision greater than 1.
+        (deleted) is rejected.
         """
         station = SismoValidationService.validate_station_id(initial_station_id)
 
@@ -191,7 +172,7 @@ class SismoService:
         return self._guardar_y_sincronizar(sismo)
 
     # ------------------------------------------------------------------
-    # CONFIRMATION AND CORRECTION (reports)
+    # CONFIRMACION Y CORRECCIÓN
     # ------------------------------------------------------------------
 
     def add_consensus_report(
@@ -201,10 +182,6 @@ class SismoService:
         prioridad: Optional[int] = None,
         clave: Optional[tuple[int, float, int]] = None,
     ) -> Sismo:
-        """Confirmation: adds the station (a set, so repeating the same
-        confirmation never duplicates it). Revision and data unchanged.
-        `prioridad`/`clave` are kept for backwards compatibility and ignored:
-        the key is always derived from current data."""
         station = SismoValidationService.validate_station_id(station_id)
         if not station:
             raise SismoValidationError("El identificador de la estación no puede estar vacío.")
@@ -230,13 +207,6 @@ class SismoService:
         revision: Optional[int] = None,
         timestamp: Optional[datetime | str] = None,
     ) -> Sismo:
-        """Correction coming from a report with a greater revision.
-
-        Everything is validated first; then the data is replaced, the
-        priority/key recomputed (the AVL removes with the old key and
-        reinserts with the new one if P or M changed) and the event goes
-        back to pending. Fields not sent keep their current value.
-        """
         station = SismoValidationService.validate_station_id(station_id)
         if not station:
             raise SismoValidationError(
@@ -273,18 +243,16 @@ class SismoService:
         return self._guardar_y_sincronizar(sismo)
 
     # ------------------------------------------------------------------
-    # ATTENTION STATUS
+    # ATENCIÓN
     # ------------------------------------------------------------------
 
     def audit_and_validate(self, sismo_id: int) -> Sismo:
-        """Marks the event as reviewed. P, M and I do not change, so the
-        key is the same and the node is NOT reinserted (section 6)."""
         sismo = self.get_by_id(sismo_id)
         sismo.status = StatusSismo.REVISADO
         return self._guardar_y_sincronizar(sismo)
 
     # ------------------------------------------------------------------
-    # DELETION AND MANUAL CORRECTION
+    # ELIMINACIÓN
     # ------------------------------------------------------------------
 
     def delete(self, sismo_id: Any) -> bool:
@@ -311,10 +279,8 @@ class SismoService:
         epicenter_y: float,
         timestamp: datetime | str,
     ) -> Sismo:
-        """Manual correction (section 6): if the current revision is r it
-        ALWAYS produces r + 1, even when the new key equals the old one.
-        All data is validated before applying any change; the event goes
-        back to pending and the AVL relocates it if P or M changed."""
+        """Manual correction if the current revision is r it
+        ALWAYS produces r + 1"""
         sismo = self.get_by_id(sismo_id)
         mag, depth_v, x, y, ts = self._validar_datos_fisicos(
             magnitude, depth, epicenter_x, epicenter_y, timestamp
@@ -340,9 +306,6 @@ class SismoService:
 
         Returns:
             Sismo: La entidad encontrada.
-
-        Raises:
-            SismoNotFoundError: Si el ID no corresponde a ningún evento guardado.
         """
         val_id = SismoValidationService.validate_id(sismo_id)
         sismo = self.repository.get_by_id(val_id)

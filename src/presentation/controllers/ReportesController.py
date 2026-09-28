@@ -46,10 +46,6 @@ class ReporteController:
         self.cola_reportes = cola_reportes
         self.modo_automatico_service = modo_automatico_service
 
-    # --------------------------------------------------------------------------
-    # SERIALIZADORES AUXILIARES
-    # --------------------------------------------------------------------------
-
     @staticmethod
     def _serialize_reporte(reporte: Reporte) -> Dict[str, Any]:
         """Convierte una entidad Reporte en un diccionario serializable a JSON."""
@@ -217,9 +213,7 @@ class ReporteController:
             }), 409
 
         except ReporteIdentificadorRetiradoError as error:
-            # Igual que los otros rechazos de negocio: se saca de la
-            # cola para que no bloquee lo que sigue detrás -- el
-            # reporte queda descartado, no reintentado indefinidamente.
+
             self.cola_reportes.descartar_reporte()
             return jsonify({
                 "mensaje": "El reporte fue rechazado.",
@@ -229,10 +223,6 @@ class ReporteController:
 
         except (ReporteValidationError, SismoValidationError, ValueError) as error:
 
-            # datos inválidos (ej. id fuera de rango, 54654654 > 999999)
-            # se quedaba atascado al frente de la cola para siempre,
-            # bloqueando todo lo que viniera detrás. Ahora se descarta
-            # igual que los demás rechazos de negocio.
             self.cola_reportes.descartar_reporte()
             return jsonify({
                 "mensaje": "El reporte fue rechazado por datos inválidos.",
@@ -260,10 +250,6 @@ class ReporteController:
             if resultado.get("decision") == "cola_vacia":
                 return jsonify(resultado), 404
 
-            # The result holds a Sismo dataclass (with a set and datetimes)
-            # that jsonify cannot serialize: before this fix the report was
-            # applied and removed from the queue but the endpoint answered
-            # 500, so the frontend showed an error for a successful step.
             if isinstance(resultado.get("resultado"), Sismo):
                 resultado["resultado"] = _sismo_to_dict(resultado["resultado"])
 
@@ -276,11 +262,6 @@ class ReporteController:
             }), 500
 
 
-# ==============================================================================
-# REGISTRO DE RUTAS FLASK
-# ==============================================================================
-
-
 def register_reporte_routes(
     app: Flask,
     reporte_service: ReporteService,
@@ -288,8 +269,7 @@ def register_reporte_routes(
     modo_automatico_service: ModoAutomaticoService,
 ) -> None:
     """Asocia e inscribe las rutas del controlador de reportes en Flask."""
-    # Created inside the function (not at module level) so the blueprint
-    # can be registered on a fresh app (tests, app factory).
+
     reporte_controller = Blueprint(
         "reporte_controller",
         __name__,

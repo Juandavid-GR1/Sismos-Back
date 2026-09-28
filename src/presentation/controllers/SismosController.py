@@ -18,11 +18,6 @@ REQUIRED_EVENT_FIELDS = [
     "timestamp",
 ]
 
-
-# ------------------------------------------------------------------------------
-# Funciones Auxiliares
-# ------------------------------------------------------------------------------
-
 def _sismo_to_dict(sismo: Sismo) -> dict[str, Any]:
     """Serializa la entidad Sismo a un diccionario listo para ser devuelto en formato JSON.
 
@@ -54,12 +49,6 @@ def _validate_payload(
 ) -> Optional[tuple[Response, int]]:
     """Valida que la petición contenga un JSON estructurado y que no falten campos obligatorios.
 
-    Args:
-        data (Optional[dict[str, Any]]): Payload parseado de la petición HTTP.
-        required_fields (list[str]): Lista de claves que deben estar presentes en el payload.
-
-    Returns:
-        Optional[tuple[Response, int]]: Respuesta JSON con error 400 en caso de fallo, o None si la validación es exitosa.
     """
     if not data:
         return jsonify({
@@ -77,13 +66,6 @@ def _validate_payload(
 
     return None
 
-
-# ------------------------------------------------------------------------------
-# Registro de rutas -- recibe sismo_service YA armado (con avl_service y
-# zona_service inyectados desde app.py), en vez de crear su propia
-# instancia aislada. Mismo patrón que register_reporte_routes,
-# register_zona_routes y register_arbol_routes.
-# ------------------------------------------------------------------------------
 
 def register_sismo_routes(app, sismo_service: SismoService):
     sismo_bp = Blueprint("sismos", __name__, url_prefix="/sismos")
@@ -126,8 +108,6 @@ def register_sismo_routes(app, sismo_service: SismoService):
 
         station_id = data.get("station_id") or data.get("initial_station_id")
 
-        # Section 3/6: the identifier is entered by the user. If it is not
-        # sent, the service generates a free one (never a retired id).
         sismo_id = data.get("id", data.get("sismo_id"))
         if sismo_id in ("", None):
             sismo_id = None
@@ -147,17 +127,6 @@ def register_sismo_routes(app, sismo_service: SismoService):
     @sismo_bp.route("/<int:sismo_id>", methods=["GET"])
     def get_sismo_by_id(sismo_id: int) -> tuple[Response, int]:
         """Consulta los datos de un evento sísmico por su identificador único.
-
-        Sección 6 del enunciado: "El resultado debe indicar si está
-        activo, archivado o eliminado. Para un evento activo se
-        muestran sus datos vigentes... prioridad, clave, estado de
-        atención, profundidad del nodo, altura, factor de balance y
-        asociaciones."
-
-        Nota: "archivado" todavía no existe en el sistema (depende de
-        la sección 10, no construida) -- por ahora solo se distingue
-        activo vs. eliminado. "asociaciones" tampoco existe todavía
-        (sección 7) -- se omite ese campo por ahora.
         """
         try:
             sismo = sismo_service.get_by_id(sismo_id)
@@ -183,8 +152,6 @@ def register_sismo_routes(app, sismo_service: SismoService):
                 datos["altura_nodo"] = nodo.getAltura()
                 datos["factor_balance"] = arbol._calcularFactorDeBalanceo(nodo)
 
-
-        # ZonaService que ya calcula esto al crear/corregir eventos
         zona_service = getattr(sismo_service, "zona_service", None)
         if zona_service is not None:
             datos["zona_poblada"] = zona_service.punto_en_zona(
@@ -233,7 +200,7 @@ def register_sismo_routes(app, sismo_service: SismoService):
         }), 200
 
     # --------------------------------------------------------------------
-    # Rutas de Dominio / Reglas de Negocio
+    # Rutas de Dominio 
     # --------------------------------------------------------------------
 
     @sismo_bp.route("/<int:sismo_id>/consensus", methods=["POST"])
