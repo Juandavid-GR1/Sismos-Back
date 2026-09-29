@@ -249,6 +249,58 @@ class ArbolAVL(ArbolBST):
     return "actualizado_con_reinsercion"
 
   # ------------------------------------------------------------------
+  # Exact topology export / import (undo, versions and section 12)
+  # ------------------------------------------------------------------
+
+  def exportarTopologia(self):
+    """Flat copy of the REAL topology: nodes in pre order with key,
+    payload, stored height and the index of each child (None = empty).
+    Iterative (no recursion limit). Shares no objects with the tree."""
+    nodos = []
+    if self._raiz is None:
+      return nodos
+    pila = [(self._raiz, None, None)]      # (node, parent index, side)
+    while pila:
+      nodo, padre, lado = pila.pop()
+      indice = len(nodos)
+      datos = nodo.getDatos()
+      nodos.append({
+        "clave": list(nodo.getClave()),
+        "datos": dict(datos) if isinstance(datos, dict) else datos,
+        "altura": nodo.getAltura(),
+        "izq": None,
+        "der": None,
+      })
+      if padre is not None:
+        nodos[padre][lado] = indice
+      if nodo.getHijoDerecho() is not None:
+        pila.append((nodo.getHijoDerecho(), indice, "der"))
+      if nodo.getHijoIzquierdo() is not None:
+        pila.append((nodo.getHijoIzquierdo(), indice, "izq"))
+    return nodos
+
+  def importarTopologia(self, nodos, modoEstres=False, contadores=None):
+    """Rebuilds EXACTLY the given topology (no reinsertion, no rotations)
+    and the id index."""
+    from src.estructuras.nodo import Nodo
+    objetos = []
+    for n in nodos:
+      datos = n.get("datos")
+      objetos.append(Nodo(tuple(n["clave"]), dict(datos) if isinstance(datos, dict) else datos,
+                          n.get("altura", 0)))
+    for n, nodo in zip(nodos, objetos):
+      for lado, setter in (("izq", nodo.setHijoIzquierdo), ("der", nodo.setHijoDerecho)):
+        indice = n.get(lado)
+        if indice is not None:
+          setter(objetos[indice])
+          objetos[indice].setPadre(nodo)
+    self._raiz = objetos[0] if objetos else None
+    self._indice = {nodo.getClave()[2]: nodo for nodo in objetos}
+    self._modoEstres = bool(modoEstres)
+    if contadores is not None:
+      self.setContadores(contadores)
+
+  # ------------------------------------------------------------------
   # Local order check (section 6: in-place update must "demonstrate that
   # the order is still valid")
   # ------------------------------------------------------------------

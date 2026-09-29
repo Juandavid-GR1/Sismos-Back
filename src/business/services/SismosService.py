@@ -283,12 +283,51 @@ class SismoService:
     # ATTENTION STATUS
     # ------------------------------------------------------------------
 
+    def marcar_revisado(self, sismo_id: int) -> dict:
+        """
+        Attention status, P, M and I do not change -> same key
+        -> the node is NOT removed nor reinserted, only its payload
+        (status) is updated in place. 
+        """
+        anterior = self.get_by_id(sismo_id)
+        if anterior.status == StatusSismo.REVISADO:
+            return {"sismo": anterior, "cambio": False, "reporte": {
+                "id": anterior.id,
+                "estado_anterior": anterior.status.value,
+                "estado_nuevo": anterior.status.value,
+                "explicacion": "El evento ya estaba revisado; no se registró ninguna acción.",
+            }}
+
+        nuevo = replace(anterior, status=StatusSismo.REVISADO,
+                        reporting_stations=set(anterior.reporting_stations))
+        contadores_avl = self.avl_service.contadores() if self.avl_service is not None else None
+        reporte_arbol = None
+        try:
+            if self.avl_service is not None:
+                reporte_arbol = self.avl_service.aplicar_correccion(anterior, nuevo)
+            self.repository.save(nuevo)
+        except Exception:
+            if self.avl_service is not None:
+                self.avl_service.restaurar_evento(anterior, contadores_avl)
+            raise
+
+        return {"sismo": nuevo, "cambio": True, "reporte": {
+            "id": nuevo.id,
+            "estado_anterior": anterior.status.value,
+            "estado_nuevo": nuevo.status.value,
+            "clave": list(nuevo.clave) if nuevo.clave else None,
+            "revision": nuevo.revision,
+            "explicacion": (
+                "Marcar como revisado no modifica P, M ni I: la clave "
+                f"{tuple(nuevo.clave) if nuevo.clave else ''} es la misma, así que el nodo "
+                "no se eliminó ni se reinsertó. La acción se puede deshacer."
+            ),
+            "arbol": reporte_arbol,
+        }}
+
     def audit_and_validate(self, sismo_id: int) -> Sismo:
-        """Marks the event as reviewed. P, M and I do not change, so the
-        key is the same and the node is NOT reinserted (section 6)."""
-        sismo = self.get_by_id(sismo_id)
-        sismo.status = StatusSismo.REVISADO
-        return self._guardar_y_sincronizar(sismo)
+        """Backwards compatible wrapper around marcar_revisado()."""
+        return self.marcar_revisado(sismo_id)["sismo"]
 
     # ------------------------------------------------------------------
     # DELETION AND MANUAL CORRECTION

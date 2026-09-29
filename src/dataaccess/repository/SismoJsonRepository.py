@@ -129,3 +129,16 @@ class SismoJsonRepository(IF_Sismos):
         """Next free numeric id (max + 1)."""
         cache = self._cargar_cache()
         return max(cache, default=0) + 1
+
+    def exportar(self) -> List[dict]:
+        """Plain-data copy of every stored event, ordered by id."""
+        cache = self._cargar_cache()
+        return [self._to_dict(cache[i]) for i in sorted(cache)]
+
+    def reemplazar_todo(self, datos: List[dict]) -> None:
+        """Replaces the whole catalog (undo / versions) and writes the file."""
+        self._cache = {}
+        for item in datos:
+            sismo = self._to_entity(item)
+            self._cache[sismo.id] = sismo
+        self._persistir()

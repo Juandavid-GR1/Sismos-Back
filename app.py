@@ -17,6 +17,7 @@ from src.business.services.reporte_service import ReporteService
 from src.business.services.RelojService import RelojService
 from src.business.services.SismosService import SismoService
 from src.business.services.ZonaService import ZonaService
+from src.business.services.HistorialService import EstadoService, HistorialService
 
 # Controladores y Rutas
 from src.presentation.controllers.ArbolController import register_arbol_routes
@@ -25,6 +26,7 @@ from src.presentation.controllers.RelojController import register_reloj_routes
 from src.presentation.controllers.ReportesController import register_reporte_routes
 from src.presentation.controllers.SismosController import register_sismo_routes
 from src.presentation.controllers.ZonaController import register_zona_routes
+from src.presentation.controllers.HistorialController import register_historial_routes
 
 app = Flask(__name__)
 CORS(app)
@@ -82,6 +84,14 @@ register_zona_routes(app, zona_service)
 register_arbol_routes(app, avl_service)
 register_reloj_routes(app, reloj_service)
 
+# Every request that changes the scenario is
+# recorded as one action with a snapshot of the previous state.
+estado_service = EstadoService(
+    sismo_repository, avl_service, eliminados_service,
+    sismo_service, reloj_service, cola_reportes,
+)
+historial_service = HistorialService(estado_service)
+register_historial_routes(app, estado_service, historial_service)
 
 # Rebuild the in-memory AVL from the persisted catalog. Without this the
 # tree was empty after every restart while sismos.json still had events.

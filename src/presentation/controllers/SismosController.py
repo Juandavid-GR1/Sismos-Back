@@ -289,8 +289,10 @@ def register_sismo_routes(app, sismo_service: SismoService):
     @sismo_bp.route("/<int:sismo_id>/audit", methods=["PATCH"])
     def audit_and_validate(sismo_id: int) -> tuple[Response, int]:
         """Audita el evento sísmico y actualiza su estado a REVISADO."""
-        validated_sismo = sismo_service.audit_and_validate(sismo_id)
-
-        return jsonify(_sismo_to_dict(validated_sismo)), 200
+        resultado = sismo_service.marcar_revisado(sismo_id)
+        cuerpo = _sismo_to_dict(resultado["sismo"])
+        cuerpo["cambio"] = resultado["cambio"]
+        cuerpo["atencion"] = resultado["reporte"]
+        return jsonify(cuerpo), 200
 
     app.register_blueprint(sismo_bp)

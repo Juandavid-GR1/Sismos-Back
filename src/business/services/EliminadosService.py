@@ -36,3 +36,7 @@ class EliminadosService:
 
     def cantidad(self) -> int:
         return len(self._retirados)
+
+    def reemplazar(self, ids) -> None:
+        """Restores the whole set (undo / versions)."""
+        self._retirados = set(int(i) for i in ids)
