@@ -78,6 +78,55 @@ class AvlService:
 
         return {"clave": sismo.clave, "resultado": resultado}
 
+    @staticmethod
+    def _payload(sismo) -> dict:
+        return {"status": sismo.status.value, "revision": sismo.revision}
+
+    def aplicar_correccion(self, anterior, nuevo) -> dict:
+        """
+        Moves an event from its old key to its new key as ONE operation
+        and reports what happened to the tree (section 6, correction):
+
+        * Same key  -> the node stays where it is, only its payload
+          (revision, status) changes; the order is proven with the node's
+          in-order neighbors.
+        * Other key -> removed with the OLD key and reinserted with the NEW
+          one (rotations happen as the current mode dictates).
+
+        The rotations of this single action are measured as the counter
+        difference before/after.
+        """
+        arbol = self._arbol
+        antes = arbol.getContadores()
+        profundidad_antes = arbol.profundidadPorId(anterior.id)
+
+        resultado = arbol.actualizar(nuevo.id, nuevo.clave, self._payload(nuevo))
+
+        nodo = arbol.buscarPorId(nuevo.id)
+        despues = arbol.getContadores()
+        return {
+            "accion_arbol": "sin_reinsercion" if resultado == "actualizado_en_lugar" else "reinsercion",
+            "resultado": resultado,
+            "profundidad_antes": profundidad_antes,
+            "profundidad_despues": arbol.profundidadDe(nodo),
+            "verificacion_orden": arbol.verificarOrdenLocal(nodo),
+            "rotaciones": {
+                "casos": {c: despues["casos"][c] - antes["casos"][c] for c in arbol.CASOS},
+                "giros": {g: despues["giros"][g] - antes["giros"][g] for g in ("izquierda", "derecha")},
+            },
+            "modo_estres": arbol.esModoEstres(),
+        }
+
+    def restaurar_evento(self, anterior, contadores: dict) -> None:
+        """Rollback helper: puts the event back with its previous key and
+        restores the rotation counters, so a failed action leaves no
+        trace (no partial state)."""
+        self._arbol.actualizar(anterior.id, anterior.clave, self._payload(anterior))
+        self._arbol.setContadores(contadores)
+
+    def contadores(self) -> dict:
+        return self._arbol.getContadores()
+
     def cargar_desde(self, sismos) -> int:
         """Rebuilds the in-memory AVL from the persisted events at startup.
         Without this, after restarting Flask the catalog had events in

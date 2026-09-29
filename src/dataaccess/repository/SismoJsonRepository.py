@@ -22,9 +22,12 @@ class SismoJsonRepository(IF_Sismos):
             self._write_raw_data([])
 
     def _write_raw_data(self, data: List[dict]) -> None:
-        """Escribe directamente la estructura de diccionarios en el archivo JSON."""
-        with open(self.json_file, "w", encoding="utf-8") as f:
+        """Writes the JSON atomically: dump to a temp file and rename it,
+        so an interrupted write never leaves a half-written sismos.json."""
+        temporal = f"{self.json_file}.tmp"
+        with open(temporal, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
+        os.replace(temporal, self.json_file)
 
     def _to_dict(self, sismo: Sismo) -> dict:
         """Convierte una entidad Sismo a un diccionario serializable en JSON."""
@@ -100,9 +103,19 @@ class SismoJsonRepository(IF_Sismos):
         return self._copia(sismo) if sismo is not None else None
 
     def save(self, sismo: Sismo) -> Sismo:
-        """Inserts or updates an event and writes the file."""
-        self._cargar_cache()[sismo.id] = self._copia(sismo)
-        self._persistir()
+        """Inserts or updates an event and writes the file. If the write
+        fails, the cache is restored so memory and disk never disagree."""
+        cache = self._cargar_cache()
+        previo = cache.get(sismo.id)
+        cache[sismo.id] = self._copia(sismo)
+        try:
+            self._persistir()
+        except Exception:
+            if previo is None:
+                cache.pop(sismo.id, None)
+            else:
+                cache[sismo.id] = previo
+            raise
         return sismo
 
     def delete(self, sismo_id: int) -> bool:

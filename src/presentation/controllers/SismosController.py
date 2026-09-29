@@ -18,6 +18,11 @@ REQUIRED_EVENT_FIELDS = [
     "timestamp",
 ]
 
+
+# ------------------------------------------------------------------------------
+# Funciones Auxiliares
+# ------------------------------------------------------------------------------
+
 def _sismo_to_dict(sismo: Sismo) -> dict[str, Any]:
     """Serializa la entidad Sismo a un diccionario listo para ser devuelto en formato JSON.
 
@@ -49,6 +54,12 @@ def _validate_payload(
 ) -> Optional[tuple[Response, int]]:
     """Valida que la petición contenga un JSON estructurado y que no falten campos obligatorios.
 
+    Args:
+        data (Optional[dict[str, Any]]): Payload parseado de la petición HTTP.
+        required_fields (list[str]): Lista de claves que deben estar presentes en el payload.
+
+    Returns:
+        Optional[tuple[Response, int]]: Respuesta JSON con error 400 en caso de fallo, o None si la validación es exitosa.
     """
     if not data:
         return jsonify({
@@ -66,6 +77,10 @@ def _validate_payload(
 
     return None
 
+
+# ------------------------------------------------------------------------------
+# Registro de rutas 
+# ------------------------------------------------------------------------------
 
 def register_sismo_routes(app, sismo_service: SismoService):
     sismo_bp = Blueprint("sismos", __name__, url_prefix="/sismos")
@@ -127,6 +142,17 @@ def register_sismo_routes(app, sismo_service: SismoService):
     @sismo_bp.route("/<int:sismo_id>", methods=["GET"])
     def get_sismo_by_id(sismo_id: int) -> tuple[Response, int]:
         """Consulta los datos de un evento sísmico por su identificador único.
+
+        Sección 6 del enunciado: "El resultado debe indicar si está
+        activo, archivado o eliminado. Para un evento activo se
+        muestran sus datos vigentes... prioridad, clave, estado de
+        atención, profundidad del nodo, altura, factor de balance y
+        asociaciones."
+
+        Nota: "archivado" todavía no existe en el sistema (depende de
+        la sección 10, no construida) -- por ahora solo se distingue
+        activo vs. eliminado. "asociaciones" tampoco existe todavía
+        (sección 7) -- se omite ese campo por ahora.
         """
         try:
             sismo = sismo_service.get_by_id(sismo_id)
@@ -152,6 +178,8 @@ def register_sismo_routes(app, sismo_service: SismoService):
                 datos["altura_nodo"] = nodo.getAltura()
                 datos["factor_balance"] = arbol._calcularFactorDeBalanceo(nodo)
 
+
+        # ZonaService que ya calcula esto al crear/corregir eventos
         zona_service = getattr(sismo_service, "zona_service", None)
         if zona_service is not None:
             datos["zona_poblada"] = zona_service.punto_en_zona(
@@ -166,28 +194,36 @@ def register_sismo_routes(app, sismo_service: SismoService):
 
         return jsonify(datos), 200
 
-    @sismo_bp.route("/<int:sismo_id>", methods=["PUT"])
+    @sismo_bp.route("/<int:sismo_id>", methods=["PUT", "PATCH"])
     def update_sismo(sismo_id: int) -> tuple[Response, int]:
-        """Actualiza la información técnica de un evento existente."""
+        """Manual correction (section 6). The body may contain one or
+        several of: magnitude, depth, epicenter_x, epicenter_y, timestamp.
+        The id is immutable. Answers with the corrected event, its previous
+        state and a report explaining what happened in the tree."""
         data = request.get_json(silent=True)
+        if not isinstance(data, dict) or not data:
+            return jsonify({
+                "error": "Bad Request",
+                "message": "El cuerpo de la petición debe ser un objeto JSON con los datos a corregir.",
+            }), 400
 
-        error_response = _validate_payload(data, REQUIRED_EVENT_FIELDS)
-        if error_response:
-            return error_response
-
-        updated_sismo = sismo_service.update_event(
-            sismo_id=sismo_id,
-            magnitude=data["magnitude"],
-            depth=data["depth"],
-            epicenter_x=data["epicenter_x"],
-            epicenter_y=data["epicenter_y"],
-            timestamp=data["timestamp"],
-        )
+        resultado = sismo_service.corregir_evento(sismo_id, data)
+        reporte = resultado["reporte"]
 
         return jsonify({
-            "message": "Sismo actualizado correctamente.",
-            "sismo": _sismo_to_dict(updated_sismo),
+            "message": (
+                f"Corrección aplicada: revisión {reporte['revision_anterior']} → "
+                f"{reporte['revision_nueva']}. {reporte['explicacion']}"
+            ),
+            "sismo": _sismo_to_dict(resultado["sismo"]),
+            "anterior": _sismo_to_dict(resultado["anterior"]),
+            "correccion": reporte,
         }), 200
+
+    @sismo_bp.route("/metricas", methods=["GET"])
+    def metricas_sismos() -> tuple[Response, int]:
+        """Accumulated event metrics (section 14)."""
+        return jsonify(sismo_service.metricas()), 200
 
     @sismo_bp.route("/<int:sismo_id>", methods=["DELETE"])
     def delete_sismo(sismo_id: int) -> tuple[Response, int]:
@@ -200,7 +236,7 @@ def register_sismo_routes(app, sismo_service: SismoService):
         }), 200
 
     # --------------------------------------------------------------------
-    # Rutas de Dominio 
+    # Rutas de Dominio / Reglas de Negocio
     # --------------------------------------------------------------------
 
     @sismo_bp.route("/<int:sismo_id>/consensus", methods=["POST"])
