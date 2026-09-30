@@ -166,8 +166,6 @@ class Sismo:
 
     revision: int = 1
 
-
-
     prioridad: int | None = None
     clave: tuple[int, float, int] | None = None
     # ------------------------------------------------------------------

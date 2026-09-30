@@ -172,6 +172,7 @@ class ReporteController:
                 sismo = resultado_sismo
             else:
                 sismo = self.reporte_service.sismo_service.get_by_id(reporte.sismo_id)
+            sismo = self.reporte_service.sismo_service.get_by_id(reporte.sismo_id)
 
             return jsonify({
                 "mensaje": "Reporte validado y emitido correctamente.",

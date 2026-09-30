@@ -46,3 +46,12 @@ class ColaReportesService:
     def _guardar_cola(self):
         reportes = self.cola.obtener_elementos()
         self.persistencia.guardar(reportes)
+
+    def exportar(self):
+        return [self.persistencia._reporte_a_dict(r) for r in self.cola.obtener_elementos()]
+
+    def reemplazar(self, datos):
+        self.cola = Cola()
+        for item in datos:
+            self.cola.encolar(self.persistencia._dict_a_reporte(item))
+        self._guardar_cola()

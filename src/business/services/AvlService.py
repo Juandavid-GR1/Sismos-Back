@@ -32,14 +32,22 @@ class AvlService:
     def __init__(self):
         self._arbol = ArbolAVL(_comparador_claves)
 
-    def calcular_prioridad(self, magnitude: float, depth: float, zona_poblada: bool) -> int:
+    def calcular_prioridad(
+        self, magnitude: float, depth: float, zona_poblada: bool
+    ) -> int:
         """Expone el cálculo de prioridad tal cual, por si algún
         controlador necesita mostrarla sin tocar el árbol (ej. antes
         de confirmar una creación)."""
         return PriorityKeyService.calcular_prioridad(magnitude, depth, zona_poblada)
 
-    def registrar_evento(self, sismo_id: int, magnitude: float, depth: float,
-                          zona_poblada: bool, datos: dict) -> dict:
+    def registrar_evento(
+        self,
+        sismo_id: int,
+        magnitude: float,
+        depth: float,
+        zona_poblada: bool,
+        datos: dict,
+    ) -> dict:
         """
         Alta o actualización de un evento en el AVL, CALCULANDO la
         prioridad aquí mismo. Úsalo cuando quien te llama todavía no
@@ -50,11 +58,7 @@ class AvlService:
 
         resultado = self._arbol.actualizar(sismo_id, clave, datos)
 
-        return {
-            "prioridad": prioridad,
-            "clave": clave,
-            "resultado": resultado
-        }
+        return {"prioridad": prioridad, "clave": clave, "resultado": resultado}
 
     def sincronizar_desde_sismo(self, sismo) -> Optional[dict]:
         """
@@ -73,7 +77,7 @@ class AvlService:
         resultado = self._arbol.actualizar(
             sismo.id,
             sismo.clave,
-            {"status": sismo.status.value, "revision": sismo.revision}
+            {"status": sismo.status.value, "revision": sismo.revision},
         )
 
         return {"clave": sismo.clave, "resultado": resultado}
@@ -105,14 +109,23 @@ class AvlService:
         nodo = arbol.buscarPorId(nuevo.id)
         despues = arbol.getContadores()
         return {
-            "accion_arbol": "sin_reinsercion" if resultado == "actualizado_en_lugar" else "reinsercion",
+            "accion_arbol": (
+                "sin_reinsercion"
+                if resultado == "actualizado_en_lugar"
+                else "reinsercion"
+            ),
             "resultado": resultado,
             "profundidad_antes": profundidad_antes,
             "profundidad_despues": arbol.profundidadDe(nodo),
             "verificacion_orden": arbol.verificarOrdenLocal(nodo),
             "rotaciones": {
-                "casos": {c: despues["casos"][c] - antes["casos"][c] for c in arbol.CASOS},
-                "giros": {g: despues["giros"][g] - antes["giros"][g] for g in ("izquierda", "derecha")},
+                "casos": {
+                    c: despues["casos"][c] - antes["casos"][c] for c in arbol.CASOS
+                },
+                "giros": {
+                    g: despues["giros"][g] - antes["giros"][g]
+                    for g in ("izquierda", "derecha")
+                },
             },
             "modo_estres": arbol.esModoEstres(),
         }
@@ -144,42 +157,6 @@ class AvlService:
         """Retira un evento del catálogo activo (eliminación
         individual o archivo -- quien llama decide el motivo)."""
         return self._arbol.eliminarPorId(sismo_id)
-
-    def capturar_subarbol(self, sismo_id: int) -> list[int]:
-        """Captures the IDs in the current AVL subtree rooted at ``sismo_id``.
-
-        This is read-only. The returned list must be treated as the fixed
-        membership of a later branch operation.
-        """
-        return self._arbol.idsDeSubarbolPorId(sismo_id)
-
-    def eliminar_subarbol(self, sismo_id: int) -> dict:
-        """Removes the captured subtree without recapturing after rotations.
-
-        This method changes only the AVL. Persistence and domain state
-        transitions are intentionally handled by ``SismosService``.
-        """
-        antes = self._arbol.getContadores()
-        ids_capturados = self.capturar_subarbol(sismo_id)
-        ids_eliminados = self._arbol.eliminarPorIds(ids_capturados)
-        despues = self._arbol.getContadores()
-        return {
-            "raiz": sismo_id,
-            "ids_capturados": ids_capturados,
-            "ids_eliminados": ids_eliminados,
-            "cantidad": len(ids_eliminados),
-            "rotaciones": {
-                "casos": {
-                    caso: despues["casos"][caso] - antes["casos"][caso]
-                    for caso in self._arbol.CASOS
-                },
-                "giros": {
-                    giro: despues["giros"][giro] - antes["giros"][giro]
-                    for giro in ("izquierda", "derecha")
-                },
-            },
-            "balanceado": self._arbol.estaBalanceado(),
-        }
 
     def profundidad_de(self, sismo_id: int):
         """Profundidad del nodo desde la raíz (raíz=0), o None si el
@@ -224,30 +201,37 @@ class AvlService:
         por_prioridad = {1: 0, 2: 0, 3: 0}
         pendientes = 0
         for nodo in arbol.inorden():
-            por_prioridad[nodo.getClave()[0]] = por_prioridad.get(nodo.getClave()[0], 0) + 1
+            por_prioridad[nodo.getClave()[0]] = (
+                por_prioridad.get(nodo.getClave()[0], 0) + 1
+            )
             datos = nodo.getDatos() or {}
             if str(datos.get("status", "")).lower().startswith("pend"):
                 pendientes += 1
-        base.update({
-            "balance": arbol.factorBalance(arbol.getRaiz()),
-            "modoEstres": arbol.esModoEstres(),
-            "balanceado": arbol.estaBalanceado(),
-            "contadores": arbol.getContadores(),
-            "porPrioridad": por_prioridad,
-            "pendientes": pendientes,
-            "limiteL": limite_l,
-            "accesoCostoso": [
-                {"clave": list(c["nodo"].getClave()), "profundidad": c["profundidad"],
-                 "visitados": c["visitados"]}
-                for c in costosos
-            ],
-            "recorridos": {
-                "inorden": [list(n.getClave()) for n in arbol.inorden()],
-                "preorden": [list(n.getClave()) for n in arbol.preorden()],
-                "postorden": [list(n.getClave()) for n in arbol.posorden()],
-                "niveles": [list(n.getClave()) for n in arbol.anchura()],
-            },
-        })
+        base.update(
+            {
+                "balance": arbol.factorBalance(arbol.getRaiz()),
+                "modoEstres": arbol.esModoEstres(),
+                "balanceado": arbol.estaBalanceado(),
+                "contadores": arbol.getContadores(),
+                "porPrioridad": por_prioridad,
+                "pendientes": pendientes,
+                "limiteL": limite_l,
+                "accesoCostoso": [
+                    {
+                        "clave": list(c["nodo"].getClave()),
+                        "profundidad": c["profundidad"],
+                        "visitados": c["visitados"],
+                    }
+                    for c in costosos
+                ],
+                "recorridos": {
+                    "inorden": [list(n.getClave()) for n in arbol.inorden()],
+                    "preorden": [list(n.getClave()) for n in arbol.preorden()],
+                    "postorden": [list(n.getClave()) for n in arbol.posorden()],
+                    "niveles": [list(n.getClave()) for n in arbol.anchura()],
+                },
+            }
+        )
         return base
 
     def get_arbol(self) -> ArbolAVL:

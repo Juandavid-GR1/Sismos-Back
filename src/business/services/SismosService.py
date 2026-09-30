@@ -9,7 +9,9 @@ from src.business.algortimos.sismos.SismoValidationService import (
     SismoValidationService,
 )
 from src.Models.Sismo import EstadoPersistencia, Sismo, StatusSismo
-from src.dataaccess.repository.HistorialSismosRepository import HistorialSismosRepository
+from src.dataaccess.repository.HistorialSismosRepository import (
+    HistorialSismosRepository,
+)
 from src.business.services.AvlService import AvlService
 from src.business.services.EliminadosService import EliminadosService
 from src.business.services.HistorialAccionesService import (
@@ -101,24 +103,40 @@ class SismoService:
     def _validar_timestamp_contra_reloj(self, timestamp) -> None:
         """Raises SismoValidationError if the timestamp is later than the
         simulation clock (section 3)."""
-        if self.reloj_service is not None and self.reloj_service.es_posterior_al_reloj(timestamp):
+        if self.reloj_service is not None and self.reloj_service.es_posterior_al_reloj(
+            timestamp
+        ):
             raise SismoValidationError(
                 f"El timestamp del evento ({timestamp}) no puede ser posterior "
                 f"al reloj de simulación ({self.reloj_service.obtener_reloj()})."
             )
 
-    def _derivar_prioridad_y_clave(self, sismo_id: int, magnitude: float, depth: float,
-                                   epicenter_x: float, epicenter_y: float):
+    def _derivar_prioridad_y_clave(
+        self,
+        sismo_id: int,
+        magnitude: float,
+        depth: float,
+        epicenter_x: float,
+        epicenter_y: float,
+    ):
         """Priority is ALWAYS derived from current data (section 4), never
         taken from the caller. Returns (None, None) if there is no
         zone service configured."""
         if self.zona_service is None:
             return None, None
-        zona_poblada = self.zona_service.punto_en_zona(longitud=epicenter_x, latitud=epicenter_y)
-        prioridad = PriorityKeyService.calcular_prioridad(magnitude, depth, zona_poblada)
-        return prioridad, PriorityKeyService.generar_clave(prioridad, magnitude, sismo_id)
+        zona_poblada = self.zona_service.punto_en_zona(
+            longitud=epicenter_x, latitud=epicenter_y
+        )
+        prioridad = PriorityKeyService.calcular_prioridad(
+            magnitude, depth, zona_poblada
+        )
+        return prioridad, PriorityKeyService.generar_clave(
+            prioridad, magnitude, sismo_id
+        )
 
-    def _validar_datos_fisicos(self, magnitude, depth, epicenter_x, epicenter_y, timestamp):
+    def _validar_datos_fisicos(
+        self, magnitude, depth, epicenter_x, epicenter_y, timestamp
+    ):
         """Validates EVERYTHING before touching any structure, so an invalid
         field never produces a partial update (section 6)."""
         datos = (
@@ -132,7 +150,10 @@ class SismoService:
         return datos
 
     def _esta_retirado(self, sismo_id: int) -> bool:
-        return self.eliminados_service is not None and self.eliminados_service.esta_retirado(sismo_id)
+        return (
+            self.eliminados_service is not None
+            and self.eliminados_service.esta_retirado(sismo_id)
+        )
 
     def _guardar_y_sincronizar(self, sismo: Sismo) -> Sismo:
         sismo_guardado = self.repository.save(sismo)
@@ -222,13 +243,19 @@ class SismoService:
         the key is always derived from current data."""
         station = SismoValidationService.validate_station_id(station_id)
         if not station:
-            raise SismoValidationError("El identificador de la estación no puede estar vacío.")
+            raise SismoValidationError(
+                "El identificador de la estación no puede estar vacío."
+            )
 
         sismo = self.get_by_id(sismo_id)
         sismo.reporting_stations.add(station)
         if sismo.clave is None:
             sismo.prioridad, sismo.clave = self._derivar_prioridad_y_clave(
-                sismo.id, sismo.magnitude, sismo.depth, sismo.epicenter_x, sismo.epicenter_y
+                sismo.id,
+                sismo.magnitude,
+                sismo.depth,
+                sismo.epicenter_x,
+                sismo.epicenter_y,
             )
         return self._guardar_y_sincronizar(sismo)
 
@@ -261,7 +288,9 @@ class SismoService:
         sismo = self.get_by_id(sismo_id)
 
         if revision is None:
-            raise SismoValidationError("La revisión es obligatoria al aplicar una corrección.")
+            raise SismoValidationError(
+                "La revisión es obligatoria al aplicar una corrección."
+            )
         if not isinstance(revision, int):
             raise SismoValidationError("La revisión debe ser un número entero.")
         if revision <= sismo.revision:
@@ -280,7 +309,9 @@ class SismoService:
 
         sismo.magnitude, sismo.depth = mag, depth_v
         sismo.epicenter_x, sismo.epicenter_y, sismo.timestamp = x, y, ts
-        sismo.prioridad, sismo.clave = self._derivar_prioridad_y_clave(sismo.id, mag, depth_v, x, y)
+        sismo.prioridad, sismo.clave = self._derivar_prioridad_y_clave(
+            sismo.id, mag, depth_v, x, y
+        )
         sismo.reporting_stations.add(station)
         sismo.revision = revision
         sismo.status = StatusSismo.PENDIENTE
@@ -310,7 +341,8 @@ class SismoService:
         anterior = self.get_by_id(val_id)
         ids_retirados_antes = (
             self.eliminados_service.todos()
-            if self.eliminados_service is not None else set()
+            if self.eliminados_service is not None
+            else set()
         )
         retirado = replace(
             anterior,
@@ -323,7 +355,9 @@ class SismoService:
                 return False
             if self.historial_repository is not None:
                 self.historial_repository.save(retirado)
-            if self.avl_service is not None and not self.avl_service.eliminar_evento(val_id):
+            if self.avl_service is not None and not self.avl_service.eliminar_evento(
+                val_id
+            ):
                 raise RuntimeError("No se pudo retirar el evento del AVL.")
             if self.eliminados_service is not None:
                 self.eliminados_service.marcar_retirado(val_id)
@@ -333,12 +367,14 @@ class SismoService:
             self._restaurar_eventos([anterior], ids_retirados_antes)
             raise
 
-        self.acciones_service.registrar(AccionSismo(
-            tipo="eliminacion_individual",
-            eventos=[anterior],
-            ids_retirados_antes=ids_retirados_antes,
-            metadatos={"ids_afectados": [val_id]},
-        ))
+        self.acciones_service.registrar(
+            AccionSismo(
+                tipo="eliminacion_individual",
+                eventos=[anterior],
+                ids_retirados_antes=ids_retirados_antes,
+                metadatos={"ids_afectados": [val_id]},
+            )
+        )
         return True
 
     def archivar_rama(self, sismo_id: Any) -> dict:
@@ -352,11 +388,15 @@ class SismoService:
         eventos = [self.get_by_id(identificador) for identificador in ids]
         ids_retirados_antes = (
             self.eliminados_service.todos()
-            if self.eliminados_service is not None else set()
+            if self.eliminados_service is not None
+            else set()
         )
         archivados = [
-            replace(evento, estado_persistencia=EstadoPersistencia.ARCHIVADO,
-                    reporting_stations=set(evento.reporting_stations))
+            replace(
+                evento,
+                estado_persistencia=EstadoPersistencia.ARCHIVADO,
+                reporting_stations=set(evento.reporting_stations),
+            )
             for evento in eventos
         ]
         try:
@@ -369,7 +409,9 @@ class SismoService:
             if self.avl_service is not None:
                 resultado_avl = self.avl_service.eliminar_subarbol(val_id)
                 if sorted(resultado_avl["ids_eliminados"]) != sorted(ids):
-                    raise RuntimeError("El AVL no retiró exactamente la rama capturada.")
+                    raise RuntimeError(
+                        "El AVL no retiró exactamente la rama capturada."
+                    )
             else:
                 resultado_avl = {
                     "ids_capturados": ids,
@@ -383,12 +425,14 @@ class SismoService:
                     self.historial_repository.delete(evento.id)
             raise
 
-        self.acciones_service.registrar(AccionSismo(
-            tipo="archivo_rama",
-            eventos=eventos,
-            ids_retirados_antes=ids_retirados_antes,
-            metadatos=resultado_avl,
-        ))
+        self.acciones_service.registrar(
+            AccionSismo(
+                tipo="archivo_rama",
+                eventos=eventos,
+                ids_retirados_antes=ids_retirados_antes,
+                metadatos=resultado_avl,
+            )
+        )
         return {
             "accion": "archivo_rama",
             "raiz": val_id,
@@ -417,11 +461,13 @@ class SismoService:
 
     def _restaurar_eventos(self, eventos: list[Sismo], ids_retirados: set[int]) -> None:
         for evento in eventos:
-            self.repository.save(replace(
-                evento,
-                estado_persistencia=EstadoPersistencia.ACTIVO,
-                reporting_stations=set(evento.reporting_stations),
-            ))
+            self.repository.save(
+                replace(
+                    evento,
+                    estado_persistencia=EstadoPersistencia.ACTIVO,
+                    reporting_stations=set(evento.reporting_stations),
+                )
+            )
             if self.avl_service is not None:
                 self.avl_service.sincronizar_desde_sismo(evento)
         if self.eliminados_service is not None:
@@ -444,11 +490,18 @@ class SismoService:
         if self.historial_repository is None:
             raise SismoNotFoundError(f"No existe histórico para el evento {sismo_id}.")
         archivado = self.historial_repository.get_by_id(sismo_id)
-        if archivado is None or archivado.estado_persistencia != EstadoPersistencia.ARCHIVADO:
-            raise SismoNotFoundError(f"No existe un evento archivado con ID {sismo_id}.")
+        if (
+            archivado is None
+            or archivado.estado_persistencia != EstadoPersistencia.ARCHIVADO
+        ):
+            raise SismoNotFoundError(
+                f"No existe un evento archivado con ID {sismo_id}."
+            )
         station = SismoValidationService.validate_station_id(station_id)
         if not station:
-            raise SismoValidationError("El identificador de estación no puede estar vacío.")
+            raise SismoValidationError(
+                "El identificador de estación no puede estar vacío."
+            )
         archivado.reporting_stations.add(station)
         self.historial_repository.save(archivado)
         return archivado
@@ -468,12 +521,19 @@ class SismoService:
         if self.historial_repository is None:
             raise SismoNotFoundError(f"No existe histórico para el evento {sismo_id}.")
         anterior = self.historial_repository.get_by_id(sismo_id)
-        if anterior is None or anterior.estado_persistencia != EstadoPersistencia.ARCHIVADO:
-            raise SismoNotFoundError(f"No existe un evento archivado con ID {sismo_id}.")
+        if (
+            anterior is None
+            or anterior.estado_persistencia != EstadoPersistencia.ARCHIVADO
+        ):
+            raise SismoNotFoundError(
+                f"No existe un evento archivado con ID {sismo_id}."
+            )
 
         station = SismoValidationService.validate_station_id(station_id)
         if not station:
-            raise SismoValidationError("El identificador de estación no puede estar vacío.")
+            raise SismoValidationError(
+                "El identificador de estación no puede estar vacío."
+            )
         if not isinstance(revision, int) or revision <= anterior.revision:
             raise SismoValidationError(
                 f"La revisión recibida ({revision}) debe ser mayor "
@@ -482,9 +542,7 @@ class SismoService:
         mag, depth_v, x, y, ts = self._validar_datos_fisicos(
             magnitude, depth, epicenter_x, epicenter_y, timestamp
         )
-        prioridad, clave = self._derivar_prioridad_y_clave(
-            sismo_id, mag, depth_v, x, y
-        )
+        prioridad, clave = self._derivar_prioridad_y_clave(sismo_id, mag, depth_v, x, y)
         nuevo = replace(
             anterior,
             magnitude=mag,
@@ -516,7 +574,13 @@ class SismoService:
     # MANUAL CORRECTION (section 6) -- one single, all-or-nothing action
     # ------------------------------------------------------------------
 
-    CAMPOS_CORREGIBLES = ("magnitude", "depth", "epicenter_x", "epicenter_y", "timestamp")
+    CAMPOS_CORREGIBLES = (
+        "magnitude",
+        "depth",
+        "epicenter_x",
+        "epicenter_y",
+        "timestamp",
+    )
 
     def corregir_evento(self, sismo_id: int, cambios: dict) -> dict:
         """
@@ -543,7 +607,9 @@ class SismoService:
         what happened and why.
         """
         if not isinstance(cambios, dict) or not cambios:
-            raise SismoValidationError("La corrección debe incluir al menos un dato a modificar.")
+            raise SismoValidationError(
+                "La corrección debe incluir al menos un dato a modificar."
+            )
 
         val_id = SismoValidationService.validate_id(sismo_id)
         if "id" in cambios and cambios["id"] not in (None, ""):
@@ -556,10 +622,16 @@ class SismoService:
                     "El identificador es inmutable: no puede cambiarse en una corrección."
                 )
 
-        campos = {k: cambios[k] for k in self.CAMPOS_CORREGIBLES if k in cambios and cambios[k] is not None}
+        campos = {
+            k: cambios[k]
+            for k in self.CAMPOS_CORREGIBLES
+            if k in cambios and cambios[k] is not None
+        }
         if not campos:
             raise SismoValidationError(
-                "La corrección debe incluir al menos uno de: " + ", ".join(self.CAMPOS_CORREGIBLES) + "."
+                "La corrección debe incluir al menos uno de: "
+                + ", ".join(self.CAMPOS_CORREGIBLES)
+                + "."
             )
 
         # 1. previous state (the repository returns an independent copy)
@@ -583,15 +655,22 @@ class SismoService:
         # 3. new version of the event (a new object; `anterior` stays intact)
         nuevo = replace(
             anterior,
-            magnitude=mag, depth=depth_v, epicenter_x=x, epicenter_y=y, timestamp=ts,
-            prioridad=prioridad, clave=clave,
+            magnitude=mag,
+            depth=depth_v,
+            epicenter_x=x,
+            epicenter_y=y,
+            timestamp=ts,
+            prioridad=prioridad,
+            clave=clave,
             revision=anterior.revision + 1,
             status=StatusSismo.PENDIENTE,
             reporting_stations=set(anterior.reporting_stations),
         )
 
         # 4 + 5. tree and persistence as one action, with rollback
-        contadores_avl = self.avl_service.contadores() if self.avl_service is not None else None
+        contadores_avl = (
+            self.avl_service.contadores() if self.avl_service is not None else None
+        )
         reporte_arbol = None
         try:
             if self.avl_service is not None:
@@ -612,21 +691,35 @@ class SismoService:
         return {
             "sismo": nuevo,
             "anterior": anterior,
-            "reporte": self._reporte_correccion(anterior, nuevo, zona_poblada, reporte_arbol),
+            "reporte": self._reporte_correccion(
+                anterior, nuevo, zona_poblada, reporte_arbol
+            ),
         }
 
-    def _reporte_correccion(self, anterior: Sismo, nuevo: Sismo, zona_poblada, reporte_arbol) -> dict:
+    def _reporte_correccion(
+        self, anterior: Sismo, nuevo: Sismo, zona_poblada, reporte_arbol
+    ) -> dict:
         """Human-readable explanation of a correction for the UI."""
         modificados = []
-        if SismoComparison.decimas(anterior.magnitude) != SismoComparison.decimas(nuevo.magnitude):
+        if SismoComparison.decimas(anterior.magnitude) != SismoComparison.decimas(
+            nuevo.magnitude
+        ):
             modificados.append("magnitude")
-        if SismoComparison.decimas(anterior.depth) != SismoComparison.decimas(nuevo.depth):
+        if SismoComparison.decimas(anterior.depth) != SismoComparison.decimas(
+            nuevo.depth
+        ):
             modificados.append("depth")
-        if SismoComparison.millonesimas(anterior.epicenter_x) != SismoComparison.millonesimas(nuevo.epicenter_x):
+        if SismoComparison.millonesimas(
+            anterior.epicenter_x
+        ) != SismoComparison.millonesimas(nuevo.epicenter_x):
             modificados.append("epicenter_x")
-        if SismoComparison.millonesimas(anterior.epicenter_y) != SismoComparison.millonesimas(nuevo.epicenter_y):
+        if SismoComparison.millonesimas(
+            anterior.epicenter_y
+        ) != SismoComparison.millonesimas(nuevo.epicenter_y):
             modificados.append("epicenter_y")
-        if SismoComparison.normalizar_fecha(anterior.timestamp) != SismoComparison.normalizar_fecha(nuevo.timestamp):
+        if SismoComparison.normalizar_fecha(
+            anterior.timestamp
+        ) != SismoComparison.normalizar_fecha(nuevo.timestamp):
             modificados.append("timestamp")
 
         misma_clave = anterior.clave == nuevo.clave
@@ -639,14 +732,20 @@ class SismoService:
         else:
             motivo = []
             if anterior.prioridad != nuevo.prioridad:
-                motivo.append(f"la prioridad pasó de {anterior.prioridad} a {nuevo.prioridad}")
-            if SismoComparison.decimas(anterior.magnitude) != SismoComparison.decimas(nuevo.magnitude):
-                motivo.append(f"la magnitud pasó de {anterior.magnitude} a {nuevo.magnitude}")
+                motivo.append(
+                    f"la prioridad pasó de {anterior.prioridad} a {nuevo.prioridad}"
+                )
+            if SismoComparison.decimas(anterior.magnitude) != SismoComparison.decimas(
+                nuevo.magnitude
+            ):
+                motivo.append(
+                    f"la magnitud pasó de {anterior.magnitude} a {nuevo.magnitude}"
+                )
             explicacion = (
                 f"La clave cambió de {tuple(anterior.clave)} a {tuple(nuevo.clave)} porque "
                 + " y ".join(motivo)
                 + ": el evento se retiró con la clave anterior y se reinsertó con la nueva, "
-                  "conservando su identificador."
+                "conservando su identificador."
             )
 
         return {
@@ -680,11 +779,16 @@ class SismoService:
         timestamp: datetime | str,
     ) -> Sismo:
         """Backwards compatible wrapper around corregir_evento()."""
-        return self.corregir_evento(sismo_id, {
-            "magnitude": magnitude, "depth": depth,
-            "epicenter_x": epicenter_x, "epicenter_y": epicenter_y,
-            "timestamp": timestamp,
-        })["sismo"]
+        return self.corregir_evento(
+            sismo_id,
+            {
+                "magnitude": magnitude,
+                "depth": depth,
+                "epicenter_x": epicenter_x,
+                "epicenter_y": epicenter_y,
+                "timestamp": timestamp,
+            },
+        )["sismo"]
 
     def metricas(self) -> dict:
         return dict(self.contadores)

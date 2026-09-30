@@ -79,3 +79,7 @@ class RelojService:
         'antigüedad estrictamente mayor a T horas')."""
         diferencia = self._reloj_actual - _normalizar(fecha_hora)
         return diferencia.total_seconds() / 3600
+
+    def restaurar(self, fecha_hora: datetime) -> None:
+        """Sets the clock to an exact previous value."""
+        self._reloj_actual = _normalizar(fecha_hora)

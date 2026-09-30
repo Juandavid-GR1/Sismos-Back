@@ -4,7 +4,7 @@ import json
 import os
 from typing import List, Optional
 
-from src.Models.Sismo import EstadoPersistencia, Sismo, StatusSismo
+from src.Models.Sismo import Sismo, StatusSismo
 from src.business.interfaces.IF_Sismos import IF_Sismos
 
 
@@ -43,7 +43,6 @@ class SismoJsonRepository(IF_Sismos):
             "clave": list(sismo.clave) if sismo.clave is not None else None,
             "reporting_stations": list(sismo.reporting_stations),
             "status": sismo.status.value,
-            "estado_persistencia": sismo.estado_persistencia.value,
         }
 
     def _to_entity(self, data: dict) -> Sismo:
@@ -67,9 +66,6 @@ class SismoJsonRepository(IF_Sismos):
             clave=clave,
             reporting_stations=set(data.get("reporting_stations", [])),
             status=StatusSismo(data.get("status", StatusSismo.PENDIENTE.value)),
-            estado_persistencia=EstadoPersistencia(
-                data.get("estado_persistencia", EstadoPersistencia.ACTIVO.value)
-            ),
         )
 
 
@@ -83,8 +79,7 @@ class SismoJsonRepository(IF_Sismos):
                     for item in raw_data:
                         try:
                             sismo = self._to_entity(item)
-                            if sismo.estado_persistencia == EstadoPersistencia.ACTIVO:
-                                self._cache[sismo.id] = sismo
+                            self._cache[sismo.id] = sismo
                         except (KeyError, ValueError, TypeError, IndexError):
                             continue
             except (OSError, json.JSONDecodeError):
@@ -110,8 +105,6 @@ class SismoJsonRepository(IF_Sismos):
     def save(self, sismo: Sismo) -> Sismo:
         """Inserts or updates an event and writes the file. If the write
         fails, the cache is restored so memory and disk never disagree."""
-        if sismo.estado_persistencia != EstadoPersistencia.ACTIVO:
-            raise ValueError("El catálogo activo solo puede almacenar eventos activos.")
         cache = self._cargar_cache()
         previo = cache.get(sismo.id)
         cache[sismo.id] = self._copia(sismo)
@@ -136,3 +129,16 @@ class SismoJsonRepository(IF_Sismos):
         """Next free numeric id (max + 1)."""
         cache = self._cargar_cache()
         return max(cache, default=0) + 1
+
+    def exportar(self) -> List[dict]:
+        """Plain-data copy of every stored event, ordered by id."""
+        cache = self._cargar_cache()
+        return [self._to_dict(cache[i]) for i in sorted(cache)]
+
+    def reemplazar_todo(self, datos: List[dict]) -> None:
+        """Replaces the whole catalog (undo / versions) and writes the file."""
+        self._cache = {}
+        for item in datos:
+            sismo = self._to_entity(item)
+            self._cache[sismo.id] = sismo
+        self._persistir()
