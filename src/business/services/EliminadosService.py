@@ -10,7 +10,7 @@ import os
 from typing import Iterable
 class EliminadosService:
 
-    def __init__(self, json_file: str = "retirados.json"):
+    def __init__(self, json_file: str = "data/retirados.json"):
         self.json_file = json_file
         self._retirados = self._cargar()
 
@@ -42,6 +42,10 @@ class EliminadosService:
     def cargar_ids(self, identificadores: Iterable[int]) -> None:
         self._retirados = {int(identificador) for identificador in identificadores}
         self._persistir()
+
+    def reemplazar(self, identificadores: Iterable[int]) -> None:
+        """Replace the retired-ID set when restoring a complete snapshot."""
+        self.cargar_ids(identificadores)
 
     def esta_retirado(self, sismo_id: int) -> bool:
         return sismo_id in self._retirados

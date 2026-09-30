@@ -10,7 +10,7 @@ from src.Models.Sismo import EstadoPersistencia, Sismo, StatusSismo
 class HistorialSismosRepository:
     """Persistencia de eventos que ya no pertenecen al AVL activo."""
 
-    def __init__(self, json_file: str = "historico_sismos.json") -> None:
+    def __init__(self, json_file: str = "data/historico_sismos.json") -> None:
         self.json_file = json_file
         self._cache: Optional[dict[int, Sismo]] = None
         self._ensure_file_exists()
@@ -120,3 +120,13 @@ class HistorialSismosRepository:
             return False
         self._persistir()
         return True
+
+    def exportar(self) -> list[dict]:
+        return [self._to_dict(sismo) for sismo in self._cargar_cache().values()]
+
+    def reemplazar_todo(self, datos: list[dict]) -> None:
+        self._cache = {}
+        for item in datos:
+            sismo = self._to_entity(item)
+            self._cache[sismo.id] = sismo
+        self._persistir()

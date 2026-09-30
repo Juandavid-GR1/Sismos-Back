@@ -215,10 +215,12 @@ backend/
 
 La fase inicial de eliminación separa el catálogo activo del histórico:
 
-* `sismos.json`: eventos activos que se cargan en el AVL al iniciar el servidor.
-* `historico_sismos.json`: eventos que ya no pertenecen al AVL, incluyendo los
+Todos los archivos JSON de ejecución se guardan bajo `data/`:
+
+* `data/sismos.json`: eventos activos que se cargan en el AVL al iniciar el servidor.
+* `data/historico_sismos.json`: eventos que ya no pertenecen al AVL, incluyendo los
   retirados por una eliminación individual.
-* `retirados.json`: identificadores que no pueden reutilizarse ni aceptarse en
+* `data/retirados.json`: identificadores que no pueden reutilizarse ni aceptarse en
   reportes posteriores hasta que una futura acción de deshacer los libere.
 
 Los registros antiguos que no tengan `estado_persistencia` se interpretan como
@@ -236,7 +238,7 @@ el registro de la acción y los endpoints se implementarán posteriormente.
 ### Acciones atómicas y deshacer
 
 La eliminación individual y el archivo de una rama se registran como una sola
-acción en `HistorialAccionesService`, aunque internamente afecten varios nodos.
+acción en el historial unificado, aunque internamente afecten varios nodos.
 Cada acción conserva snapshots completos para permitir restaurar el catálogo
 activo, el histórico, los identificadores retirados y el AVL.
 
@@ -245,12 +247,19 @@ Endpoints disponibles:
 * `DELETE /sismos/<id>`: eliminación individual.
 * `POST /sismos/<id>/archivar`: archiva la rama completa capturada desde el AVL.
 * `GET /sismos/historico`: lista eventos archivados o retirados.
-* `POST /sismos/acciones/deshacer`: deshace la última eliminación o archivo.
+* `POST /historial/deshacer`: deshace la última acción modificadora.
+* `POST /sismos/acciones/deshacer`: alias de la misma pila unificada.
 
-* `historial_acciones.json`: pila persistente de acciones deshacibles. Se
-  guarda en orden LIFO junto con snapshots completos de los eventos afectados.
-  Al iniciar el servidor se reconstruye la pila, por lo que `deshacer` puede
-  ejecutarse después de reiniciar el proceso.
+* `data/historial_acciones.json`: pila persistente de acciones deshacibles. Se
+  guarda en orden cronológico, desde la acción más antigua hasta la más reciente
+  (base → cima). Al iniciar el servidor se reconstruye la pila, por lo que
+  `deshacer` siempre consume primero la última acción guardada, incluso después
+  de reiniciar el proceso.
+
+La pila unificada registra una sola acción por cambio efectivo, incluyendo
+creaciones, correcciones, marcado como revisado, eliminación individual,
+archivo de ramas y procesamiento de reportes. Las dos rutas de deshacer
+consultan el mismo `HistorialService`.
 
 ### Reportes sobre eventos archivados
 

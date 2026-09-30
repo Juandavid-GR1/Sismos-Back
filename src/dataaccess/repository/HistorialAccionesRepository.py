@@ -10,7 +10,7 @@ from src.Models.AccionSismo import AccionSismo
 class HistorialAccionesRepository:
     """Persiste la pila de acciones deshacibles en orden de cima a base."""
 
-    def __init__(self, json_file: str = "historial_acciones.json") -> None:
+    def __init__(self, json_file: str = "data/historial_acciones_sismos.json") -> None:
         self.json_file = json_file
         self._ensure_file_exists()
 

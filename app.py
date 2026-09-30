@@ -6,7 +6,9 @@ from datetime import datetime, timedelta
 from src.dataaccess.repository.JsonColasRepository import ColaJsonPersistencia
 from src.dataaccess.repository.SismoJsonRepository import SismoJsonRepository
 from src.dataaccess.repository.HistorialSismosRepository import HistorialSismosRepository
-from src.dataaccess.repository.HistorialAccionesRepository import HistorialAccionesRepository
+from src.dataaccess.repository.HistorialGeneralRepository import (
+    HistorialGeneralRepository,
+)
 from src.dataaccess.repository.ZonaRepository import ZonaRepository
 
 # Algoritmos y Servicios
@@ -14,7 +16,6 @@ from src.business.algortimos.sismos.Priority_Key_sismo import PriorityKeyService
 from src.business.services.AvlService import AvlService
 from src.business.services.cola_reportes import ColaReportesService
 from src.business.services.EliminadosService import EliminadosService
-from src.business.services.HistorialAccionesService import HistorialAccionesService
 from src.business.services.ModoAutomaticoService import ModoAutomaticoService
 from src.business.services.reporte_service import ReporteService
 from src.business.services.RelojService import RelojService
@@ -39,9 +40,9 @@ CORS(app)
 # REPOSITORIOS Y PERSISTENCIA
 # =========================================================
 
-sismo_repository = SismoJsonRepository()
-historial_repository = HistorialSismosRepository()
-zona_repository = ZonaRepository("zonas.json")
+sismo_repository = SismoJsonRepository("data/sismos.json")
+historial_repository = HistorialSismosRepository("data/historico_sismos.json")
+zona_repository = ZonaRepository("data/zonas.json")
 cola_persistencia = ColaJsonPersistencia("data/reportes_cola.json")
 
 
@@ -57,7 +58,6 @@ zona_service = ZonaService(zona_repository)
 # set it to the date of the scenario / test cases.
 reloj_service = RelojService(hora_inicial=datetime.now() + timedelta(days=365))
 eliminados_service = EliminadosService()
-acciones_service = HistorialAccionesService(HistorialAccionesRepository())
 sismo_service = SismoService(
     sismo_repository,
     avl_service,
@@ -65,9 +65,7 @@ sismo_service = SismoService(
     reloj_service,
     eliminados_service,
     historial_repository,
-    acciones_service,
 )
-sismo_service = SismoService(sismo_repository, avl_service, zona_service, reloj_service, eliminados_service)
 priority_key_service = PriorityKeyService()
 
 reporte_service = ReporteService(
@@ -102,9 +100,12 @@ register_reloj_routes(app, reloj_service)
 # recorded as one action with a snapshot of the previous state.
 estado_service = EstadoService(
     sismo_repository, avl_service, eliminados_service,
-    sismo_service, reloj_service, cola_reportes,
+    sismo_service, reloj_service, cola_reportes, historial_repository,
 )
-historial_service = HistorialService(estado_service)
+historial_service = HistorialService(
+    estado_service,
+    HistorialGeneralRepository("data/historial_acciones.json"),
+)
 register_historial_routes(app, estado_service, historial_service)
 
 # Rebuild the in-memory AVL from the persisted catalog. Without this the

@@ -14,10 +14,6 @@ from src.dataaccess.repository.HistorialSismosRepository import (
 )
 from src.business.services.AvlService import AvlService
 from src.business.services.EliminadosService import EliminadosService
-from src.business.services.HistorialAccionesService import (
-    AccionSismo,
-    HistorialAccionesService,
-)
 from src.business.services.RelojService import RelojService
 from src.business.services.ZonaService import ZonaService
 
@@ -67,7 +63,7 @@ class SismoService:
         reloj_service: Optional[RelojService] = None,
         eliminados_service: Optional[EliminadosService] = None,
         historial_repository: Optional[HistorialSismosRepository] = None,
-        acciones_service: Optional[HistorialAccionesService] = None,
+        acciones_service: object | None = None,
     ):
         """Inicializa el servicio con su repositorio de persistencia.
 
@@ -95,7 +91,9 @@ class SismoService:
         self.reloj_service = reloj_service
         self.eliminados_service = eliminados_service
         self.historial_repository = historial_repository
-        self.acciones_service = acciones_service or HistorialAccionesService()
+        # Kept only for constructor compatibility; undo is centralized in
+        # HistorialService and this legacy service is never invoked.
+        self._legacy_actions_service = acciones_service
         # Accumulated metrics of this service (section 14). They will be
         # part of the restorable state when undo/versions are added.
         self.contadores = {"correcciones_aceptadas": 0}
@@ -367,14 +365,6 @@ class SismoService:
             self._restaurar_eventos([anterior], ids_retirados_antes)
             raise
 
-        self.acciones_service.registrar(
-            AccionSismo(
-                tipo="eliminacion_individual",
-                eventos=[anterior],
-                ids_retirados_antes=ids_retirados_antes,
-                metadatos={"ids_afectados": [val_id]},
-            )
-        )
         return True
 
     def archivar_rama(self, sismo_id: Any) -> dict:
@@ -425,38 +415,12 @@ class SismoService:
                     self.historial_repository.delete(evento.id)
             raise
 
-        self.acciones_service.registrar(
-            AccionSismo(
-                tipo="archivo_rama",
-                eventos=eventos,
-                ids_retirados_antes=ids_retirados_antes,
-                metadatos=resultado_avl,
-            )
-        )
         return {
             "accion": "archivo_rama",
             "raiz": val_id,
             "eventos_archivados": ids,
             "cantidad": len(ids),
             "avl": resultado_avl,
-        }
-
-    def deshacer_ultima_accion(self) -> dict:
-        """Restores the latest deletion or branch archive as one action."""
-        accion = self.acciones_service.deshacer_ultima()
-        try:
-            for evento in accion.eventos:
-                if self.historial_repository is not None:
-                    self.historial_repository.delete(evento.id)
-            self._restaurar_eventos(accion.eventos, accion.ids_retirados_antes)
-            self.acciones_service.confirmar_deshacer()
-        except Exception:
-            self.acciones_service.registrar(accion)
-            raise
-        return {
-            "accion_deshacida": accion.tipo,
-            "eventos_restaurados": [evento.id for evento in accion.eventos],
-            "cantidad": len(accion.eventos),
         }
 
     def _restaurar_eventos(self, eventos: list[Sismo], ids_retirados: set[int]) -> None:

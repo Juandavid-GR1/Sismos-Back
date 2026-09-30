@@ -3,7 +3,11 @@ from flask import Blueprint, g, jsonify, request
 from src.business.services.HistorialService import EstadoService, HistorialService
 
 METODOS_QUE_MODIFICAN = {"POST", "PUT", "PATCH", "DELETE"}
-PREFIJOS_EXCLUIDOS = ("/historial", "/estaciones")
+PREFIJOS_EXCLUIDOS = (
+    "/historial",
+    "/estaciones",
+    "/sismos/acciones/deshacer",
+)
 
 
 def _sis(valor):
@@ -90,11 +94,22 @@ def register_historial_routes(app, estado_service: EstadoService, historial: His
     def deshacer():
         accion = historial.deshacer()
         if accion is None:
-            return jsonify({"error": "No hay acciones para deshacer."}), 404
+            return jsonify({"error": "No hay acciones para deshacer."}), 409
         return jsonify({
             "mensaje": f"Se deshizo: {accion['descripcion']}",
             "accion": accion,
             "pendientes": len(historial.listar()),
         })
+
+    @app.route("/sismos/acciones/deshacer", methods=["POST"])
+    def deshacer_sismo_alias():
+        accion = historial.deshacer()
+        if accion is None:
+            return jsonify({"error": "No hay acciones para deshacer."}), 409
+        return jsonify({
+            "mensaje": f"Se deshizo: {accion['descripcion']}",
+            "accion": accion,
+            "pendientes": len(historial.listar()),
+        }), 200
 
     app.register_blueprint(bp)

@@ -1,0 +1,4156 @@
+[
+  {
+    "numero": 6,
+    "descripcion": "Alta de SIS-990010",
+    "hora": "22:53:06",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 1
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 7,
+    "descripcion": "Alta de SIS-990020",
+    "hora": "22:53:15",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 1,
+            "der": 2
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 8,
+    "descripcion": "Alta de SIS-990030",
+    "hora": "22:53:25",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 2
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 3,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 10,
+    "descripcion": "Reporte encolado (SIS-990001, estación STA-REPORT-01, rev. 2)",
+    "hora": "23:00:10",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 2
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 3,
+            "der": 4
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 1,
+            "derecha": 1
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 11,
+    "descripcion": "Paso de cola: alta (SIS-990001)",
+    "hora": "23:01:32",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 2
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 3,
+            "der": 4
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 1,
+            "derecha": 1
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": [
+        {
+          "sismo_id": 990001,
+          "station_id": "STA-REPORT-01",
+          "magnitude": 4.8,
+          "depth": 35,
+          "epicenter_x": -70,
+          "epicenter_y": 4,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2
+        }
+      ]
+    }
+  },
+  {
+    "numero": 12,
+    "descripcion": "Reporte encolado (SIS-990001, estación STA-REPORT-02, rev. 2)",
+    "hora": "23:02:48",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 13,
+    "descripcion": "Paso de cola: confirmacion (SIS-990001)",
+    "hora": "23:02:56",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": [
+        {
+          "sismo_id": 990001,
+          "station_id": "STA-REPORT-02",
+          "magnitude": 4.8,
+          "depth": 35,
+          "epicenter_x": -70,
+          "epicenter_y": 4,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2
+        }
+      ]
+    }
+  },
+  {
+    "numero": 14,
+    "descripcion": "Reporte encolado (SIS-990001, estación STA-CONFLICT, rev. 2)",
+    "hora": "23:04:01",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 15,
+    "descripcion": "Paso de cola: conflicto (evento)",
+    "hora": "23:04:08",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": [
+        {
+          "sismo_id": 990001,
+          "station_id": "STA-CONFLICT",
+          "magnitude": 6.0,
+          "depth": 50,
+          "epicenter_x": -70,
+          "epicenter_y": 4,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2
+        }
+      ]
+    }
+  },
+  {
+    "numero": 16,
+    "descripcion": "Reporte encolado (SIS-990001, estación STA-OLD, rev. 1)",
+    "hora": "23:04:38",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 17,
+    "descripcion": "Paso de cola: reporte_antiguo (evento)",
+    "hora": "23:04:50",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": [
+        {
+          "sismo_id": 990001,
+          "station_id": "STA-OLD",
+          "magnitude": 4.8,
+          "depth": 35,
+          "epicenter_x": -70,
+          "epicenter_y": 4,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1
+        }
+      ]
+    }
+  },
+  {
+    "numero": 18,
+    "descripcion": "Reporte encolado (SIS-990100, estación STA-NEW, rev. 7)",
+    "hora": "23:05:15",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 19,
+    "descripcion": "Paso de cola: alta (SIS-990100)",
+    "hora": "23:05:29",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": [
+        {
+          "sismo_id": 990100,
+          "station_id": "STA-NEW",
+          "magnitude": 3.5,
+          "depth": 15,
+          "epicenter_x": -70,
+          "epicenter_y": 4,
+          "timestamp": "2026-01-05T12:00:00",
+          "revision": 7
+        }
+      ]
+    }
+  },
+  {
+    "numero": 20,
+    "descripcion": "Reporte encolado (SIS-990020, estación STA-ARCHIVE-01, rev. 1)",
+    "hora": "23:06:20",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990100,
+          "magnitude": 3.5,
+          "depth": 15.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-05T12:00:00",
+          "revision": 7,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990100
+          ],
+          "reporting_stations": [
+            "STA-NEW"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990100
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 7
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 5,
+            "der": 6
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 2,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 3,
+            "derecha": 3
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 21,
+    "descripcion": "Paso de cola: confirmacion (SIS-990020)",
+    "hora": "23:06:27",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990100,
+          "magnitude": 3.5,
+          "depth": 15.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-05T12:00:00",
+          "revision": 7,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990100
+          ],
+          "reporting_stations": [
+            "STA-NEW"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990100
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 7
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 5,
+            "der": 6
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 2,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 3,
+            "derecha": 3
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": [
+        {
+          "sismo_id": 990020,
+          "station_id": "STA-ARCHIVE-01",
+          "magnitude": 4.5,
+          "depth": 30,
+          "epicenter_x": -70,
+          "epicenter_y": 4,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1
+        }
+      ]
+    }
+  },
+  {
+    "numero": 22,
+    "descripcion": "Reporte encolado (SIS-990020, estación STA-ARCHIVE-02, rev. 8)",
+    "hora": "23:07:13",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-ARCHIVE-01",
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990100,
+          "magnitude": 3.5,
+          "depth": 15.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-05T12:00:00",
+          "revision": 7,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990100
+          ],
+          "reporting_stations": [
+            "STA-NEW"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990100
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 7
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 5,
+            "der": 6
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 2,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 3,
+            "derecha": 3
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  },
+  {
+    "numero": 23,
+    "descripcion": "Paso de cola: correccion (SIS-990020)",
+    "hora": "23:07:18",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-ARCHIVE-01",
+            "STA-20"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990100,
+          "magnitude": 3.5,
+          "depth": 15.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-05T12:00:00",
+          "revision": 7,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990100
+          ],
+          "reporting_stations": [
+            "STA-NEW"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990100
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 7
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 5,
+            "der": 6
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 2,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 3,
+            "derecha": 3
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": [
+        {
+          "sismo_id": 990020,
+          "station_id": "STA-ARCHIVE-02",
+          "magnitude": 5.1,
+          "depth": 45,
+          "epicenter_x": -71,
+          "epicenter_y": 5,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 8
+        }
+      ]
+    }
+  },
+  {
+    "numero": 24,
+    "descripcion": "SIS-990001 marcado como revisado",
+    "hora": "23:08:48",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 900002,
+          "magnitude": 7.4,
+          "depth": 30.0,
+          "epicenter_x": -30.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            7.4,
+            900002
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990001,
+          "magnitude": 4.8,
+          "depth": 35.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 2,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.8,
+            990001
+          ],
+          "reporting_stations": [
+            "STA-REPORT-01",
+            "STA-REPORT-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990010,
+          "magnitude": 3.5,
+          "depth": 20.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990010
+          ],
+          "reporting_stations": [
+            "STA-10"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990020,
+          "magnitude": 5.1,
+          "depth": 45.0,
+          "epicenter_x": -71.0,
+          "epicenter_y": 5.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 8,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.1,
+            990020
+          ],
+          "reporting_stations": [
+            "STA-ARCHIVE-01",
+            "STA-20",
+            "STA-ARCHIVE-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990030,
+          "magnitude": 5.5,
+          "depth": 40.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-03T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            5.5,
+            990030
+          ],
+          "reporting_stations": [
+            "STA-30"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 990100,
+          "magnitude": 3.5,
+          "depth": 15.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-05T12:00:00",
+          "revision": 7,
+          "prioridad": 1,
+          "clave": [
+            1,
+            3.5,
+            990100
+          ],
+          "reporting_stations": [
+            "STA-NEW"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990100
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 7
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              3.5,
+              990010
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              5.5,
+              990030
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 4,
+            "der": 6
+          },
+          {
+            "clave": [
+              2,
+              4.8,
+              990001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 2
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 5
+          },
+          {
+            "clave": [
+              2,
+              5.1,
+              990020
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 8
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              7.4,
+              900002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 2,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 3,
+            "derecha": 3
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 1
+      },
+      "reloj": "2027-09-29T22:26:04.498104",
+      "cola": []
+    }
+  }
+]

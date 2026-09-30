@@ -4,14 +4,14 @@ import json
 import os
 from typing import List, Optional
 
-from src.Models.Sismo import Sismo, StatusSismo
+from src.Models.Sismo import EstadoPersistencia, Sismo, StatusSismo
 from src.business.interfaces.IF_Sismos import IF_Sismos
 
 
 class SismoJsonRepository(IF_Sismos):
     """Implementación concreta de IF_Sismos que almacena los eventos sísmicos en un archivo JSON."""
 
-    def __init__(self, json_file: str = "sismos.json") -> None:
+    def __init__(self, json_file: str = "data/sismos.json") -> None:
         self.json_file = json_file
         self._cache: Optional[dict] = None
         self._ensure_file_exists()
@@ -43,6 +43,7 @@ class SismoJsonRepository(IF_Sismos):
             "clave": list(sismo.clave) if sismo.clave is not None else None,
             "reporting_stations": list(sismo.reporting_stations),
             "status": sismo.status.value,
+            "estado_persistencia": sismo.estado_persistencia.value,
         }
 
     def _to_entity(self, data: dict) -> Sismo:
@@ -66,6 +67,9 @@ class SismoJsonRepository(IF_Sismos):
             clave=clave,
             reporting_stations=set(data.get("reporting_stations", [])),
             status=StatusSismo(data.get("status", StatusSismo.PENDIENTE.value)),
+            estado_persistencia=EstadoPersistencia(
+                data.get("estado_persistencia", EstadoPersistencia.ACTIVO.value)
+            ),
         )
 
 
@@ -79,7 +83,8 @@ class SismoJsonRepository(IF_Sismos):
                     for item in raw_data:
                         try:
                             sismo = self._to_entity(item)
-                            self._cache[sismo.id] = sismo
+                            if sismo.estado_persistencia == EstadoPersistencia.ACTIVO:
+                                self._cache[sismo.id] = sismo
                         except (KeyError, ValueError, TypeError, IndexError):
                             continue
             except (OSError, json.JSONDecodeError):

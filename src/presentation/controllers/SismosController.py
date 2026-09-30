@@ -242,14 +242,6 @@ def register_sismo_routes(app, sismo_service: SismoService):
         """Archives the complete AVL subtree rooted at an event."""
         return jsonify(sismo_service.archivar_rama(sismo_id)), 200
 
-    @sismo_bp.route("/acciones/deshacer", methods=["POST"])
-    def undo_last_action() -> tuple[Response, int]:
-        """Undoes the latest deletion or branch archive."""
-        try:
-            return jsonify(sismo_service.deshacer_ultima_accion()), 200
-        except LookupError as error:
-            return jsonify({"error": str(error)}), 409
-
     @sismo_bp.route("/<int:sismo_id>", methods=["DELETE"])
     def delete_sismo(sismo_id: int) -> tuple[Response, int]:
         """Elimina individualmente un evento y registra la acción."""
@@ -258,10 +250,6 @@ def register_sismo_routes(app, sismo_service: SismoService):
                 "error": "Not Found",
                 "message": f"No se encontró el evento sísmico con ID {sismo_id}.",
             }), 404
-    @sismo_bp.route("/<int:sismo_id>", methods=["DELETE"])
-    def delete_sismo(sismo_id: int) -> tuple[Response, int]:
-        """Elimina permanentemente un evento sísmico del sistema."""
-        sismo_service.delete(sismo_id)
 
         return jsonify({
             "message": f"Evento sísmico con ID {sismo_id} eliminado exitosamente.",
@@ -325,10 +313,5 @@ def register_sismo_routes(app, sismo_service: SismoService):
         validated_sismo = sismo_service.audit_and_validate(sismo_id)
 
         return jsonify(_sismo_to_dict(validated_sismo)), 200
-        resultado = sismo_service.marcar_revisado(sismo_id)
-        cuerpo = _sismo_to_dict(resultado["sismo"])
-        cuerpo["cambio"] = resultado["cambio"]
-        cuerpo["atencion"] = resultado["reporte"]
-        return jsonify(cuerpo), 200
 
     app.register_blueprint(sismo_bp)

@@ -7,7 +7,7 @@ from src.Models.Estaciones import Station
 class JsonStationRepository(IF_Estaciones):
     """Implementación de la interfaz para persistencia física en archivo JSON."""
 
-    def __init__(self, json_file: str = "stations.json"):
+    def __init__(self, json_file: str = "data/stations.json"):
         self.json_file = json_file
         self._ensure_file_exists()
 

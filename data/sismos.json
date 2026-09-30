@@ -1,0 +1,22 @@
+[
+  {
+    "id": 900001,
+    "magnitude": 4.5,
+    "depth": 30.0,
+    "epicenter_x": -70.0,
+    "epicenter_y": 4.0,
+    "timestamp": "2026-01-01T12:00:00",
+    "revision": 1,
+    "prioridad": 2,
+    "clave": [
+      2,
+      4.5,
+      900001
+    ],
+    "reporting_stations": [
+      "STA-01"
+    ],
+    "status": "Pendiente",
+    "estado_persistencia": "activo"
+  }
+]

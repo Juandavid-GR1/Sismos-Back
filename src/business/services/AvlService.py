@@ -158,6 +158,18 @@ class AvlService:
         individual o archivo -- quien llama decide el motivo)."""
         return self._arbol.eliminarPorId(sismo_id)
 
+    def capturar_subarbol(self, sismo_id: int) -> list[int]:
+        return self._arbol.idsDeSubarbolPorId(sismo_id)
+
+    def eliminar_subarbol(self, sismo_id: int) -> dict:
+        ids = self.capturar_subarbol(sismo_id)
+        eliminados = self._arbol.eliminarPorIds(ids)
+        return {
+            "ids_capturados": ids,
+            "ids_eliminados": eliminados,
+            "cantidad": len(eliminados),
+        }
+
     def profundidad_de(self, sismo_id: int):
         """Profundidad del nodo desde la raíz (raíz=0), o None si el
         id no está activo -- necesario para 'Consulta de un evento'
