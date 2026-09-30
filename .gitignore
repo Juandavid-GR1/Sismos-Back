@@ -1,0 +1,15 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Datos de ejecución (cambian en cada corrida)
+sismos.json
+data/*.json
+
+# Sistema / editores
+.DS_Store
+.vscode/
+.idea/
