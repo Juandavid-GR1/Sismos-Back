@@ -53,7 +53,13 @@ def describir_accion(endpoint: str, vista: dict, cuerpo: dict, respuesta: dict) 
     return generar() if generar else f"{request.method} {request.path}"
 
 
-def register_historial_routes(app, estado_service: EstadoService, historial: HistorialService):
+def register_historial_routes(
+    app,
+    estado_service: EstadoService,
+    historial: HistorialService,
+    referencia_service=None,
+    configuracion_service=None,
+):
     bp = Blueprint("historial", __name__, url_prefix="/historial")
 
     def _aplica():
@@ -65,6 +71,8 @@ def register_historial_routes(app, estado_service: EstadoService, historial: His
     @app.before_request
     def capturar_estado_previo():
         if _aplica():
+            if configuracion_service is not None:
+                configuracion_service.actualizar_marcas()
             g.estado_previo = estado_service.capturar()
 
     @app.after_request
@@ -73,6 +81,12 @@ def register_historial_routes(app, estado_service: EstadoService, historial: His
         if estado_previo is None:
             return response
         estado_actual = estado_service.capturar()
+        if configuracion_service is not None:
+            configuracion_service.actualizar_marcas()
+            estado_actual = estado_service.capturar()
+        if referencia_service is not None:
+            referencia_service.recalcular_todas()
+            estado_actual = estado_service.capturar()
         if EstadoService.huella(estado_actual) == EstadoService.huella(estado_previo):
             return response          # nothing changed -> not an action
 

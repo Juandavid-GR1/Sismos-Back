@@ -222,6 +222,10 @@ Todos los archivos JSON de ejecución se guardan bajo `data/`:
   retirados por una eliminación individual.
 * `data/retirados.json`: identificadores que no pueden reutilizarse ni aceptarse en
   reportes posteriores hasta que una futura acción de deshacer los libere.
+* `data/referencias_sismo.json`: asociaciones seleccionadas y configuración de
+  ventana temporal `W` y radio `R`.
+* `data/configuracion_escenario.json`: límite de profundidad `L` y antigüedad
+  mínima `T` para las fases de acceso costoso y archivo de ramas.
 
 Los registros antiguos que no tengan `estado_persistencia` se interpretan como
 activos para conservar compatibilidad con los datos existentes.
@@ -232,8 +236,12 @@ La estructura AVL permite capturar una rama por identificador mediante
 `AvlService.capturar_subarbol(id)`. La lista devuelta es una instantánea tomada
 antes de modificar el árbol. `AvlService.eliminar_subarbol(id)` utiliza esa
 misma lista para retirar los nodos, aunque las eliminaciones intermedias
-produzcan rotaciones. Esta fase solo modifica el AVL; el traslado al histórico,
-el registro de la acción y los endpoints se implementarán posteriormente.
+produzcan rotaciones. El servicio también evalúa automáticamente todos los
+subárboles activos: una rama es elegible cuando todos sus eventos tienen
+prioridad baja y antigüedad estrictamente mayor que `T`. Se selecciona la rama
+con más nodos; los empates se resuelven por profundidad de la raíz y luego por
+identificador numérico descendente. La captura de identificadores se realiza
+antes de retirar la rama.
 
 ### Acciones atómicas y deshacer
 
@@ -246,6 +254,11 @@ Endpoints disponibles:
 
 * `DELETE /sismos/<id>`: eliminación individual.
 * `POST /sismos/<id>/archivar`: archiva la rama completa capturada desde el AVL.
+* `GET /sismos/archivo-rama/elegible`: muestra la rama seleccionada por las
+  reglas automáticas, sus identificadores, cantidad, profundidad y criterios.
+* `POST /sismos/archivo-rama/elegible`: archiva la rama seleccionada
+  automáticamente. Si no existe una rama elegible, devuelve esa situación sin
+  modificar el estado.
 * `GET /sismos/historico`: lista eventos archivados o retirados.
 * `POST /historial/deshacer`: deshace la última acción modificadora.
 * `POST /sismos/acciones/deshacer`: alias de la misma pila unificada.
@@ -260,6 +273,85 @@ La pila unificada registra una sola acción por cambio efectivo, incluyendo
 creaciones, correcciones, marcado como revisado, eliminación individual,
 archivo de ramas y procesamiento de reportes. Las dos rutas de deshacer
 consultan el mismo `HistorialService`.
+
+### Profundidad y presupuesto de acceso
+
+La configuración se consulta en `GET /arbol/configuracion` y se modifica con
+`PUT /arbol/configuracion`. Los valores iniciales son `L = 3` y `T = 72` horas.
+El cuerpo acepta `limite_profundidad` y `antiguedad_archivo_horas`, o sus
+abreviaturas `L` y `T`. `L` debe ser un entero no negativo y `T` debe ser
+positivo.
+
+`GET /arbol/metricas` conserva el parámetro opcional `L` por compatibilidad.
+Cada nodo del árbol informa por separado su prioridad (`P`) y `accesoCostoso`;
+esta marca se determina para eventos de prioridad alta cuando su profundidad
+es estrictamente mayor que `L`, y el costo simulado es `profundidad + 1`.
+
+### Asociaciones entre eventos
+
+Las rutas `/referencias-sismo` muestran los candidatos y la asociación actual.
+Los candidatos consideran eventos activos y archivados, excluyen retirados y
+se ordenan de forma determinista por distancia, magnitud y luego identificador.
+La asociación se recalcula después de cada operación modificadora. La distancia
+conserva el cálculo geográfico Haversine usado por el proyecto para sus
+coordenadas de latitud y longitud. La configuración inicial es `W = 48` horas
+y `R = 40` km; puede consultarse con `GET /referencias-sismo/configuracion` y
+modificarse con `PUT /referencias-sismo/configuracion` enviando
+`{"ventana_horas": 48, "radio_km": 40}`.
+
+La fase 4 amplía las consultas de asociaciones:
+
+* `GET /referencias-sismo/<id>` mantiene `referencias` por compatibilidad y
+  ahora también devuelve `candidatos`, la `referencia` elegida y
+  `eventos_que_lo usan_como_referencia`.
+* `GET /referencias-sismo/<id>/detalle` devuelve la consulta completa,
+  incluyendo el estado `activo` o `archivado` de cada evento y la configuración
+  vigente de `W` y `R`.
+* `GET /referencias-sismo/<id>/usos` lista los eventos que tienen al evento
+  indicado como referencia.
+
+Los eventos retirados no aparecen en estas consultas. Las asociaciones siguen
+siendo deterministas y cada evento receptor conserva como máximo una referencia,
+mientras que una referencia puede ser utilizada por varios receptores.
+
+### Consultas de eventos
+
+La fase 3 expone las consultas del catálogo activo:
+
+* `GET /sismos/consultas/pendientes?k=3`: devuelve hasta `k` eventos
+  pendientes en orden descendente de `K=(P,M,I)`.
+* `GET /sismos/consultas/magnitud?min=4.0&max=5.5`: devuelve eventos dentro
+  del intervalo inclusivo de magnitud.
+* `GET /sismos/consultas/profundidad-fecha?profundidad_max=30&fecha_desde=2026-01-01T00:00:00&fecha_hasta=2026-12-31T23:59:59`:
+  devuelve eventos cuya profundidad del hipocentro es menor o igual al límite
+  y cuya fecha está dentro del intervalo inclusivo.
+
+Las respuestas incluyen `nodos_avl_examinados`. La consulta de pendientes puede
+detenerse al encontrar `k` eventos; las consultas por magnitud y por
+profundidad/fecha examinan todos los nodos porque esos atributos no permiten
+descartar ramas del AVL de forma segura en todos los casos.
+
+### Comparación AVL contra BST
+
+La fase 5 usa árboles temporales y no modifica el AVL operativo. Ambos árboles
+reciben las mismas claves `K=(P,M,I)` y se comparan con distintos órdenes de
+inserción:
+
+* `GET /arbol/comparacion`: evalúa `original`, `ascendente` y `descendente`.
+* `GET /arbol/comparacion?orden=ascendente`: evalúa un orden específico.
+* `POST /arbol/comparacion`: acepta opcionalmente:
+
+```json
+{
+  "ids": [910001, 910002, 910003],
+  "ordenes": ["original", "ascendente", "descendente"]
+}
+```
+
+El resultado informa para cada orden la altura, cantidad de hojas,
+comparaciones de inserción, total/promedio/máximo de comparaciones de búsqueda
+y el detalle de cada clave buscada. El conjunto de búsqueda es el mismo en AVL
+y BST, por lo que la comparación estructural es reproducible.
 
 ### Reportes sobre eventos archivados
 

@@ -10,7 +10,7 @@ class EstadoService:
 
     def __init__(self, sismo_repository, avl_service, eliminados_service,
                  sismo_service, reloj_service, cola_reportes,
-                 historial_repository):
+                 historial_repository, referencias_repository=None):
         self.repo = sismo_repository
         self.avl = avl_service
         self.eliminados = eliminados_service
@@ -18,6 +18,11 @@ class EstadoService:
         self.reloj = reloj_service
         self.cola = cola_reportes
         self.historial = historial_repository
+        self.referencias = referencias_repository
+        self.configuracion = None
+
+    def conectar_configuracion(self, configuracion):
+        self.configuracion = configuracion
 
     def capturar(self) -> dict:
         arbol = self.avl.get_arbol()
@@ -33,6 +38,14 @@ class EstadoService:
             "metricas": dict(self.sismos.contadores),
             "reloj": self.reloj.obtener_reloj().isoformat(),
             "cola": self.cola.exportar(),
+            "referencias": (
+                self.referencias.exportar()
+                if self.referencias is not None else {}
+            ),
+            "configuracion": (
+                self.configuracion.exportar()
+                if self.configuracion is not None else {}
+            ),
         }
 
     def restaurar(self, estado: dict) -> None:
@@ -46,6 +59,10 @@ class EstadoService:
         self.sismos.contadores = dict(estado["metricas"])
         self.reloj.restaurar(datetime.fromisoformat(estado["reloj"]))
         self.cola.reemplazar(estado["cola"])
+        if self.referencias is not None and "referencias" in estado:
+            self.referencias.reemplazar_todo(estado.get("referencias", {}))
+        if self.configuracion is not None and "configuracion" in estado:
+            self.configuracion.reemplazar(estado["configuracion"])
 
     @staticmethod
     def huella(estado: dict) -> str:

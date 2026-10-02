@@ -13,6 +13,9 @@ from src.dataaccess.repository.HistorialSismosRepository import (
     HistorialSismosRepository,
 )
 from src.business.services.AvlService import AvlService
+from src.business.services.ConfiguracionEscenarioService import (
+    ConfiguracionEscenarioService,
+)
 from src.business.services.EliminadosService import EliminadosService
 from src.business.services.RelojService import RelojService
 from src.business.services.ZonaService import ZonaService
@@ -63,6 +66,7 @@ class SismoService:
         reloj_service: Optional[RelojService] = None,
         eliminados_service: Optional[EliminadosService] = None,
         historial_repository: Optional[HistorialSismosRepository] = None,
+        configuracion_service: Optional[ConfiguracionEscenarioService] = None,
         acciones_service: object | None = None,
     ):
         """Inicializa el servicio con su repositorio de persistencia.
@@ -91,6 +95,7 @@ class SismoService:
         self.reloj_service = reloj_service
         self.eliminados_service = eliminados_service
         self.historial_repository = historial_repository
+        self.configuracion_service = configuracion_service
         # Kept only for constructor compatibility; undo is centralized in
         # HistorialService and this legacy service is never invoked.
         self._legacy_actions_service = acciones_service
@@ -422,6 +427,81 @@ class SismoService:
             "cantidad": len(ids),
             "avl": resultado_avl,
         }
+
+    def ramas_elegibles_para_archivo(self) -> list[dict]:
+        """Returns a frozen evaluation of every eligible active subtree."""
+        if self.avl_service is None or self.reloj_service is None:
+            return []
+
+        limite_antiguedad = (
+            self.configuracion_service.antiguedad_archivo_horas
+            if self.configuracion_service is not None
+            else 72.0
+        )
+        arbol = self.avl_service.get_arbol()
+        candidatos = []
+        for nodo in arbol.inorden():
+            raiz_id = nodo.getClave()[2]
+            ids = self.avl_service.capturar_subarbol(raiz_id)
+            eventos = [self.get_by_id(identificador) for identificador in ids]
+            antiguedades = [
+                self.reloj_service.antiguedad_en_horas(evento.timestamp)
+                for evento in eventos
+            ]
+            prioridad_baja = all(evento.clave is not None and evento.clave[0] == 1 for evento in eventos)
+            antiguedad_suficiente = all(
+                antiguedad > limite_antiguedad for antiguedad in antiguedades
+            )
+            if prioridad_baja and antiguedad_suficiente:
+                candidatos.append({
+                    "raiz": raiz_id,
+                    "ids": ids,
+                    "cantidad": len(ids),
+                    "profundidad_raiz": arbol.profundidadDe(nodo),
+                    "prioridad_baja": True,
+                    "antiguedad_minima_horas": min(antiguedades),
+                    "T": limite_antiguedad,
+                })
+        return sorted(
+            candidatos,
+            key=lambda candidato: (
+                -candidato["cantidad"],
+                -candidato["profundidad_raiz"],
+                -candidato["raiz"],
+            ),
+        )
+
+    def previsualizar_archivo_rama_elegible(self) -> dict:
+        candidatos = self.ramas_elegibles_para_archivo()
+        if not candidatos:
+            return {
+                "elegible": False,
+                "raiz": None,
+                "ids": [],
+                "cantidad": 0,
+                "candidatos": [],
+                "mensaje": "No existe una rama elegible para archivo.",
+            }
+        seleccion = candidatos[0]
+        resultado = dict(seleccion)
+        resultado["elegible"] = True
+        resultado["candidatos"] = candidatos
+        resultado["justificacion"] = (
+            "Mayor cantidad de nodos entre las ramas elegibles; "
+            "los empates se resolvieron por profundidad y luego por identificador."
+        )
+        return resultado
+
+    def archivar_rama_elegible(self) -> dict:
+        seleccion = self.previsualizar_archivo_rama_elegible()
+        if not seleccion["elegible"]:
+            return seleccion
+        resultado = self.archivar_rama(seleccion["raiz"])
+        resultado.update({
+            "seleccion": seleccion,
+            "justificacion": seleccion["justificacion"],
+        })
+        return resultado
 
     def _restaurar_eventos(self, eventos: list[Sismo], ids_retirados: set[int]) -> None:
         for evento in eventos:
@@ -790,3 +870,88 @@ class SismoService:
             list[Sismo]: Lista de sismos almacenados.
         """
         return self.repository.get_all()
+
+    def consultar_pendientes(self, k: int) -> dict:
+        """Returns up to k pending active events in descending K order."""
+        if self.avl_service is None:
+            return {"eventos": [], "nodos_avl_examinados": 0}
+        nodos = list(reversed(self.avl_service.get_arbol().inorden()))
+        eventos = []
+        examinados = 0
+        for nodo in nodos:
+            examinados += 1
+            evento = self.repository.get_by_id(nodo.getClave()[2])
+            if evento is None or evento.status != StatusSismo.PENDIENTE:
+                continue
+            eventos.append(evento)
+            if len(eventos) == k:
+                break
+        return {
+            "eventos": eventos,
+            "nodos_avl_examinados": examinados,
+            "orden": "K descendente (P, M, I)",
+            "criterio": "Se recorre el AVL en orden inverso y se detiene al reunir k pendientes.",
+        }
+
+    def consultar_por_magnitud(
+        self, magnitud_minima: float, magnitud_maxima: float
+    ) -> dict:
+        """Returns active events in an inclusive magnitude interval."""
+        if self.avl_service is None:
+            return {"eventos": [], "nodos_avl_examinados": 0}
+        eventos = []
+        nodos = self.avl_service.get_arbol().inorden()
+        for nodo in nodos:
+            evento = self.repository.get_by_id(nodo.getClave()[2])
+            if (
+                evento is not None
+                and magnitud_minima <= evento.magnitude <= magnitud_maxima
+            ):
+                eventos.append(evento)
+        return {
+            "eventos": eventos,
+            "nodos_avl_examinados": len(nodos),
+            "intervalo": {
+                "magnitud_minima": magnitud_minima,
+                "magnitud_maxima": magnitud_maxima,
+                "inclusivo": True,
+            },
+            "criterio": (
+                "Se examinan los nodos activos; el intervalo cruza las particiones "
+                "de prioridad de K, por lo que no se descartan ramas de forma segura."
+            ),
+        }
+
+    def consultar_por_profundidad_y_fecha(
+        self,
+        profundidad_maxima: float,
+        fecha_desde: datetime,
+        fecha_hasta: datetime,
+    ) -> dict:
+        """Returns active events matching inclusive depth and date ranges."""
+        if self.avl_service is None:
+            return {"eventos": [], "nodos_avl_examinados": 0}
+        eventos = []
+        nodos = self.avl_service.get_arbol().inorden()
+        for nodo in nodos:
+            evento = self.repository.get_by_id(nodo.getClave()[2])
+            if (
+                evento is not None
+                and evento.depth <= profundidad_maxima
+                and fecha_desde <= evento.timestamp <= fecha_hasta
+            ):
+                eventos.append(evento)
+        return {
+            "eventos": eventos,
+            "nodos_avl_examinados": len(nodos),
+            "filtros": {
+                "profundidad_maxima": profundidad_maxima,
+                "fecha_desde": fecha_desde.isoformat(),
+                "fecha_hasta": fecha_hasta.isoformat(),
+                "inclusivos": True,
+            },
+            "criterio": (
+                "La fecha y la profundidad no forman parte de K; se examinan "
+                "todos los nodos activos para garantizar el resultado."
+            ),
+        }

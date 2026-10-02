@@ -31,6 +31,7 @@ class AvlService:
 
     def __init__(self):
         self._arbol = ArbolAVL(_comparador_claves)
+        self._limite_acceso = 3
 
     def calcular_prioridad(
         self, magnitude: float, depth: float, zona_poblada: bool
@@ -206,8 +207,26 @@ class AvlService:
     def auditar(self) -> list:
         return self._arbol.auditar()
 
-    def metricas(self, limite_l: int = 3) -> dict:
+    def actualizar_marcas_acceso_costoso(self, limite_l: int | None = None):
+        if limite_l is not None:
+            self._limite_acceso = limite_l
+        for nodo in self._arbol.inorden():
+            datos = dict(nodo.getDatos() or {})
+            profundidad = self._arbol.profundidadDe(nodo)
+            datos["acceso_costoso"] = (
+                nodo.getClave()[0] == 3 and profundidad > self._limite_acceso
+            )
+            datos["limite_acceso"] = self._limite_acceso
+            datos["profundidad_nodo"] = profundidad
+            datos["nodos_visitados"] = profundidad + 1
+            nodo.setDatos(datos)
+
+    def metricas(self, limite_l: int | None = None) -> dict:
         arbol = self._arbol
+        if limite_l is not None:
+            self._limite_acceso = limite_l
+        self.actualizar_marcas_acceso_costoso()
+        limite_l = self._limite_acceso
         base = arbol.metricas()
         costosos = arbol.eventosAccesoCostoso(limite_l)
         por_prioridad = {1: 0, 2: 0, 3: 0}

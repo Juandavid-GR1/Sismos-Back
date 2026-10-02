@@ -18,5 +18,125 @@
     ],
     "status": "Pendiente",
     "estado_persistencia": "activo"
+  },
+  {
+    "id": 910001,
+    "magnitude": 6.0,
+    "depth": 20.0,
+    "epicenter_x": -75.0,
+    "epicenter_y": 4.0,
+    "timestamp": "2026-09-29T10:00:00",
+    "revision": 1,
+    "prioridad": 3,
+    "clave": [
+      3,
+      6.0,
+      910001
+    ],
+    "reporting_stations": [
+      "STA-POSTMAN-01"
+    ],
+    "status": "Pendiente",
+    "estado_persistencia": "activo"
+  },
+  {
+    "id": 910002,
+    "magnitude": 4.5,
+    "depth": 18.0,
+    "epicenter_x": -75.05,
+    "epicenter_y": 4.02,
+    "timestamp": "2026-09-29T12:00:00",
+    "revision": 1,
+    "prioridad": 3,
+    "clave": [
+      3,
+      4.5,
+      910002
+    ],
+    "reporting_stations": [
+      "STA-POSTMAN-02"
+    ],
+    "status": "Pendiente",
+    "estado_persistencia": "activo"
+  },
+  {
+    "id": 910003,
+    "magnitude": 5.0,
+    "depth": 25.0,
+    "epicenter_x": -75.03,
+    "epicenter_y": 4.01,
+    "timestamp": "2026-09-29T11:00:00",
+    "revision": 1,
+    "prioridad": 3,
+    "clave": [
+      3,
+      5.0,
+      910003
+    ],
+    "reporting_stations": [
+      "STA-POSTMAN-03"
+    ],
+    "status": "Pendiente",
+    "estado_persistencia": "activo"
+  },
+  {
+    "id": 910004,
+    "magnitude": 4.0,
+    "depth": 15.0,
+    "epicenter_x": -75.06,
+    "epicenter_y": 4.025,
+    "timestamp": "2026-09-29T13:00:00",
+    "revision": 1,
+    "prioridad": 1,
+    "clave": [
+      1,
+      4.0,
+      910004
+    ],
+    "reporting_stations": [
+      "STA-POSTMAN-04"
+    ],
+    "status": "Pendiente",
+    "estado_persistencia": "activo"
+  },
+  {
+    "id": 910005,
+    "magnitude": 4.2,
+    "depth": 20.0,
+    "epicenter_x": -75.04,
+    "epicenter_y": 4.015,
+    "timestamp": "2026-10-02T12:00:00",
+    "revision": 1,
+    "prioridad": 1,
+    "clave": [
+      1,
+      4.2,
+      910005
+    ],
+    "reporting_stations": [
+      "STA-POSTMAN-05"
+    ],
+    "status": "Pendiente",
+    "estado_persistencia": "activo"
+  },
+  {
+    "id": 910006,
+    "magnitude": 4.1,
+    "depth": 20.0,
+    "epicenter_x": -74.0,
+    "epicenter_y": 4.0,
+    "timestamp": "2026-09-29T13:00:00",
+    "revision": 1,
+    "prioridad": 1,
+    "clave": [
+      1,
+      4.1,
+      910006
+    ],
+    "reporting_stations": [
+      "STA-POSTMAN-06"
+    ],
+    "status": "Pendiente",
+    "estado_persistencia": "activo"
   }
 ]

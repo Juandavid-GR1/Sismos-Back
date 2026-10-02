@@ -5,7 +5,13 @@ from flask import Blueprint, jsonify, request
 from src.business.services.AvlService import AvlService
 
 
-def register_arbol_routes(app, avl_service: AvlService):
+def register_arbol_routes(
+    app,
+    avl_service: AvlService,
+    configuracion=None,
+    sismo_repository=None,
+    comparacion_service=None,
+):
     arbol_bp = Blueprint("arbol", __name__, url_prefix="/arbol")
 
     def _nodo_a_dict(nodo, profundidad=0):
@@ -13,9 +19,14 @@ def register_arbol_routes(app, avl_service: AvlService):
             return None
         arbol = avl_service.get_arbol()
         fb = arbol.factorBalance(nodo)
+        datos = nodo.getDatos() or {}
         return {
             "clave": list(nodo.getClave()),
-            "datos": nodo.getDatos(),
+            "datos": datos,
+            "prioridad": nodo.getClave()[0],
+            "accesoCostoso": bool(datos.get("acceso_costoso", False)),
+            "limiteL": datos.get("limite_acceso"),
+            "nodosVisitados": datos.get("nodos_visitados"),
             "altura": nodo.getAltura(),
             "profundidad": profundidad,
             "factorBalance": fb,
@@ -26,11 +37,35 @@ def register_arbol_routes(app, avl_service: AvlService):
 
     @arbol_bp.route("/metricas", methods=["GET"])
     def metricas():
-        limite = request.args.get("L", default=3, type=int)
-        datos = avl_service.metricas(max(0, limite))
+        limite = request.args.get(
+            "L",
+            default=configuracion.limite_profundidad if configuracion else 3,
+            type=int,
+        )
+        limite = max(0, limite)
+        datos = avl_service.metricas(limite)
         # Backwards compatible fields used by the current frontend.
         datos["actualizadoEn"] = datetime.now().strftime("%H:%M:%S")
         return jsonify(datos)
+
+    @arbol_bp.route("/configuracion", methods=["GET", "PUT", "PATCH"])
+    def configuracion_arbol():
+        if configuracion is None:
+            return jsonify({"error": "Configuración no disponible."}), 500
+        if request.method == "GET":
+            return jsonify(configuracion.exportar()), 200
+        body = request.get_json(silent=True) or {}
+        try:
+            resultado = configuracion.configurar(
+                limite=body.get("limite_profundidad", body.get("L")),
+                antiguedad=body.get(
+                    "antiguedad_archivo_horas",
+                    body.get("T"),
+                ),
+            )
+        except (TypeError, ValueError) as error:
+            return jsonify({"error": str(error)}), 400
+        return jsonify(resultado), 200
 
     @arbol_bp.route("/topologia", methods=["GET"])
     def topologia():
@@ -51,11 +86,38 @@ def register_arbol_routes(app, avl_service: AvlService):
         return jsonify({
             "clave": list(nodo.getClave()),
             "datos": nodo.getDatos(),
+            "prioridad": nodo.getClave()[0],
+            "accesoCostoso": bool((nodo.getDatos() or {}).get("acceso_costoso", False)),
+            "limiteL": (nodo.getDatos() or {}).get("limite_acceso"),
             "altura": nodo.getAltura(),
             "profundidad": profundidad,
             "visitadosBusquedaPorClave": profundidad + 1,
             "factorBalance": arbol.factorBalance(nodo),
         })
+
+    @arbol_bp.route("/comparacion", methods=["GET", "POST"])
+    def comparacion_arboles():
+        if comparacion_service is None or sismo_repository is None:
+            return jsonify({"error": "Comparación de árboles no disponible."}), 500
+        body = request.get_json(silent=True) or {}
+        ids = body.get("ids") if request.method == "POST" else None
+        ordenes = body.get("ordenes") if request.method == "POST" else None
+        if ordenes is None:
+            orden = request.args.get("orden")
+            ordenes = [orden] if orden else None
+        try:
+            eventos = sismo_repository.get_all()
+            if ids is not None:
+                ids = {int(identificador) for identificador in ids}
+                eventos = [evento for evento in eventos if evento.id in ids]
+            claves = [evento.clave for evento in eventos if evento.clave is not None]
+            if not claves:
+                return jsonify({
+                    "error": "No hay eventos activos con clave para comparar."
+                }), 400
+            return jsonify(comparacion_service.comparar(claves, ordenes)), 200
+        except (TypeError, ValueError) as error:
+            return jsonify({"error": str(error)}), 400
 
     @arbol_bp.route("/auditoria", methods=["GET"])
     def auditoria():

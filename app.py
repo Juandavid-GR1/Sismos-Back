@@ -10,10 +10,14 @@ from src.dataaccess.repository.HistorialGeneralRepository import (
     HistorialGeneralRepository,
 )
 from src.dataaccess.repository.ZonaRepository import ZonaRepository
+from src.dataaccess.repository.ReferenciaSismoRepository import (
+    ReferenciaSismoRepository,
+)
 
 # Algoritmos y Servicios
 from src.business.algortimos.sismos.Priority_Key_sismo import PriorityKeyService
 from src.business.services.AvlService import AvlService
+from src.business.services.ComparacionArbolesService import ComparacionArbolesService
 from src.business.services.cola_reportes import ColaReportesService
 from src.business.services.EliminadosService import EliminadosService
 from src.business.services.ModoAutomaticoService import ModoAutomaticoService
@@ -22,6 +26,10 @@ from src.business.services.RelojService import RelojService
 from src.business.services.SismosService import SismoService
 from src.business.services.ZonaService import ZonaService
 from src.business.services.HistorialService import EstadoService, HistorialService
+from src.business.services.ReferenciaService import ReferenciaSismoService
+from src.business.services.ConfiguracionEscenarioService import (
+    ConfiguracionEscenarioService,
+)
 
 # Controladores y Rutas
 from src.presentation.controllers.ArbolController import register_arbol_routes
@@ -31,6 +39,7 @@ from src.presentation.controllers.ReportesController import register_reporte_rou
 from src.presentation.controllers.SismosController import register_sismo_routes
 from src.presentation.controllers.ZonaController import register_zona_routes
 from src.presentation.controllers.HistorialController import register_historial_routes
+from src.presentation.controllers.ReferenciaCotroller import register_referencia_routes
 
 app = Flask(__name__)
 CORS(app)
@@ -44,6 +53,7 @@ sismo_repository = SismoJsonRepository("data/sismos.json")
 historial_repository = HistorialSismosRepository("data/historico_sismos.json")
 zona_repository = ZonaRepository("data/zonas.json")
 cola_persistencia = ColaJsonPersistencia("data/reportes_cola.json")
+referencia_repository = ReferenciaSismoRepository("data/referencias_sismo.json")
 
 
 # =========================================================
@@ -51,6 +61,10 @@ cola_persistencia = ColaJsonPersistencia("data/reportes_cola.json")
 # =========================================================
 
 avl_service = AvlService()
+configuracion_service = ConfiguracionEscenarioService(
+    avl_service,
+    "data/configuracion_escenario.json",
+)
 zona_service = ZonaService(zona_repository)
 
 # The simulation clock starts one year ahead so that timestamps sent by
@@ -65,6 +79,7 @@ sismo_service = SismoService(
     reloj_service,
     eliminados_service,
     historial_repository,
+    configuracion_service,
 )
 priority_key_service = PriorityKeyService()
 
@@ -80,6 +95,13 @@ modo_automatico_service = ModoAutomaticoService(
     cola_reportes=cola_reportes,
     reporte_service=reporte_service,
 )
+referencia_service = ReferenciaSismoService(
+    sismo_repository,
+    referencia_repository,
+    historial_repository,
+    eliminados_service,
+)
+comparacion_arboles_service = ComparacionArbolesService()
 
 
 # =========================================================
@@ -90,27 +112,40 @@ modo_automatico_service = ModoAutomaticoService(
 app.register_blueprint(station_bp)
 
 # Rutas con inyección de dependencias
-register_sismo_routes(app, sismo_service)
+register_sismo_routes(app, sismo_service, referencia_service)
 register_reporte_routes(app, reporte_service, cola_reportes, modo_automatico_service)
 register_zona_routes(app, zona_service)
-register_arbol_routes(app, avl_service)
+register_arbol_routes(
+    app, avl_service, configuracion_service, sismo_repository,
+    comparacion_arboles_service,
+)
 register_reloj_routes(app, reloj_service)
+register_referencia_routes(app, referencia_service)
 
 # Every request that changes the scenario is
 # recorded as one action with a snapshot of the previous state.
 estado_service = EstadoService(
     sismo_repository, avl_service, eliminados_service,
     sismo_service, reloj_service, cola_reportes, historial_repository,
+    referencia_repository,
 )
 historial_service = HistorialService(
     estado_service,
     HistorialGeneralRepository("data/historial_acciones.json"),
 )
-register_historial_routes(app, estado_service, historial_service)
+historial_service.estado.conectar_configuracion(configuracion_service)
+register_historial_routes(
+    app,
+    estado_service,
+    historial_service,
+    referencia_service,
+    configuracion_service,
+)
 
 # Rebuild the in-memory AVL from the persisted catalog. Without this the
 # tree was empty after every restart while sismos.json still had events.
 avl_service.cargar_desde(sismo_repository.get_all())
+configuracion_service.actualizar_marcas()
 historial_repository.get_all()
 
 

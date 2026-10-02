@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any, Optional
 
 from flask import Blueprint, jsonify, request
@@ -79,11 +80,24 @@ def _validate_payload(
     return None
 
 
+def _parse_query_datetime(value: str, field_name: str) -> datetime:
+    """Parses ISO-8601 query values, accepting the common UTC Z suffix."""
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        # Existing event timestamps are stored as naive datetimes. Keep the
+        # query comparable with that persisted representation.
+        return parsed.replace(tzinfo=None)
+    except (TypeError, ValueError) as error:
+        raise ValueError(
+            f"El parámetro '{field_name}' debe ser una fecha ISO-8601 válida."
+        ) from error
+
+
 # ------------------------------------------------------------------------------
 # Registro de rutas 
 # ------------------------------------------------------------------------------
 
-def register_sismo_routes(app, sismo_service: SismoService):
+def register_sismo_routes(app, sismo_service: SismoService, referencia_service=None):
     sismo_bp = Blueprint("sismos", __name__, url_prefix="/sismos")
     sismo_bp.strict_slashes = False
 
@@ -140,6 +154,69 @@ def register_sismo_routes(app, sismo_service: SismoService):
 
         return jsonify(_sismo_to_dict(new_sismo)), 201
 
+    @sismo_bp.route("/consultas/pendientes", methods=["GET"])
+    def consultar_pendientes() -> tuple[Response, int]:
+        raw_k = request.args.get("k")
+        try:
+            k = int(raw_k) if raw_k is not None else 0
+            if k <= 0:
+                raise ValueError
+        except (TypeError, ValueError):
+            return jsonify({
+                "error": "Bad Request",
+                "message": "El parámetro 'k' debe ser un entero positivo.",
+            }), 400
+        resultado = sismo_service.consultar_pendientes(k)
+        resultado["eventos"] = [
+            _sismo_to_dict(evento) for evento in resultado["eventos"]
+        ]
+        return jsonify(resultado), 200
+
+    @sismo_bp.route("/consultas/magnitud", methods=["GET"])
+    def consultar_magnitud() -> tuple[Response, int]:
+        try:
+            minima = float(request.args["min"])
+            maxima = float(request.args["max"])
+            if minima > maxima:
+                raise ValueError
+        except (KeyError, TypeError, ValueError):
+            return jsonify({
+                "error": "Bad Request",
+                "message": "Se requieren 'min' y 'max', con min <= max.",
+            }), 400
+        resultado = sismo_service.consultar_por_magnitud(minima, maxima)
+        resultado["eventos"] = [
+            _sismo_to_dict(evento) for evento in resultado["eventos"]
+        ]
+        return jsonify(resultado), 200
+
+    @sismo_bp.route("/consultas/profundidad-fecha", methods=["GET"])
+    def consultar_profundidad_fecha() -> tuple[Response, int]:
+        try:
+            profundidad = float(request.args["profundidad_max"])
+            fecha_desde = _parse_query_datetime(
+                request.args["fecha_desde"], "fecha_desde"
+            )
+            fecha_hasta = _parse_query_datetime(
+                request.args["fecha_hasta"], "fecha_hasta"
+            )
+            if profundidad < 0 or fecha_desde > fecha_hasta:
+                raise ValueError
+        except (KeyError, TypeError, ValueError) as error:
+            return jsonify({
+                "error": "Bad Request",
+                "message": str(error) or (
+                    "Se requieren profundidad_max, fecha_desde y fecha_hasta válidos."
+                ),
+            }), 400
+        resultado = sismo_service.consultar_por_profundidad_y_fecha(
+            profundidad, fecha_desde, fecha_hasta
+        )
+        resultado["eventos"] = [
+            _sismo_to_dict(evento) for evento in resultado["eventos"]
+        ]
+        return jsonify(resultado), 200
+
     @sismo_bp.route("/<int:sismo_id>", methods=["GET"])
     def get_sismo_by_id(sismo_id: int) -> tuple[Response, int]:
         """Consulta los datos de un evento sísmico por su identificador único.
@@ -162,6 +239,15 @@ def register_sismo_routes(app, sismo_service: SismoService):
             if historico is not None:
                 datos = _sismo_to_dict(historico)
                 datos["estado"] = historico.estado_persistencia.value
+                if referencia_service is not None:
+                    relacion = referencia_service.obtener_referencia(sismo_id)
+                    datos["asociaciones"] = {
+                        "referencia": relacion.to_dict() if relacion else None,
+                        "candidatos": [
+                            candidato.to_dict()
+                            for candidato in referencia_service.obtener_candidatos(historico)
+                        ],
+                    }
                 return jsonify(datos), 200
             eliminados_service = getattr(sismo_service, "eliminados_service", None)
             if eliminados_service is not None and eliminados_service.esta_retirado(sismo_id):
@@ -184,6 +270,12 @@ def register_sismo_routes(app, sismo_service: SismoService):
                 datos["profundidad_nodo"] = avl_service.profundidad_de(sismo_id)
                 datos["altura_nodo"] = nodo.getAltura()
                 datos["factor_balance"] = arbol._calcularFactorDeBalanceo(nodo)
+                datos_nodo = nodo.getDatos() or {}
+                datos["acceso_costoso"] = bool(
+                    datos_nodo.get("acceso_costoso", False)
+                )
+                datos["limite_acceso"] = datos_nodo.get("limite_acceso")
+                datos["nodos_visitados"] = datos_nodo.get("nodos_visitados")
 
 
         # ZonaService que ya calcula esto al crear/corregir eventos
@@ -196,8 +288,17 @@ def register_sismo_routes(app, sismo_service: SismoService):
         else:
             datos["zona_poblada"] = None
 
-        # Pendiente: "asociaciones" (sección 7, no construida todavía)
-        datos["asociaciones"] = None
+        if referencia_service is None:
+            datos["asociaciones"] = None
+        else:
+            relacion = referencia_service.obtener_referencia(sismo_id)
+            datos["asociaciones"] = {
+                "referencia": relacion.to_dict() if relacion else None,
+                "candidatos": [
+                    candidato.to_dict()
+                    for candidato in referencia_service.obtener_candidatos(sismo)
+                ],
+            }
 
         return jsonify(datos), 200
 
@@ -236,6 +337,16 @@ def register_sismo_routes(app, sismo_service: SismoService):
     def get_historico() -> tuple[Response, int]:
         """Obtiene eventos archivados o retirados."""
         return jsonify([_sismo_to_dict(sismo) for sismo in sismo_service.get_historico()]), 200
+
+    @sismo_bp.route("/archivo-rama/elegible", methods=["GET"])
+    def preview_archive_eligible_branch() -> tuple[Response, int]:
+        """Previews the branch selected by the automatic archive rules."""
+        return jsonify(sismo_service.previsualizar_archivo_rama_elegible()), 200
+
+    @sismo_bp.route("/archivo-rama/elegible", methods=["POST"])
+    def archive_eligible_branch() -> tuple[Response, int]:
+        """Archives the branch selected by the automatic archive rules."""
+        return jsonify(sismo_service.archivar_rama_elegible()), 200
 
     @sismo_bp.route("/<int:sismo_id>/archivar", methods=["POST"])
     def archive_sismo_branch(sismo_id: int) -> tuple[Response, int]:

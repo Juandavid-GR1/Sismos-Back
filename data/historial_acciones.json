@@ -4152,5 +4152,4602 @@
       "reloj": "2027-09-29T22:26:04.498104",
       "cola": []
     }
+  },
+  {
+    "numero": 25,
+    "descripcion": "Alta de SIS-910001",
+    "hora": "10:23:41",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T10:19:32.764406",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": []
+      }
+    }
+  },
+  {
+    "numero": 26,
+    "descripcion": "Alta de SIS-910002",
+    "hora": "10:23:54",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 1
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T10:19:32.764406",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": []
+      }
+    }
+  },
+  {
+    "numero": 27,
+    "descripcion": "Alta de SIS-910003",
+    "hora": "10:24:13",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 1,
+            "der": 2
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 1,
+            "derecha": 1
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T10:19:32.764406",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910001,
+            "distancia": 5.975394638275223,
+            "fecha_creacion": "2026-09-30T10:23:54.961877"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "numero": 28,
+    "descripcion": "Alta de SIS-910004",
+    "hora": "10:25:52",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 2
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 3,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 1,
+            "derecha": 1
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T10:19:32.764406",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T10:24:13.706226"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T10:24:13.709224"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "numero": 29,
+    "descripcion": "Alta de SIS-910005",
+    "hora": "10:28:11",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 3
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": null
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 4,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 1,
+            "derecha": 1
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T10:19:32.764406",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T10:25:52.714493"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T10:25:52.717607"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T10:25:52.720491"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "numero": 30,
+    "descripcion": "Alta de SIS-910006",
+    "hora": "10:28:44",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 2,
+            "izq": 1,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 2,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 1,
+            "izq": 5,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 1,
+            "RL": 1
+          },
+          "giros": {
+            "izquierda": 2,
+            "derecha": 2
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T10:19:32.764406",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T10:28:11.870946"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T10:28:11.873223"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T10:28:11.876570"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "numero": 31,
+    "descripcion": "POST /arbol/comparacion",
+    "hora": "14:30:43",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T14:30:43.228398",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T10:28:44.653686"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T10:28:44.655915"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T10:28:44.657916"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 72.0
+      }
+    }
+  },
+  {
+    "numero": 32,
+    "descripcion": "POST /arbol/comparacion",
+    "hora": "14:30:43",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T14:30:43.228398",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T14:30:43.271053"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T14:30:43.273378"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T14:30:43.276849"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 72.0
+      }
+    }
+  },
+  {
+    "numero": 33,
+    "descripcion": "PUT /arbol/configuracion",
+    "hora": "15:32:20",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T14:30:43.296364"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T14:30:43.299874"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T14:30:43.302996"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 72.0
+      }
+    }
+  },
+  {
+    "numero": 34,
+    "descripcion": "PUT /arbol/configuracion",
+    "hora": "15:34:02",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T15:32:20.436766"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T15:32:20.442285"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T15:32:20.444988"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 72.0
+      }
+    }
+  },
+  {
+    "numero": 35,
+    "descripcion": "PUT /arbol/configuracion",
+    "hora": "15:34:26",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T15:34:02.172885"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T15:34:02.253532"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T15:34:02.262064"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 72.0
+      }
+    }
+  },
+  {
+    "numero": 36,
+    "descripcion": "PUT /arbol/configuracion",
+    "hora": "15:59:39",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T15:34:26.695219"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T15:34:26.701651"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T15:34:26.710058"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 72.0
+      }
+    }
+  },
+  {
+    "numero": 37,
+    "descripcion": "PUT /arbol/configuracion",
+    "hora": "16:00:14",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T15:59:39.350820"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T15:59:39.352850"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T15:59:39.355298"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 1000000.0
+      }
+    }
+  },
+  {
+    "numero": 39,
+    "descripcion": "PUT /arbol/configuracion",
+    "hora": "16:11:10",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T16:00:14.875776"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T16:00:14.878891"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T16:00:14.880888"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 72.0
+      }
+    }
+  },
+  {
+    "numero": 40,
+    "descripcion": "POST /sismos/archivo-rama/elegible",
+    "hora": "16:11:13",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T16:11:10.114727"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T16:11:10.117778"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T16:11:10.119782"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 1000000.0
+      }
+    }
+  },
+  {
+    "numero": 41,
+    "descripcion": "PUT /arbol/configuracion",
+    "hora": "16:11:24",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T16:11:13.167857"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T16:11:13.170854"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T16:11:13.172888"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 1000000.0
+      }
+    }
+  },
+  {
+    "numero": 42,
+    "descripcion": "SIS-990001 marcado como revisado",
+    "hora": "16:18:51",
+    "estado": {
+      "sismos": [
+        {
+          "id": 900001,
+          "magnitude": 4.5,
+          "depth": 30.0,
+          "epicenter_x": -70.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-01-01T12:00:00",
+          "revision": 1,
+          "prioridad": 2,
+          "clave": [
+            2,
+            4.5,
+            900001
+          ],
+          "reporting_stations": [
+            "STA-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910001,
+          "magnitude": 6.0,
+          "depth": 20.0,
+          "epicenter_x": -75.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T10:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            6.0,
+            910001
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-01"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910002,
+          "magnitude": 4.5,
+          "depth": 18.0,
+          "epicenter_x": -75.05,
+          "epicenter_y": 4.02,
+          "timestamp": "2026-09-29T12:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            4.5,
+            910002
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-02"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910003,
+          "magnitude": 5.0,
+          "depth": 25.0,
+          "epicenter_x": -75.03,
+          "epicenter_y": 4.01,
+          "timestamp": "2026-09-29T11:00:00",
+          "revision": 1,
+          "prioridad": 3,
+          "clave": [
+            3,
+            5.0,
+            910003
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-03"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910004,
+          "magnitude": 4.0,
+          "depth": 15.0,
+          "epicenter_x": -75.06,
+          "epicenter_y": 4.025,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.0,
+            910004
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-04"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910005,
+          "magnitude": 4.2,
+          "depth": 20.0,
+          "epicenter_x": -75.04,
+          "epicenter_y": 4.015,
+          "timestamp": "2026-10-02T12:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.2,
+            910005
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-05"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        },
+        {
+          "id": 910006,
+          "magnitude": 4.1,
+          "depth": 20.0,
+          "epicenter_x": -74.0,
+          "epicenter_y": 4.0,
+          "timestamp": "2026-09-29T13:00:00",
+          "revision": 1,
+          "prioridad": 1,
+          "clave": [
+            1,
+            4.1,
+            910006
+          ],
+          "reporting_stations": [
+            "STA-POSTMAN-06"
+          ],
+          "status": "Pendiente",
+          "estado_persistencia": "activo"
+        }
+      ],
+      "historico": [],
+      "arbol": {
+        "nodos": [
+          {
+            "clave": [
+              3,
+              4.5,
+              910002
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 0,
+              "nodos_visitados": 1
+            },
+            "altura": 3,
+            "izq": 1,
+            "der": 5
+          },
+          {
+            "clave": [
+              1,
+              4.2,
+              910005
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 2,
+            "izq": 2,
+            "der": 4
+          },
+          {
+            "clave": [
+              1,
+              4.0,
+              910004
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 1,
+            "izq": null,
+            "der": 3
+          },
+          {
+            "clave": [
+              1,
+              4.1,
+              910006
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 3,
+              "nodos_visitados": 4
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              2,
+              4.5,
+              900001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              6.0,
+              910001
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 1,
+              "nodos_visitados": 2
+            },
+            "altura": 1,
+            "izq": 6,
+            "der": null
+          },
+          {
+            "clave": [
+              3,
+              5.0,
+              910003
+            ],
+            "datos": {
+              "status": "Pendiente",
+              "revision": 1,
+              "acceso_costoso": false,
+              "limite_acceso": 3,
+              "profundidad_nodo": 2,
+              "nodos_visitados": 3
+            },
+            "altura": 0,
+            "izq": null,
+            "der": null
+          }
+        ],
+        "modoEstres": false,
+        "contadores": {
+          "casos": {
+            "LL": 0,
+            "RR": 0,
+            "LR": 0,
+            "RL": 0
+          },
+          "giros": {
+            "izquierda": 0,
+            "derecha": 0
+          }
+        }
+      },
+      "eliminados": [],
+      "metricas": {
+        "correcciones_aceptadas": 0
+      },
+      "reloj": "2027-09-30T15:06:59.395217",
+      "cola": [],
+      "referencias": {
+        "ventana_horas": 48.0,
+        "radio_km": 40.0,
+        "referencias": [
+          {
+            "sismo_id": 910002,
+            "referencia_id": 910003,
+            "distancia": 2.481513566597627,
+            "fecha_creacion": "2026-09-30T16:11:24.665388"
+          },
+          {
+            "sismo_id": 910003,
+            "referencia_id": 910001,
+            "distancia": 3.508565029162549,
+            "fecha_creacion": "2026-09-30T16:11:24.667390"
+          },
+          {
+            "sismo_id": 910004,
+            "referencia_id": 910002,
+            "distancia": 1.2407476648694304,
+            "fecha_creacion": "2026-09-30T16:11:24.670387"
+          }
+        ]
+      },
+      "configuracion": {
+        "limite_profundidad": 3,
+        "antiguedad_archivo_horas": 72.0
+      }
+    }
   }
 ]
