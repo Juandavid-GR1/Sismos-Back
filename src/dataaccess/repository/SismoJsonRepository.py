@@ -4,6 +4,7 @@ import json
 import os
 from typing import List, Optional
 
+from src.business.algortimos.sismos.SismoValidationService import SismoValidationService
 from src.Models.Sismo import EstadoPersistencia, Sismo, StatusSismo
 from src.business.interfaces.IF_Sismos import IF_Sismos
 
@@ -61,7 +62,7 @@ class SismoJsonRepository(IF_Sismos):
             depth=float(data["depth"]),
             epicenter_x=float(data["epicenter_x"]),
             epicenter_y=float(data["epicenter_y"]),
-            timestamp=datetime.fromisoformat(data["timestamp"]),
+            timestamp=SismoValidationService.a_utc(datetime.fromisoformat(data["timestamp"])),
             revision=int(data.get("revision", 0)),
             prioridad=int(data["prioridad"]) if data.get("prioridad") is not None else None,
             clave=clave,

@@ -5,6 +5,7 @@ from typing import Iterable
 from src.estructuras.arbol_avl import ArbolAVL
 from src.estructuras.arbol_bst import ArbolBST
 from src.estructuras.comparador_eventos import comparador_eventos
+from src.business.algortimos.arboles.topologia import topologia_anidada
 
 
 class ComparacionArbolesService:
@@ -52,6 +53,12 @@ class ComparacionArbolesService:
                 "avl": self._metricas(avl, busquedas, "avl", inserciones_avl),
                 "bst": self._metricas(bst, busquedas, "bst", inserciones_bst),
                 "busquedas": busquedas,
+                # Shape of both trees, so the interface can draw them side
+                # by side (same format as /arbol/topologia). Read only.
+                "topologia": {
+                    "avl": topologia_anidada(avl),
+                    "bst": topologia_anidada(bst),
+                },
             })
 
         return {

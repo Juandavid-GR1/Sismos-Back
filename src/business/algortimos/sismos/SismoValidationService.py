@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, Any
 
 
@@ -103,16 +103,26 @@ class SismoValidationService:
         return value
 
     @staticmethod
+    def a_utc(fecha: datetime) -> datetime:
+        """Every occurrence time is stored in UTC with tzinfo (section 3:
+        "UTC, ISO 8601"). A time without offset is taken as UTC. Mixing
+        naive and aware datetimes made the association comparison crash
+        (TypeError) as soon as a report without "Z" arrived."""
+        if fecha.tzinfo is None:
+            return fecha.replace(tzinfo=timezone.utc)
+        return fecha.astimezone(timezone.utc)
+
+    @staticmethod
     def validate_timestamp(
         ts: Any
     ) -> datetime:
 
         if isinstance(ts, datetime):
-            return ts
+            return SismoValidationService.a_utc(ts)
 
         if isinstance(ts, str):
             try:
-                return datetime.fromisoformat(ts)
+                return SismoValidationService.a_utc(datetime.fromisoformat(ts))
             except ValueError:
                 raise SismoValidationError(
                     "El 'timestamp' debe ser una cadena con formato ISO 8601 válido."

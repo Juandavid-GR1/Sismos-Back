@@ -102,6 +102,15 @@ class ReferenciaSismoService:
         for evento in eventos:
             candidatos = self.obtener_candidatos(evento)
             if candidatos:
+                actual = self.obtener_referencia(evento.id)
+                # Same reference and distance as before -> keep it as it is.
+                # Saving it again changed fecha_creacion on every request, so
+                # even a rejected action (an error 400) looked like a change
+                # and was recorded in the undo stack.
+                if (actual is not None
+                        and actual.referencia_id == candidatos[0].id
+                        and abs(actual.distancia - candidatos[0].distancia) < 1e-9):
+                    continue
                 self.guardar_referencia(evento.id, candidatos[0].id)
             else:
                 self.referencia_repository.eliminar_por_sismo(evento.id)
