@@ -353,6 +353,74 @@ comparaciones de inserción, total/promedio/máximo de comparaciones de búsqued
 y el detalle de cada clave buscada. El conjunto de búsqueda es el mismo en AVL
 y BST, por lo que la comparación estructural es reproducible.
 
+### Persistencia y reconstrucción del escenario
+
+El escenario completo se exporta con:
+
+```http
+GET /arbol/escenario/exportar
+```
+
+La respuesta contiene la topología activa, eventos, histórico, retirados,
+cola, reloj, zonas y configuraciones `W`, `R`, `L` y `T`.
+
+La carga usa `multipart/form-data` para que el frontend pueda abrir un
+explorador de archivos. El campo `archivo` contiene el JSON y
+`tipo_carga` debe ser exactamente `inserciones` o `topologia`:
+
+```http
+POST /arbol/escenario/cargar
+Content-Type: multipart/form-data
+```
+
+En modo `inserciones`, el JSON tiene la forma:
+
+```json
+{
+  "eventos": [
+    {
+      "id": 910001,
+      "magnitude": 6.0,
+      "depth": 20.0,
+      "epicenter_x": -75.0,
+      "epicenter_y": 4.0,
+      "timestamp": "2026-09-29T10:00:00",
+      "revision": 1,
+      "prioridad": 3,
+      "clave": [3, 6.0, 910001],
+      "reporting_stations": [],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    }
+  ]
+}
+```
+
+Los IDs duplicados rechazan el archivo. El AVL se construye con balanceo
+activo y el BST de comparación puede reconstruirse posteriormente con el mismo
+orden de eventos.
+
+En modo `topologia`, se puede enviar el resultado completo de
+`/arbol/escenario/exportar`, o un documento con `eventos`, `nodos`,
+`modoEstres` y `contadores`. Se validan enlaces, ciclos, unicidad, orden BST,
+alturas, balance y metadatos de las claves antes de sustituir el escenario.
+Una carga inválida conserva el escenario anterior completo.
+
+### Versiones persistentes
+
+El punto 13 incluye versiones nombradas independientes de la pila de deshacer:
+
+* `POST /versiones` con `{"nombre": "antes-de-archivar"}` guarda el estado
+  operativo completo.
+* `GET /versiones` lista las versiones persistidas.
+* `GET /versiones/<nombre>` muestra sus metadatos y resumen.
+* `POST /versiones/<nombre>/restaurar` restaura la versión como una acción
+  única que puede deshacerse con `POST /historial/deshacer`.
+* `DELETE /versiones/<nombre>` elimina una versión.
+
+Las versiones se almacenan en `data/versiones.json`. No contienen la pila de
+deshacer ni otras versiones, y sobreviven al reinicio del servidor.
+
 ### Reportes sobre eventos archivados
 
 Un reporte consulta primero los eventos activos y luego el histórico:

@@ -27,3 +27,10 @@ class ZonaRepository:
         ) as file:
 
             return json.load(file)
+
+    def reemplazar_todo(self, datos: dict) -> None:
+        """Replaces the GeoJSON atomically for complete scenario restores."""
+        temporal = self.json_path.with_suffix(self.json_path.suffix + ".tmp")
+        with temporal.open("w", encoding="utf-8") as file:
+            json.dump(datos, file, indent=2, ensure_ascii=False)
+        temporal.replace(self.json_path)

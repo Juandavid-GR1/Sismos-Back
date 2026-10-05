@@ -13,11 +13,14 @@ from src.dataaccess.repository.ZonaRepository import ZonaRepository
 from src.dataaccess.repository.ReferenciaSismoRepository import (
     ReferenciaSismoRepository,
 )
+from src.dataaccess.repository.VersionesRepository import VersionesRepository
 
 # Algoritmos y Servicios
 from src.business.algortimos.sismos.Priority_Key_sismo import PriorityKeyService
 from src.business.services.AvlService import AvlService
 from src.business.services.ComparacionArbolesService import ComparacionArbolesService
+from src.business.services.PersistenciaEscenarioService import PersistenciaEscenarioService
+from src.business.services.VersionesService import VersionesService
 from src.business.services.cola_reportes import ColaReportesService
 from src.business.services.EliminadosService import EliminadosService
 from src.business.services.ModoAutomaticoService import ModoAutomaticoService
@@ -33,6 +36,7 @@ from src.business.services.ConfiguracionEscenarioService import (
 
 # Controladores y Rutas
 from src.presentation.controllers.ArbolController import register_arbol_routes
+from src.presentation.controllers.VersionesController import register_versiones_routes
 from src.presentation.controllers.EstacionesController import station_bp
 from src.presentation.controllers.RelojController import register_reloj_routes
 from src.presentation.controllers.ReportesController import register_reporte_routes
@@ -103,6 +107,7 @@ referencia_service = ReferenciaSismoService(
     eliminados_service,
 )
 comparacion_arboles_service = ComparacionArbolesService()
+versiones_repository = VersionesRepository("data/versiones.json")
 
 
 # =========================================================
@@ -116,10 +121,6 @@ app.register_blueprint(station_bp)
 register_sismo_routes(app, sismo_service, referencia_service)
 register_reporte_routes(app, reporte_service, cola_reportes, modo_automatico_service)
 register_zona_routes(app, zona_service)
-register_arbol_routes(
-    app, avl_service, configuracion_service, sismo_repository,
-    comparacion_arboles_service,
-)
 register_reloj_routes(app, reloj_service)
 register_referencia_routes(app, referencia_service)
 
@@ -128,8 +129,17 @@ register_referencia_routes(app, referencia_service)
 estado_service = EstadoService(
     sismo_repository, avl_service, eliminados_service,
     sismo_service, reloj_service, cola_reportes, historial_repository,
-    referencia_repository,
+    referencia_repository, zona_repository,
 )
+persistencia_escenario_service = PersistenciaEscenarioService(
+    estado_service, sismo_repository
+)
+versiones_service = VersionesService(estado_service, versiones_repository)
+register_arbol_routes(
+    app, avl_service, configuracion_service, sismo_repository,
+    comparacion_arboles_service, persistencia_escenario_service,
+)
+register_versiones_routes(app, versiones_service)
 historial_service = HistorialService(
     estado_service,
     HistorialGeneralRepository("data/historial_acciones.json"),
