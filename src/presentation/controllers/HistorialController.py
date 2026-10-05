@@ -80,6 +80,8 @@ def register_historial_routes(
         estado_previo = g.pop("estado_previo", None)
         if estado_previo is None:
             return response
+        if response.status_code >= 400:
+            return response
         estado_actual = estado_service.capturar()
         if configuracion_service is not None:
             configuracion_service.actualizar_marcas()

@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 
 from flask import Blueprint, jsonify, request
 
@@ -11,6 +12,7 @@ def register_arbol_routes(
     configuracion=None,
     sismo_repository=None,
     comparacion_service=None,
+    persistencia_service=None,
 ):
     arbol_bp = Blueprint("arbol", __name__, url_prefix="/arbol")
 
@@ -118,6 +120,31 @@ def register_arbol_routes(
             return jsonify(comparacion_service.comparar(claves, ordenes)), 200
         except (TypeError, ValueError) as error:
             return jsonify({"error": str(error)}), 400
+
+    @arbol_bp.route("/escenario/exportar", methods=["GET"])
+    def exportar_escenario():
+        if persistencia_service is None:
+            return jsonify({"error": "Persistencia no disponible."}), 500
+        return jsonify(persistencia_service.exportar()), 200
+
+    @arbol_bp.route("/escenario/cargar", methods=["POST"])
+    def cargar_escenario():
+        if persistencia_service is None:
+            return jsonify({"error": "Persistencia no disponible."}), 500
+        archivo = request.files.get("archivo")
+        tipo = request.form.get("tipo_carga")
+        if archivo is None or not archivo.filename:
+            return jsonify({
+                "error": "Debe seleccionar un archivo JSON en el campo 'archivo'."
+            }), 400
+        if not archivo.filename.lower().endswith(".json"):
+            return jsonify({"error": "El archivo debe tener extensión .json."}), 400
+        try:
+            documento = json.load(archivo.stream)
+            resultado = persistencia_service.cargar(documento, tipo)
+        except (ValueError, json.JSONDecodeError) as error:
+            return jsonify({"error": str(error)}), 400
+        return jsonify(resultado), 200
 
     @arbol_bp.route("/auditoria", methods=["GET"])
     def auditoria():

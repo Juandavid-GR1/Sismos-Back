@@ -10,7 +10,8 @@ class EstadoService:
 
     def __init__(self, sismo_repository, avl_service, eliminados_service,
                  sismo_service, reloj_service, cola_reportes,
-                 historial_repository, referencias_repository=None):
+                 historial_repository, referencias_repository=None,
+                 zonas_repository=None):
         self.repo = sismo_repository
         self.avl = avl_service
         self.eliminados = eliminados_service
@@ -19,6 +20,7 @@ class EstadoService:
         self.cola = cola_reportes
         self.historial = historial_repository
         self.referencias = referencias_repository
+        self.zonas = zonas_repository
         self.configuracion = None
 
     def conectar_configuracion(self, configuracion):
@@ -46,6 +48,10 @@ class EstadoService:
                 self.configuracion.exportar()
                 if self.configuracion is not None else {}
             ),
+            "zonas": (
+                self.zonas.get_all()
+                if self.zonas is not None else {}
+            ),
         }
 
     def restaurar(self, estado: dict) -> None:
@@ -63,6 +69,8 @@ class EstadoService:
             self.referencias.reemplazar_todo(estado.get("referencias", {}))
         if self.configuracion is not None and "configuracion" in estado:
             self.configuracion.reemplazar(estado["configuracion"])
+        if self.zonas is not None and "zonas" in estado:
+            self.zonas.reemplazar_todo(estado["zonas"])
 
     @staticmethod
     def huella(estado: dict) -> str:
