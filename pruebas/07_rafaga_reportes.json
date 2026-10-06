@@ -1,0 +1,458 @@
+{
+  "arbol": {
+    "contadores": {
+      "casos": {
+        "LL": 0,
+        "LR": 1,
+        "RL": 0,
+        "RR": 0
+      },
+      "giros": {
+        "derecha": 1,
+        "izquierda": 1
+      }
+    },
+    "modoEstres": false,
+    "nodos": [
+      {
+        "altura": 1,
+        "clave": [
+          1,
+          3.5,
+          702
+        ],
+        "datos": {
+          "acceso_costoso": false,
+          "limite_acceso": 3,
+          "nodos_visitados": 1,
+          "profundidad_nodo": 0,
+          "revision": 1,
+          "status": "Pendiente"
+        },
+        "der": 1,
+        "izq": null
+      },
+      {
+        "altura": 0,
+        "clave": [
+          3,
+          5.0,
+          701
+        ],
+        "datos": {
+          "acceso_costoso": false,
+          "limite_acceso": 3,
+          "nodos_visitados": 2,
+          "profundidad_nodo": 1,
+          "revision": 1,
+          "status": "Pendiente"
+        },
+        "der": null,
+        "izq": null
+      }
+    ]
+  },
+  "cola": [
+    {
+      "depth": 25.0,
+      "epicenter_x": -75.7,
+      "epicenter_y": 4.53,
+      "magnitude": 4.6,
+      "revision": 1,
+      "sismo_id": 704,
+      "station_id": "1",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    },
+    {
+      "depth": 25.0,
+      "epicenter_x": -75.7,
+      "epicenter_y": 4.53,
+      "magnitude": 4.6,
+      "revision": 1,
+      "sismo_id": 704,
+      "station_id": "3",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    },
+    {
+      "depth": 18.0,
+      "epicenter_x": -74.08,
+      "epicenter_y": 4.6,
+      "magnitude": 5.3,
+      "revision": 2,
+      "sismo_id": 701,
+      "station_id": "3",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    },
+    {
+      "depth": 18.0,
+      "epicenter_x": -74.08,
+      "epicenter_y": 4.6,
+      "magnitude": 5.9,
+      "revision": 2,
+      "sismo_id": 701,
+      "station_id": "4",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    },
+    {
+      "depth": 20.0,
+      "epicenter_x": -74.08,
+      "epicenter_y": 4.6,
+      "magnitude": 5.0,
+      "revision": 1,
+      "sismo_id": 701,
+      "station_id": "4",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    },
+    {
+      "depth": 15.0,
+      "epicenter_x": -76.5,
+      "epicenter_y": 3.45,
+      "magnitude": 4.1,
+      "revision": 2,
+      "sismo_id": 703,
+      "station_id": "1",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    },
+    {
+      "depth": 60.0,
+      "epicenter_x": -75.6,
+      "epicenter_y": 6.2,
+      "magnitude": 3.5,
+      "revision": 1,
+      "sismo_id": 702,
+      "station_id": "4",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    },
+    {
+      "depth": 5.0,
+      "epicenter_x": -75.6,
+      "epicenter_y": 6.25,
+      "magnitude": 2.1,
+      "revision": 1,
+      "sismo_id": 705,
+      "station_id": "1",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    }
+  ],
+  "configuracion": {
+    "antiguedad_archivo_horas": 72.0,
+    "limite_profundidad": 3
+  },
+  "eliminados": [
+    703
+  ],
+  "historico": [
+    {
+      "clave": [
+        1,
+        4.0,
+        703
+      ],
+      "depth": 15.0,
+      "epicenter_x": -76.5,
+      "epicenter_y": 3.45,
+      "estado_persistencia": "retirado",
+      "id": 703,
+      "magnitude": 4.0,
+      "prioridad": 1,
+      "reporting_stations": [
+        "1"
+      ],
+      "revision": 1,
+      "status": "Pendiente",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    }
+  ],
+  "metricas": {
+    "archivos_masivos": 0,
+    "conflictos": 0,
+    "correcciones_aceptadas": 0,
+    "eventos_archivados": 0,
+    "reportes_descartados": 0
+  },
+  "referencias": {
+    "radio_km": 40.0,
+    "referencias": [],
+    "ventana_horas": 48.0
+  },
+  "reloj": "2026-10-01T12:00:00",
+  "sismos": [
+    {
+      "clave": [
+        3,
+        5.0,
+        701
+      ],
+      "depth": 20.0,
+      "epicenter_x": -74.08,
+      "epicenter_y": 4.6,
+      "estado_persistencia": "activo",
+      "id": 701,
+      "magnitude": 5.0,
+      "prioridad": 3,
+      "reporting_stations": [
+        "1"
+      ],
+      "revision": 1,
+      "status": "Pendiente",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    },
+    {
+      "clave": [
+        1,
+        3.5,
+        702
+      ],
+      "depth": 60.0,
+      "epicenter_x": -75.6,
+      "epicenter_y": 6.2,
+      "estado_persistencia": "activo",
+      "id": 702,
+      "magnitude": 3.5,
+      "prioridad": 1,
+      "reporting_stations": [
+        "1"
+      ],
+      "revision": 1,
+      "status": "Pendiente",
+      "timestamp": "2026-10-01T09:00:00+00:00"
+    }
+  ],
+  "zonas": {
+    "features": [
+      {
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -79.0,
+                9.0
+              ],
+              [
+                -72.0,
+                9.0
+              ],
+              [
+                -72.0,
+                12.5
+              ],
+              [
+                -75.0,
+                12.5
+              ],
+              [
+                -79.0,
+                11.5
+              ],
+              [
+                -79.0,
+                9.0
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "properties": {
+          "codigo": "ZN",
+          "id": 1,
+          "nombre": "Zona Norte",
+          "poblada": true
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -79.0,
+                5.0
+              ],
+              [
+                -74.5,
+                5.0
+              ],
+              [
+                -74.5,
+                9.0
+              ],
+              [
+                -79.0,
+                9.0
+              ],
+              [
+                -79.0,
+                5.0
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "properties": {
+          "codigo": "ZNO",
+          "id": 2,
+          "nombre": "Zona Noroccidental",
+          "poblada": true
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -75.5,
+                2.0
+              ],
+              [
+                -72.0,
+                2.0
+              ],
+              [
+                -72.0,
+                7.5
+              ],
+              [
+                -74.5,
+                7.5
+              ],
+              [
+                -75.5,
+                5.0
+              ],
+              [
+                -75.5,
+                2.0
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "properties": {
+          "codigo": "ZC",
+          "id": 3,
+          "nombre": "Zona Central",
+          "poblada": true
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -72.0,
+                5.0
+              ],
+              [
+                -66.8,
+                5.0
+              ],
+              [
+                -66.8,
+                9.0
+              ],
+              [
+                -72.0,
+                9.0
+              ],
+              [
+                -72.0,
+                5.0
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "properties": {
+          "codigo": "ZO",
+          "id": 4,
+          "nombre": "Zona Oriental",
+          "poblada": false
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -79.0,
+                -1.5
+              ],
+              [
+                -72.0,
+                -1.5
+              ],
+              [
+                -72.0,
+                5.0
+              ],
+              [
+                -75.5,
+                5.0
+              ],
+              [
+                -79.0,
+                2.0
+              ],
+              [
+                -79.0,
+                -1.5
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "properties": {
+          "codigo": "ZS",
+          "id": 5,
+          "nombre": "Zona Sur",
+          "poblada": false
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -75.5,
+                -4.0
+              ],
+              [
+                -66.8,
+                -4.0
+              ],
+              [
+                -66.8,
+                5.0
+              ],
+              [
+                -72.0,
+                5.0
+              ],
+              [
+                -75.5,
+                2.0
+              ],
+              [
+                -75.5,
+                -4.0
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "properties": {
+          "codigo": "ZA",
+          "id": 6,
+          "nombre": "Zona Amazónica",
+          "poblada": false
+        },
+        "type": "Feature"
+      }
+    ],
+    "type": "FeatureCollection"
+  }
+}

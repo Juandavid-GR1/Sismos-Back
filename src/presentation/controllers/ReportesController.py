@@ -139,6 +139,7 @@ class ReporteController:
                 return jsonify({"error": "No hay reportes pendientes en la cola."}), 404
 
             reporte = self.cola_reportes.descartar_reporte()
+            self.reporte_service.sismo_service.registrar_rechazo("ruido")
 
             return jsonify({
                 "mensaje": "Reporte descartado como ruido.",
@@ -204,6 +205,7 @@ class ReporteController:
 
         except ReporteDesactualizadoError as error:
             self.cola_reportes.descartar_reporte()
+            self.reporte_service.sismo_service.registrar_rechazo("reporte_antiguo")
             return jsonify({
                 "mensaje": "El reporte fue rechazado.",
                 "decision": "reporte_antiguo",
@@ -212,6 +214,7 @@ class ReporteController:
 
         except ReporteConflictoError as error:
             self.cola_reportes.descartar_reporte()
+            self.reporte_service.sismo_service.registrar_rechazo("conflicto")
             return jsonify({
                 "mensaje": "El reporte fue rechazado.",
                 "decision": "conflicto",
@@ -221,6 +224,7 @@ class ReporteController:
         except ReporteIdentificadorRetiradoError as error:
 
             self.cola_reportes.descartar_reporte()
+            self.reporte_service.sismo_service.registrar_rechazo("identificador_retirado")
             return jsonify({
                 "mensaje": "El reporte fue rechazado.",
                 "decision": "identificador_retirado",
@@ -230,6 +234,7 @@ class ReporteController:
         except (ReporteValidationError, SismoValidationError, ValueError) as error:
 
             self.cola_reportes.descartar_reporte()
+            self.reporte_service.sismo_service.registrar_rechazo("datos_invalidos")
             return jsonify({
                 "mensaje": "El reporte fue rechazado por datos inválidos.",
                 "decision": "datos_invalidos",

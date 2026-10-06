@@ -101,7 +101,33 @@ class SismoService:
         self._legacy_actions_service = acciones_service
         # Accumulated metrics of this service (section 14). They will be
         # part of the restorable state when undo/versions are added.
-        self.contadores = {"correcciones_aceptadas": 0}
+        self.contadores = {
+            "correcciones_aceptadas": 0,
+            "reportes_descartados": 0,
+            "conflictos": 0,
+            "archivos_masivos": 0,
+            "eventos_archivados": 0,
+        }
+
+    # Queue decision -> section 14 counter it increments
+    _CONTADOR_POR_DECISION = {
+        "conflicto": "conflictos",
+        "reporte_antiguo": "reportes_descartados",
+        "identificador_retirado": "reportes_descartados",
+        "datos_invalidos": "reportes_descartados",
+        "ruido": "reportes_descartados",
+    }
+
+    def sumar_contador(self, nombre: str, cantidad: int = 1) -> None:
+        """Adds to a section 14 counter. .get() keeps older snapshots,
+        exports and versions (without the newer keys) working."""
+        self.contadores[nombre] = self.contadores.get(nombre, 0) + cantidad
+
+    def registrar_rechazo(self, decision: str) -> None:
+        """Counts a queue report that was rejected or discarded."""
+        nombre = self._CONTADOR_POR_DECISION.get(decision)
+        if nombre is not None:
+            self.sumar_contador(nombre)
 
     def _validar_timestamp_contra_reloj(self, timestamp) -> None:
         """Raises SismoValidationError if the timestamp is later than the
@@ -420,6 +446,9 @@ class SismoService:
                     self.historial_repository.delete(evento.id)
             raise
 
+        # Section 14 counters: one mass archive and n archived events
+        self.sumar_contador("archivos_masivos")
+        self.sumar_contador("eventos_archivados", len(ids))
         return {
             "accion": "archivo_rama",
             "raiz": val_id,
