@@ -10,6 +10,7 @@ from src.business.services.SismosService import (
     SismoValidationError,
 )
 from src.Models.Sismo import Sismo
+from src.business.algortimos.sismos.SismoValidationService import SismoValidationService
 
 REQUIRED_EVENT_FIELDS = [
     "magnitude",
@@ -84,9 +85,9 @@ def _parse_query_datetime(value: str, field_name: str) -> datetime:
     """Parses ISO-8601 query values, accepting the common UTC Z suffix."""
     try:
         parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-        # Existing event timestamps are stored as naive datetimes. Keep the
-        # query comparable with that persisted representation.
-        return parsed.replace(tzinfo=None)
+        # Event timestamps are stored in UTC with tzinfo: compare in UTC
+        # (a date without offset is taken as UTC).
+        return SismoValidationService.a_utc(parsed)
     except (TypeError, ValueError) as error:
         raise ValueError(
             f"El parámetro '{field_name}' debe ser una fecha ISO-8601 válida."

@@ -48,6 +48,17 @@ def describir_accion(endpoint: str, vista: dict, cuerpo: dict, respuesta: dict) 
         ),
         "arbol.recuperar_balance": lambda: "Recuperación global del balance",
         "reloj.avanzar_reloj": lambda: "Avance del reloj de simulación",
+        "sismos.archive_eligible_branch": lambda: (
+            f"Archivo masivo de la rama {_sis((respuesta or {}).get('raiz'))} "
+            f"({(respuesta or {}).get('cantidad', 0)} eventos)"
+        ),
+        "sismos.archive_sismo_branch": lambda: (
+            f"Archivo masivo de la rama {_sis(sid)} ({(respuesta or {}).get('cantidad', 0)} eventos)"
+        ),
+        "arbol.configuracion_arbol": lambda: "Cambio de parámetros L / T",
+        "referencia_sismo.configuracion": lambda: "Cambio de parámetros W / R",
+        "arbol.cargar_escenario": lambda: f"Carga de escenario por {request.form.get('tipo_carga', '')}",
+        "versiones.restaurar_version": lambda: f"Restauración de la versión '{vista.get('nombre')}'",
     }
     generar = textos.get(endpoint)
     return generar() if generar else f"{request.method} {request.path}"
@@ -80,7 +91,10 @@ def register_historial_routes(
         estado_previo = g.pop("estado_previo", None)
         if estado_previo is None:
             return response
-        if response.status_code >= 400:
+        # A rejected queue step answers 409/400 but DOES remove the report
+        # from the queue, so it must stay undoable (section 13).
+        es_paso_de_cola = (request.endpoint or "").startswith("reporte_controller.")
+        if response.status_code >= 400 and not es_paso_de_cola:
             return response
         estado_actual = estado_service.capturar()
         if configuracion_service is not None:

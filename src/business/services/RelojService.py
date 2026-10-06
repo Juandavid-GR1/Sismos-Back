@@ -12,7 +12,7 @@ comparación que otros servicios (SismoService, y más adelante el
 archivo de rama de la sección 10) necesitan.
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 class RelojFueraDeOrdenError(ValueError):
@@ -32,14 +32,19 @@ def _normalizar(fecha_hora: datetime) -> datetime:
     que se descarta el offset en vez de convertir --  simplifica sin
     perder nada relevante para el escenario."""
     if fecha_hora.tzinfo is not None:
-        return fecha_hora.replace(tzinfo=None)
+        # Convert to UTC BEFORE dropping the offset: "10:00-05:00" is
+        # 15:00 UTC, simply removing the offset would make it 10:00.
+        return fecha_hora.astimezone(timezone.utc).replace(tzinfo=None)
     return fecha_hora
 
 
 class RelojService:
 
     def __init__(self, hora_inicial: datetime = None):
-        base = hora_inicial if hora_inicial is not None else datetime.now()
+        # The scenario works in UTC (section 3: "UTC, ISO 8601"). With the
+        # local datetime.now() a computer in Colombia (UTC-5) started the
+        # clock 5 h behind and every new event "now" was rejected as future.
+        base = hora_inicial if hora_inicial is not None else datetime.now(timezone.utc)
         self._reloj_actual = _normalizar(base)
 
     def obtener_reloj(self) -> datetime:

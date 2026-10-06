@@ -1,0 +1,205 @@
+{
+  "descripcion": "Límites M=4.5, M=6.0, H=30 km, borde de zona y empate de P y M desempatado por id.",
+  "eventos": [
+    {
+      "id": 101,
+      "magnitude": 4.5,
+      "depth": 30.0,
+      "epicenter_x": -74.08,
+      "epicenter_y": 4.6,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 3,
+      "clave": [
+        3,
+        4.5,
+        101
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 102,
+      "magnitude": 4.5,
+      "depth": 30.0,
+      "epicenter_x": -70.0,
+      "epicenter_y": 0.0,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 2,
+      "clave": [
+        2,
+        4.5,
+        102
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 103,
+      "magnitude": 4.5,
+      "depth": 30.1,
+      "epicenter_x": -74.08,
+      "epicenter_y": 4.6,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 2,
+      "clave": [
+        2,
+        4.5,
+        103
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 104,
+      "magnitude": 4.4,
+      "depth": 10.0,
+      "epicenter_x": -74.08,
+      "epicenter_y": 4.6,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 1,
+      "clave": [
+        1,
+        4.4,
+        104
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 105,
+      "magnitude": 6.0,
+      "depth": 200.0,
+      "epicenter_x": -70.0,
+      "epicenter_y": 0.0,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 3,
+      "clave": [
+        3,
+        6.0,
+        105
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 106,
+      "magnitude": 5.9,
+      "depth": 200.0,
+      "epicenter_x": -70.0,
+      "epicenter_y": 0.0,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 2,
+      "clave": [
+        2,
+        5.9,
+        106
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 107,
+      "magnitude": 4.5,
+      "depth": 30.0,
+      "epicenter_x": -72.0,
+      "epicenter_y": 6.0,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 2,
+      "clave": [
+        2,
+        4.5,
+        107
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 110,
+      "magnitude": 5.0,
+      "depth": 50.0,
+      "epicenter_x": -70.0,
+      "epicenter_y": 0.0,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 2,
+      "clave": [
+        2,
+        5.0,
+        110
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 111,
+      "magnitude": 5.0,
+      "depth": 50.0,
+      "epicenter_x": -70.0,
+      "epicenter_y": 0.0,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 2,
+      "clave": [
+        2,
+        5.0,
+        111
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    },
+    {
+      "id": 112,
+      "magnitude": 5.0,
+      "depth": 50.0,
+      "epicenter_x": -70.0,
+      "epicenter_y": 0.0,
+      "timestamp": "2026-10-01T08:00:00+00:00",
+      "revision": 1,
+      "prioridad": 2,
+      "clave": [
+        2,
+        5.0,
+        112
+      ],
+      "reporting_stations": [
+        "1"
+      ],
+      "status": "Pendiente",
+      "estado_persistencia": "activo"
+    }
+  ]
+}

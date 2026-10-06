@@ -4,6 +4,7 @@ from dataclasses import replace
 from datetime import datetime
 from typing import Optional
 
+from src.business.algortimos.sismos.SismoValidationService import SismoValidationService
 from src.Models.Sismo import EstadoPersistencia, Sismo, StatusSismo
 
 
@@ -55,7 +56,7 @@ class HistorialSismosRepository:
             depth=float(data["depth"]),
             epicenter_x=float(data["epicenter_x"]),
             epicenter_y=float(data["epicenter_y"]),
-            timestamp=datetime.fromisoformat(data["timestamp"]),
+            timestamp=SismoValidationService.a_utc(datetime.fromisoformat(data["timestamp"])),
             revision=int(data.get("revision", 1)),
             prioridad=int(data["prioridad"]) if data.get("prioridad") is not None else None,
             clave=clave,

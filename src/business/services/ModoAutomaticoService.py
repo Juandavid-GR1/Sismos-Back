@@ -96,6 +96,7 @@ class ModoAutomaticoService:
             for tipos, decision, mensaje in _RECHAZOS:
                 if isinstance(error, tipos):
                     self.cola_reportes.descartar_reporte()
+                    self.reporte_service.sismo_service.registrar_rechazo(decision)
                     return {
                         "procesado": True,
                         "decision": decision,

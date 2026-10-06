@@ -1,3 +1,4 @@
+from datetime import timezone
 from math import radians, sin, cos, sqrt, atan2
 
 from src.Models.Referencia import Referencia
@@ -11,6 +12,11 @@ VENTANA_HORAS = 48
 # expresada en kilómetros.
 RADIO_KM = 40
 
+def _en_utc(fecha):
+    """Compara fechas en UTC: unas llegan con zona horaria ("Z") y otras sin ella."""
+    if fecha.tzinfo is None:
+        return fecha.replace(tzinfo=timezone.utc)
+    return fecha.astimezone(timezone.utc)
 
 def calcular_distancia(x1, y1, x2, y2):
     """
@@ -112,7 +118,7 @@ def es_referencia_candidata(
     # 3. La referencia debe haber ocurrido antes
     # -------------------------------------------------
 
-    if evento_a.timestamp >= evento_b.timestamp:
+    if _en_utc(evento_a.timestamp) >= _en_utc(evento_b.timestamp):
         return False
 
     # -------------------------------------------------
@@ -120,7 +126,7 @@ def es_referencia_candidata(
     # -------------------------------------------------
 
     diferencia_horas = (
-        evento_b.timestamp - evento_a.timestamp
+        _en_utc(evento_b.timestamp) - _en_utc(evento_a.timestamp)
     ).total_seconds() / 3600
 
     if diferencia_horas > ventana_horas:

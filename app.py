@@ -71,10 +71,11 @@ configuracion_service = ConfiguracionEscenarioService(
 )
 zona_service = ZonaService(zona_repository)
 
-# The simulation clock starts one year ahead so that timestamps sent by
-# the frontend are "in the past" during development. For the defense,
-# set it to the date of the scenario / test cases.
-reloj_service = RelojService(hora_inicial=datetime.now() + timedelta(days=365))
+# Scenario clock (section 3): starts at the real current time in UTC and
+# only moves forward when the user advances it (clock menu in the front).
+# Before it started one year ahead to hide a time zone mismatch, which
+# RelojService now handles (everything is compared in UTC).
+reloj_service = RelojService()
 eliminados_service = EliminadosService()
 sismo_service = SismoService(
     sismo_repository,
